@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <title></title>
+</head>
+
+<body>
+  <a id="firebaseui-auth-container"></a>
+</body>
+
+</html>
+
+<!-- <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-analytics.js"></script> -->
+<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth__ko.js"></script>
+<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyD31r7iSzhsJFpqOGjc_lEOjqghU_0uvSU",
+    authDomain: "fir-auth-7c965.firebaseapp.com",
+    databaseURL: "https://fir-auth-7c965.firebaseio.com",
+    projectId: "fir-auth-7c965",
+    storageBucket: "fir-auth-7c965.appspot.com",
+    messagingSenderId: "604826162923",
+    appId: "1:604826162923:web:6afafba71e15524f6750ae",
+    measurementId: "G-HH67KRK774"
+  };
+  firebase.initializeApp(firebaseConfig);
+  var uiConfig = {
+    //signInSuccessUrl: '/',
+    signInOptions: [{
+        provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+        defaultCountry: 'KR'
+      }
+    ],
+    //tosUrl: '/',
+    callbacks: {
+      signInSuccess: (currentUser, credential, redirectUrl) => {
+        console.log(currentUser.providerData[0].phoneNumber);
+        $(opener.location).attr("href","javascript:successPhoneConfirm("+currentUser.providerData[0].phoneNumber+");");
+        window.close()
+      },
+       signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+         console.log(authResult);
+         console.log(redirectUrl);
+         return true;
+       }
+    },
+    privacyPolicyUrl: function() {
+      // console.log(firebase.auth.PhoneAuthProvider);
+      //window.location.assign('/');
+    }
+  };
+  var ui = new firebaseui.auth.AuthUI(firebase.auth());
+  ui.start('#firebaseui-auth-container', uiConfig);
+</script>

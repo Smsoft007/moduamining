@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<%- include('head') %>
+
+<body class="theme-dark">
+
+  <div id="preloader">
+    <div class="spinner-border color-highlight" role="status"></div>
+  </div>
+
+  <div id="page">
+    <div class="header header-auto-show header-fixed header-logo-center">
+      <a href="/index" class="header-title">Golden Duck</a>
+      <a href="#" data-menu="menu-main" class="header-icon header-icon-1"><i class="fas fa-bars"></i></a>
+      <a href="#" data-toggle-theme class="header-icon header-icon-4 show-on-theme-dark"><i class="fas fa-sun"></i></a>
+      <a href="#" data-toggle-theme class="header-icon header-icon-4 show-on-theme-light"><i class="fas fa-moon"></i></a>
+      <a href="#" data-menu="menu-share" class="header-icon header-icon-3"><i class="fas fa-share-alt"></i></a>
+    </div>
+    <div id="footer-bar" class="footer-bar-6">
+      <a data-menu="menu-charge"><i class="fas fa-qrcode"></i><span>Charge</span></a>
+      <a data-menu="menu-cart-item"><i class="fas fa-shopping-basket"></i><span>buy</span></a>
+      <a href="/index" class="circle-nav active-nav"><i class="fa fa-home"></i><span>Welcome</span></a>
+      <a href="/farmer"><i class="fas fa-warehouse"></i><span>farm</span></a>
+      <a data-menu="menu-main"><i class="fa fa-bars"></i><span>Menu</span></a>
+    </div>
+    <div class="page-title page-title-fixed">
+      <div>
+        <h1>Notice</h1>
+      </div>
+      <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-share"><i class="fa fa-share-alt"></i></a>
+      <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-light" data-toggle-theme><i class="fa fa-moon"></i></a>
+      <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark" data-toggle-theme><i class="fa fa-lightbulb color-yellow-dark"></i></a>
+      <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i class="fa fa-bars"></i></a>
+    </div>
+    <div class="page-title-clear"></div>
+
+    <div class="page-content">
+        <div class="card card-style">
+            <div class="content" id="reading-progress-text">
+                <h1 class="mb-n1"> <data-tag id="B_TITLE"></data-tag></h1>
+                <p>
+                    By <strong class="color-highlight"><data-tag id="B_UID"></data-tag> 관리자</strong> -
+                    <data-tag id="B_IDATE"></data-tag>
+                    <!-- -
+                    <strong class="reading-progress-words color-highlight"></strong> words. -->
+                </p>
+                <h5 class="mt-n3 font-300">
+                    <data-tag id="B_CONTENTS"></data-tag>
+                </h5>
+            </div>
+        </div>
+    </div>
+  </div>
+</body>
+<script>
+var LISTPARAM = {
+  B_UID:"<%=MY_INFO.D_UID%>",
+  B_GUBUN:"NOTICE",
+  B_IDX: "<%=IDX%>",
+}
+  $(document).ready(() => {
+    getList()
+  })
+  async function getList() {
+    reqApi({
+      URL: 'getBoardDetail',
+      PARAM: LISTPARAM
+    }).then(async (data) => {
+      commonLib.bindValue(data['BOARD'])
+    })
+  }
+</script>

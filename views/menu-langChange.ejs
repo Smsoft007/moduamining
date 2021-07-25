@@ -1,0 +1,28 @@
+<div class="menu-title">
+    <p class="color-highlight">다국어 지원</p>
+    <h1 class="font-24">언어를 선택하세요</h1>
+    <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
+</div>
+<div class="mr-3 ml-3 mt-3">
+    <div class="list-group list-custom-small">
+        <a onclick="langChange(1)" href="#"><img class="mr-3 mt-2" src="images/flags/United-States.png"><span>English</span><i class="fa fa-angle-right"></i></a>
+        <a onclick="langChange(0)" href="#"><img class="mr-3 mt-2" src="images/flags/South-Korea.png"><span>한국어</span><i class="fa fa-angle-right"></i></a>
+        <a onclick="langChange(2)" href="#"><img class="mr-3 mt-2" src="images/flags/China.png"><span>中文</span><i class="fa fa-angle-right"></i></a>
+        <a onclick="langChange(3)" href="#"><img class="mr-3 mt-2" src="images/flags/Japan.png"><span>日本</span><i class="fa fa-angle-right"></i></a>
+        <a onclick="langChange(4)" href="#" class="border-0"><img class="mr-3 mt-2" width="20"  src="images/flags/Vietnam.png"><span>Tiếng Việt</span><i class="fa fa-angle-right"></i></a>
+    </div>
+    <div class="clear"></div>
+</div>
+<script>
+  function langChange(num) {
+    if (num != -1) {
+      reqApi({
+        URL: 'langChange',
+        PARAM: {
+          langNum: num + ""
+        }
+      })
+      location.reload()
+    }
+  }
+</script>

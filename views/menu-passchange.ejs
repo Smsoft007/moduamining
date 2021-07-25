@@ -1,0 +1,144 @@
+<div class="menu-title">
+  <h1 class="font-24"><%=LANG['LANG164'][NUM]%></h1>
+  <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
+</div>
+<div class="content mb-0 mt-0">
+  <div class="input-style has-icon input-style-1">
+    <span><%=LANG['LANG183'][NUM]%></span>
+    <em>(required)</em>
+    <input type="password" placeholder="<%=LANG['LANG183'][NUM]%>" id="CUR_PW">
+  </div>
+  <div class="input-style has-icon input-style-1 input-required">
+    <span><%=LANG['LANG184'][NUM]%></span>
+    <em>(required)</em>
+    <input type="password" placeholder="<%=LANG['LANG184'][NUM]%>" id="NEW_PW">
+  </div>
+  <div class="input-style has-icon input-style-1 input-required">
+    <span><%=LANG['LANG185'][NUM]%></span>
+    <em>(required)</em>
+    <input type="password" placeholder="<%=LANG['LANG185'][NUM]%>" id="NEW_PW_CH">
+  </div>
+  <a class="btn btn-full btn-xxs font-600 font-13 bg-dark-dark rounded-s mb-2" onclick="pwdChsendEmail()"><%=LANG['LANG188'][NUM]%></a>
+  <div class="input-style has-icon input-style-1 input-required">
+    <span><%=LANG['LANG186'][NUM]%></span>
+    <!-- <em class="badge bg-dark-dark font-11"><%=LANG['LANG186'][NUM]%></em> -->
+    <input type="text" placeholder="<%=LANG['LANG186'][NUM]%>" class="font-16" id="PSMS_NO">
+  </div>
+  <a href="#" class="btn btn-full btn-m shadow-l rounded-s font-600 bg-blue-dark mt-4" onclick="startChangePwd()"><%=LANG['LANG187'][NUM]%></a>
+</div>
+<script>
+  var ADDRESIES = []
+  var seletedCoin = 0;
+  var D_IDX;
+  async function pwdChsendEmail() {
+    var EmailParam = {}
+    EmailParam['D_MAIL'] = "<%=MY_INFO.D_EMAIL%>"
+    EmailParam['TITLE'] = "ChangePassword Mail"
+    EmailParam['D_FLAG'] = "001"
+    var valResult = commonLib.objValidate(EmailParam)
+    if (valResult) {
+      alert(lang(valResult))
+      return
+    }
+    var r = await reqApi({
+      URL: 'mailSender/purchSendMail',
+      PARAM: EmailParam
+    })
+    if (r.SENDMAIL == -1) {
+      openPop("F", "<%=LANG['LANG189'][NUM]%>")
+    } else {
+      openPop("S", "<%=LANG['LANG190'][NUM]%>")
+      D_IDX = r.NMAIL
+    }
+  }
+  async function startChangePwd() {
+    var Param = {}
+    Param['D_SMSNO'] = $("#PSMS_NO").val()
+    Param['D_FLAG'] = "001";
+    Param['D_IDX'] = D_IDX + ""
+
+    var PARAM = {}
+    PARAM['CUR_PW'] = $("#CUR_PW").val()
+    PARAM['NEW_PW'] = $("#NEW_PW").val()
+    PARAM['D_SMSNO'] = $("#PSMS_NO").val()
+    PARAM['D_IDX'] = D_IDX + ""
+    if(PARAM['NEW_PW'] != $("#NEW_PW_CH").val()){
+      openPop("F", "<%=LANG['LANG191'][NUM]%>")
+      return
+    }
+    var valResult = commonLib.objValidate(PARAM)
+    if (valResult) {
+      openPop("F", "<%=LANG['LANG192'][NUM]%>")
+      return
+    }
+    var valResult = commonLib.objValidate(Param)
+    if (valResult) {
+      openPop("F", "<%=LANG['LANG193'][NUM]%>")
+      return
+    }
+
+    // var r = await reqApi({
+    //   URL: 'mailConfirm',
+    //   PARAM: Param
+    // })
+    // var result = r.MAILCONF
+    // console.log(r);
+    var r = await reqApi({
+      URL: 'changePwd',
+      PARAM: PARAM
+    })
+    var widthResult = r.CHPWD.RESULT
+    if (widthResult == 0) {
+      openPop("S", "<%=LANG['LANG194'][NUM]%>")
+      closePop('menu-passchange')
+      $("#CUR_PW").val("")
+      $("#NEW_PW").val("")
+      $("#NEW_PW_CH").val("")
+      $("#PSMS_NO").val("")
+      D_IDX=""
+    } else if (widthResult == 1) {
+      openPop("F", "<%=LANG['LANG196'][NUM]%>")
+    } else if (widthResult == 2) {
+      openPop("F", "<%=LANG['LANG201'][NUM]%>")
+    } else if (widthResult == 3) {
+      openPop("F", "<%=LANG['LANG195'][NUM]%>")
+    } else if (widthResult == 4) {
+      openPop("F", "<%=LANG['LANG200'][NUM]%>")
+    } else {
+      openPop("F", "<%=LANG['LANG201'][NUM]%>")
+    }
+    // if (r.MAILCONF.RESULT == 0) {
+    //   var r = await reqApi({
+    //     URL: 'changePwd',
+    //     PARAM: PARAM
+    //   })
+    //   console.log(r);
+    //   var widthResult = r.CHPWD.RESULT
+    //   if (widthResult == 0) {
+    //     openPop("S", "<%=LANG['LANG194'][NUM]%>")
+    //     closePop('menu-passchange')
+    //     $("#CUR_PW").val("")
+    //     $("#NEW_PW").val("")
+    //     $("#NEW_PW_CH").val("")
+    //     $("#PSMS_NO").val("")
+    //     D_IDX=""
+    //   } else if (widthResult == 1) {
+    //     openPop("F", "<%=LANG['LANG196'][NUM]%>")
+    //   } else if (widthResult == 2) {
+    //     openPop("F", "인증번호를 다시 받아주십시오!")
+    //   } else if (widthResult == 3) {
+    //     openPop("F", "재로그인후 다시 시도 하여 주십시오")
+    //   } else if (widthResult == 4) {
+    //     openPop("F", "<%=LANG['LANG200'][NUM]%>")
+    //   } else {
+    //     openPop("F", "<%=LANG['LANG201'][NUM]%>")
+    //   }
+    // } else if (r.MAILCONF.RESULT == 1) {
+    //   openPop("F", "<%=LANG['LANG199'][NUM]%>")
+    // } else if (r.MAILCONF.RESULT == 2) {
+    //   openPop("F", "<%=LANG['LANG200'][NUM]%>")
+    // } else {
+    //   openPop("F", "<%=LANG['LANG201'][NUM]%>")
+    // }
+  }
+</script>

@@ -1,0 +1,166 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+
+        <section id="title-section">
+          <h1>공지사항 관리</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>게시판 관리</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>공지사항 관리</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="cont-section">
+          <div class="cont-whitebox">
+
+
+            <div class="conts-box">
+
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">공지사항 상세보기</h2>
+                </div>
+
+                <div class="table-box mem-list">
+                  <div class="table-over-box">
+                    <table border="0">
+                      <thead>
+                        <tr>
+                          <th>번호</th>
+                          <th>제목</th>
+                          <th>조회수</th>
+                          <th>작성자</th>
+                          <th>작성일</th>
+                          <th>등록자 ID</th>
+                          <th>등록자 이름</th>
+                        </tr>
+                      </thead>
+                      <tbody name="tableData">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+              <div class="from-section mb-0">
+
+                <div class="form-btn-group-box row">
+
+                  <!-- 미승인 -->
+                  <div class="fl-r">
+                    <a class="btn-change" onclick="gotoModi()">수정하기</a>
+                    <a class="btn-change btn-cancel-approval" onclick="delBoard()">삭제하기</a>
+                  </div>
+
+                  <!-- 승인&취소 처리완료 -->
+                  <div class="fl-l">
+                    <a href="/default/notice-list" class="btn-change">목록보기</a>
+                  </div>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+
+            </div>
+            <!--conts-box-->
+
+
+          </div>
+        </section>
+
+
+      </div>
+      <!--main-wrap-->
+
+    </div>
+    <!--row-->
+
+  </div>
+  <!--wrap--->
+
+
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+  $(".sidebar #side-menu > li.menu10").addClass("active");
+  $(".sidebar #side-menu > li.menu10").find("ul li.submenu1 a").addClass("active");
+</script>
+<script>
+  $(document).ready(() => {
+    getList()
+  })
+
+  function getList() {
+    $("tbody[name=tableData]").empty()
+    var param = {}
+    param['B_GUBUN'] = 'NOTICE'
+    param['B_IDX'] = commonLib.getParameter("idx") + ""
+    reqApi({
+      URL: 'getBoardView',
+      PARAM: param
+    }).then((data) => {
+      var ListDATA = data.BOARDVIEW
+      var innerHtml = ""
+      innerHtml += '<tr>';
+      innerHtml += '<td>' + ListDATA.ROW_NOMBER + '</td>';
+      innerHtml += '<td>' + ListDATA.B_TITLE + '</td>';
+      innerHtml += '<td>' + ListDATA.B_VIEW_CNT + '</td>';
+      innerHtml += '<td>' + ListDATA.B_UID + '</td>';
+      innerHtml += '<td>' + ListDATA.B_IDATE + '</td>';
+      innerHtml += '<td>' + ListDATA.B_AID + '</td>';
+      innerHtml += '<td>' + ListDATA.B_ANAME + '</td>';
+      innerHtml += '</tr>';
+      innerHtml += '<tr>';
+      innerHtml += '<td colspan="7" class="tx-l p-15">';
+      innerHtml += ListDATA.B_CONTENTS
+      innerHtml += '</td>';
+      innerHtml += '</tr>';
+      $("tbody[name=tableData]").append(innerHtml)
+    })
+  }
+  function gotoModi(){
+    location.href="/default/notice-list-modify?idx="+commonLib.getParameter("idx")
+  }
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+  function delBoard(){
+    if(confirm("삭제 하시겠습니까?")){
+      var param = {}
+      param['B_IDX'] = commonLib.getParameter("idx") + ""
+      reqApi({
+        URL: 'delBoard',
+        PARAM: param
+      }).then(data=>{
+        alert("삭제되었습니다")
+        location.href='/default/notice-list'
+      })
+    }
+  }
+
+  function btnPage(pos) {
+    if (pos == "bef" && currentPage > 1) {
+      currentPage--
+    } else if (pos == "next" && currentPage < totalPage) {
+      currentPage++
+    }
+    getList()
+  }
+</script>

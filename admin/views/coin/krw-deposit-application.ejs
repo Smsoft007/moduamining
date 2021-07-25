@@ -1,0 +1,623 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+        <section id="title-section">
+          <h1>USD 입출금내역</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>USD입출금관리</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>USD 입출금신청내역</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+
+        <section id="cont-section">
+  				<div class="cont-whitebox">
+
+  					<ul class="row main-teb-menu">
+
+  <!--선택 시 a class="active" -->
+
+  						<li><a class="active" id="teb-menu1" href="krw-deposit-application">입출금신청내역</a></li>
+  						<li><a id="teb-menu2" href="krw-deposit-application-complete">입출금완료내역</a></li>
+  						<li><a id="teb-menu3" href="krw-deposit-application-cancel">입출금취소내역</a></li>
+  					</ul>
+
+  					<div class="main-teb-cont">
+
+  						<div class="teb-conts teb-cont1 p-0">
+
+  							<div class="conts-box pb-0">
+  								<div class="search-box border-l0 border-r0 p-5">
+  									<div class="row">
+  										<div class="w50p fl-l m-0">
+  											<div class="search-form-box row pl-5 pr-5">
+  												<label class="fl-l">검색어</label>
+  												<div class="select-input-box fl-l">
+  													<select>
+  														<option>아이디</option>
+  														<option>이름</option>
+  														<option>전화번호</option>
+  														<option>이메일</option>
+  													</select>
+  													<input type="text" class="input">
+  												</div>
+  											</div>
+  										</div>
+                      <div class="w50p fl-l">
+  											<div class="form-box row">
+  												<label class="fl-l">구분</label>
+  												<div class="fl-l select-box">
+  													<select>
+  														<option>전체</option>
+  														<option>입금</option>
+    													<option>출금</option>
+  													</select>
+  												</div>
+  											</div>
+  										</div>
+
+  									</div>
+  								</div><!--search-box-->
+
+  								<div class="from-section">
+
+  									<div class="form-tr row">
+  										<!-- <div class="w50p fl-l">
+  											<div class="form-box row">
+  												<label class="fl-l">신청사이트</label>
+  												<div class="fl-l select-box">
+  													<select>
+  														<option>Exchange Korea</option>
+  														<option>Exchange English</option>
+  														<option>Exchange Chinese</option>
+  														<option>Exchange Japanese</option>
+  													</select>
+  												</div>
+  											</div>
+  										</div> -->
+  										<div class="w50p fl-l">
+  											<div class="form-box row">
+  												<label class="fl-l">입출금신청일자</label>
+      										<div class="fl-l calendar-input-box"  id="Search-time">
+      											<div class="row">
+      												<div class="calendar-input-btn-box fl-l">
+      													<input type="text" id="datepicker1">
+      												</div>
+      												<span class="fl-l"> ~ </span>
+      												<div class="calendar-input-btn-box fl-l">
+      													<input type="text" id="datepicker2">
+      												</div>
+      											</div>
+      										</div>
+
+      									</div>
+      								</div>
+
+
+      						<!-- 달력 -->
+      							  <link rel="stylesheet" href="../views/include/datepicker.css">
+      							  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      							  <script>
+      								$(function() {
+      									$("#datepicker1, #datepicker2").datepicker({
+      										dateFormat: 'yy.mm.dd',
+      									  showOn: "both",
+      									  buttonImage: "../views/images/calendar-5.png",
+      									  buttonImageOnly: true,
+      									  buttonText: "Select date"
+      									});
+      								});
+      							  </script>
+
+  									</div><!--form-tr-->
+
+  								</div><!--from-section-->
+
+  								<div class="from-section mb-0">
+
+  									<div class="form-btn-box mb-0">
+  										<a class="btn-change">회원검색 하기</a>
+  									</div>
+
+  								</div><!--from-section-->
+
+  							</div><!--conts-box-->
+
+
+  							<div class="conts-box pb-0">
+
+  								<div class="from-section">
+  									<div class="form-title row">
+  										<h2 class="fl-l">USD 입출금신청내역</h2>
+  										<div class="fl-r mt-10">
+  											<a href="#" class="btn-excel-down fl-l">엑셀 다운로드</a>
+  										</div>
+  									</div>
+
+  									<div class="table-box krw-dep-app">
+  										<div class="table-over-box">
+  											<table border="0">
+  												<thead>
+  													<tr>
+  														<th>번호</th>
+  														<th>구분</th>
+  														<th>아이디</th>
+  														<th>휴대전화번호</th>
+  														<th>입금자명</th>
+  														<th class="tx-r">신청금액(USD)</th>
+  														<th class="tx-r">실제금액(USD)</th>
+  														<th class="tx-r">수수료(USD)</th>
+  														<th>신청일자</th>
+  														<th>관리하기</th>
+  													</tr>
+  												</thead>
+  												<tbody>
+  													<tr>
+  														<td>1</td>
+                              <td class="tx-blue">입금</td>
+  														<td>mail@mail.com</td>
+  														<td>010 0000 0000</td>
+  														<td>홍길동</td>
+  														<td class="tx-r">9,700</td>
+  														<td class="tx-r">9,700,000</td>
+  														<td class="tx-r">1,000</td>
+  														<td>2018.03.15</td>
+  														<td>
+  															<a class="btn-table-change btn-completion-deposit mr-5">입금완료</a>
+  															<a class="btn-table-change btn-cancel-deposit">입금취소</a>
+  														</td>
+  													</tr>
+  													<tr>
+  														<td>2</td>
+                              <td class="tx-red">출금</td>
+  														<td>mail@mail.com</td>
+  														<td>010 0000 0000</td>
+  														<td>홍길동</td>
+  														<td class="tx-r">9,700</td>
+  														<td class="tx-r">9,700,000</td>
+  														<td class="tx-r">1,000</td>
+  														<td>2018.03.15</td>
+  														<td><a class="btn-table-change btn-completion-withdrawal mr-5">출금완료</a><a class="btn-table-change btn-cancel-withdrawal">출금취소</a></td>
+  													</tr>
+  												</tbody>
+  											</table>
+  										</div>
+  									</div>
+
+        						<div class="row">
+        							<div class="paging fl-r">
+        								<ul class="row">
+        									<li><a><i class="fa fa-angle-left"></i></a></li>
+        									<li><a class="active">1</a></li>
+        									<li><a>2</a></li>
+        									<li><a>3</a></li>
+        									<li><a>4</a></li>
+        									<li><a>5</a></li>
+        									<li><a><i class="fa fa-angle-right"></i></a></li>
+        								</ul>
+        							</div>
+        						</div>
+
+  								</div>
+
+  							</div><!--conts-box-->
+
+  						</div><!--teb-cont1-->
+
+
+  					</div><!--main-teb-cont-->
+
+  				</div>
+  			</section>
+
+
+      </div>
+    </div>
+  </div>
+
+  <!--출금취소 팝업-->
+  <div class="popup-bg">
+
+
+
+  <!--출금취소 팝업-->
+  <div id="popup" class="completion-deposit">
+
+  	<div class="pop-title">
+  		<h2>BTC 입금완료</h2>
+  		<a class="close"><i class="sm sm-multiply"></i></a>
+  	</div>
+
+    <div class="pop-conts">
+  		<div class="pop-form-box row">
+  			<p class="fl-l">신청자 아이디</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="ID" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">신청자 휴대전화번호</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="010 0000 0000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">입금 신청일</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="2018.03.25" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">가입사이트</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="Exchange Korea" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">입금자명</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="2018.03.25" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">입금신청금액</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="9,700,000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">입금수수료</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="1,000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">입금금액</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="9,699,000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">메세지 전송</p>
+  			<div class="checkbox-box fl-l mr-10">
+  				<input type="checkbox" name="sms-confirm" id="sms-confirm" value="1" checked>
+  				<label for="sms-confirm">SMS 전송</label>
+  			</div>
+  			<div class="checkbox-box">
+  				<input type="checkbox" name="mail-confirm" id="mail-confirm" value="1">
+  				<label for="mail-confirm">Mail 전송</label>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<div class="checkbox-box fl-l">
+  				<input type="checkbox" name="sms-confirm" id="sms-confirm" value="1" checked>
+  				<label for="sms-confirm">입금완료 메시지를 전송합니다.</label>
+  			</div>
+  		</div>
+
+  		<div class="pop-btn-box">
+  			<a class="btn-pop close" onclick="parent.close_completion_deposit();">입금 완료하기</a>
+  		</div>
+
+  	</div>
+
+  </div>
+
+<script>
+
+$(".btn-completion-deposit").click(function(){
+	$(".popup-bg").fadeIn(200, function(){
+		$("#popup.completion-deposit").fadeIn(500);
+	});
+});
+$("#popup.completion-deposit a.close").click(function(){
+	$("#popup.completion-deposit").fadeOut(500, function(){
+		$(".popup-bg").fadeOut(200);
+	});
+});
+
+</script>
+
+
+  <!--출금취소 팝업-->
+  <div id="popup" class="cancel-deposit">
+
+  	<div class="pop-title">
+  		<h2>KRW 입금취소</h2>
+  		<a class="close"><i class="sm sm-multiply"></i></a>
+  	</div>
+
+    <div class="pop-conts">
+  		<div class="pop-form-box row">
+  			<p class="fl-l">신청자 아이디</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="mail@mail.com" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">신청자 휴대전화번호</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="010 0000 0000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">입금 신청일</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="2018.03.25" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">가입사이트</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="Exchange Korea" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">입금자명</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="2018.03.25" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">입금신청금액</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="9,700,000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">입금수수료</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="1,000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">입금금액</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="9,699,000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">취소사유</p>
+  			<div class="pop-input-box fl-l">
+  				<textarea></textarea>
+  			</div>
+  		</div>
+
+  		<div class="pop-btn-box">
+  			<a class="btn-pop close" onclick="parent.close_cancel_deposit();">입금 취소하기</a>
+  		</div>
+
+  	</div>
+
+
+  </div>
+
+
+<script>
+
+
+$(".btn-cancel-deposit").click(function(){
+	$(".popup-bg").fadeIn(200, function(){
+		$("#popup.cancel-deposit").fadeIn(500);
+	});
+});
+$("#popup.cancel-deposit a.close").click(function(){
+	$("#popup.cancel-deposit").fadeOut(500, function(){
+		$(".popup-bg").fadeOut(200);
+	});
+});
+
+</script>
+
+  <!--출금취소 팝업-->
+  <div id="popup" class="completion-withdrawal">
+
+  	<div class="pop-title">
+  		<h2>KRW 출금완료</h2>
+  		<a class="close"><i class="sm sm-multiply"></i></a>
+  	</div>
+
+    <div class="pop-conts">
+  		<div class="pop-form-box row">
+  			<p class="fl-l">신청자 아이디</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="mail@mail.com" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">신청자 휴대전화번호</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="010 0000 0000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">출금 신청일</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="2018.03.25" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">가입사이트</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="Exchange Korea" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">입금주</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="2018.03.25" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">출금신청금액</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="9,700,000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">출금수수료</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="1,000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">출금금액</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="9,699,000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">메세지 전송</p>
+  			<div class="checkbox-box fl-l mr-10">
+  				<input type="checkbox" name="sms-confirm" id="sms-confirm" value="1" checked>
+  				<label for="sms-confirm">SMS 전송</label>
+  			</div>
+  			<div class="checkbox-box">
+  				<input type="checkbox" name="mail-confirm" id="mail-confirm" value="1">
+  				<label for="mail-confirm">Mail 전송</label>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<div class="checkbox-box fl-l">
+  				<input type="checkbox" name="sms-confirm" id="sms-confirm" value="1" checked>
+  				<label for="sms-confirm">입금완료 메시지를 전송합니다.</label>
+  			</div>
+  		</div>
+
+  		<div class="pop-btn-box">
+  			<a class="btn-pop close" onclick="parent.close_completion_withdrawal();">출금 완료하기</a>
+  		</div>
+
+  	</div>
+
+  </div>
+
+
+<script>
+
+$(".btn-completion-withdrawal").click(function(){
+	$(".popup-bg").fadeIn(200, function(){
+		$("#popup.completion-withdrawal").fadeIn(500);
+	});
+});
+$("#popup.completion-withdrawal a.close").click(function(){
+	$("#popup.completion-withdrawal").fadeOut(500, function(){
+		$(".popup-bg").fadeOut(200);
+	});
+});
+
+</script>
+
+
+
+
+  <!--출금취소 팝업-->
+  <div id="popup" class="cancel-withdrawal">
+
+  	<div class="pop-title">
+  		<h2>KRW 출금취소</h2>
+  		<a class="close"><i class="sm sm-multiply"></i></a>
+  	</div>
+
+    <div class="pop-conts">
+  		<div class="pop-form-box row">
+  			<p class="fl-l">신청자 아이디</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="mail@mail.com" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">신청자 휴대전화번호</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="010 0000 0000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">출금 신청일</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="2018.03.25" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">가입사이트</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="Exchange Korea" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">입금주</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="2018.03.25" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">출금신청금액</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="9,700,000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">출금수수료</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="1,000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">출금금액</p>
+  			<div class="pop-input-box fl-l">
+  				<input type="text" class="input" value="9,699,000" readonly>
+  			</div>
+  		</div>
+  		<div class="pop-form-box row">
+  			<p class="fl-l">취소사유</p>
+  			<div class="pop-input-box fl-l">
+  				<textarea></textarea>
+  			</div>
+  		</div>
+
+  		<div class="pop-btn-box">
+  			<a class="btn-pop close" onclick="parent.close_cancel_withdrawal();">출금신청 취소하기</a>
+  		</div>
+
+  	</div>
+
+  </div>
+
+
+<script>
+
+$(".btn-cancel-withdrawal").click(function(){
+	$(".popup-bg").fadeIn(200, function(){
+		$("#popup.cancel-withdrawal").fadeIn(500);
+	});
+});
+$("#popup.cancel-withdrawal a.close").click(function(){
+	$("#popup.cancel-withdrawal").fadeOut(500, function(){
+		$(".popup-bg").fadeOut(200);
+	});
+});
+
+</script>
+
+
+
+
+</div>
+
+
+</body>
+
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>

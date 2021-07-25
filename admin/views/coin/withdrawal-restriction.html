@@ -1,0 +1,165 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+        <section id="title-section">
+          <h1>회원제한이력조회</h1>
+          <div class="row">
+            <p class="fl-l">출금제한 이력을 조회합니다.</p>
+          </div>
+        </section>
+        <section id="cont-section">
+          <div class="cont-whitebox">
+            <div class="conts-box pb-0">
+              <div class="search-box border-l0 border-r0 p-5 mb-20">
+                <div class="row">
+                  <div class="w50p fl-l mb-5">
+                    <div class="search-form-box row pl-5 pr-5">
+                      <label class="fl-l">검색어</label>
+                      <div class="select-input-box fl-l">
+                        <select id="selType">
+                          <option value="1" selected>아이디</option>
+                          <option value="2">이름</option>
+                          <option value="3">전화번호</option>
+                          <option value="4">이메일</option>
+                        </select>
+                        <input type="text" class="input" id="selText">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="w50p fl-l mb-5">
+                    <div class="form-box row">
+                      <label class="fl-l">회원가입일자</label>
+                      <div class="fl-l calendar-input-box" id="Search-time">
+                        <div class="row">
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker1">
+                          </div>
+                          <span class="fl-l"> ~ </span>
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker2">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <link rel="stylesheet" href="../views/include/datepicker.css">
+                  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                  <script>
+                    $(function() {
+                      $("#datepicker1, #datepicker2").datepicker({
+                        dateFormat: 'yy.mm.dd',
+                        showOn: "both",
+                        buttonImage: "../views/images/calendar-5.png",
+                        buttonImageOnly: true,
+                        buttonText: "Select date"
+                      });
+                    });
+                  </script>
+
+                </div>
+              </div>
+              <!--search-box-->
+
+
+              <div class="from-section mb-0">
+
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onClick="getList()">회원검색 하기</a>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+            </div>
+            <!--conts-box-->
+
+            <div class="conts-box pb-0">
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">회원 리스트<span>검색 00명 / 전체 00명</span></h2>
+                  <div class="fl-r">
+                    <a href="#" class="btn-excel-down fl-l" onclick="commonLib.fnExcelReport('excelTable','UserList')">엑셀 다운로드</a>
+
+                    <!-- <select id="SECHER1_TITLE4" name="SECHER1_TITLE4">
+                      <option value="D_DATE">최근가입순</option>
+                      <option value="SECHER_TEXT">아이디 오름차순</option>
+                      <option value="SECHER_TEXT">아이디 내림차순</option>
+                    </select> -->
+                  </div>
+                </div>
+                <div class="table-box mem-list">
+                  <div class="table-over-box">
+                    <table border="0" id="excelTable">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>변일일시</th>
+                          <th>회원No</th>
+                          <th>회원ID</th>
+                          <th>변경내용</th>
+
+                        </tr>
+                      </thead>
+                      <tbody name="tableData">
+                        <tr>
+                          <td>1</td>
+                          <td>2020-00-00 00:00:00,000</td>
+                          <td>10016</td>
+                          <td>asd@mail.com</td>
+                          <td><span class="text-blue">출금가능</span> > <span class="text-red">출금제한</span></td>
+                          <td>01012345678</td>
+                          <td class="break-word">sdlkfjslkdjflsdjflksjdfkjlsdjkfsdf</td>
+                          <td>2020-00-00 00:00:00,000</td>
+                          <td>slkjfkjagsfsd</td>
+                          <td><a class="btn-table-change btn-blue btn-forfeit">출금가능</a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <!--/CONTENT LIST--->
+                  </div>
+
+                  <div class="row">
+                    <div class="paging fl-r">
+                      <ul class="row" name="paging">
+                        <!-- <li><a><i class="fa fa-angle-left"></i></a></li>
+                        <li><a class="active">1</a></li>
+                        <li><a>2</a></li>
+                        <li><a>3</a></li>
+                        <li><a>4</a></li>
+                        <li><a>5</a></li>
+                        <li><a><i class="fa fa-angle-right"></i></a></li> -->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <!--conts-box-->
+
+          </div>
+        </section>
+
+
+      </div>
+      <!--main-wrap-->
+
+    </div>
+    <!--row-->
+
+  </div>
+  <!--wrap--->
+
+
+  <!--삭제/몰수 팝업-->
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>

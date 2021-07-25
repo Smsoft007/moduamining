@@ -1,0 +1,93 @@
+<%- include('head') %>
+
+<body class="theme-light">
+
+  <div id="preloader">
+    <div class="spinner-border color-highlight" role="status"></div>
+  </div>
+
+  <div id="page">
+
+    <div class="page-content pt-3">
+
+      <div class="card card-style">
+        <div class="content">
+          <p class="font-600 color-highlight mb-n1">Reset Account</p>
+          <h1 class="font-30">Forgot</h1>
+          <p>
+            Enter your email addresse below and we'll send you the reset instructions.
+          </p>
+
+          <div class="input-style has-icon input-style-1 input-required">
+            <i class="input-icon fa fa-user"></i>
+            <span>메일인증번호</span>
+            <em>(required)</em>
+            <input type="text" placeholder="메일인증번호" id="RAN_NUM">
+          </div>
+          <div class="input-style has-icon input-style-1 input-required">
+            <i class="input-icon fa fa-user"></i>
+            <span>비밀번호</span>
+            <em>(required)</em>
+            <input type="password" placeholder="비밀번호" id="D_NEW_PASS">
+          </div>
+          <div class="input-style has-icon input-style-1 input-required">
+            <i class="input-icon fa fa-user"></i>
+            <span>비밀번호확인</span>
+            <em>(required)</em>
+            <input type="password" placeholder="비밀번호확인" id="D_NEW_PASS_CH">
+          </div>
+
+          <a class="btn btn-full btn-l font-600 font-13 gradient-highlight mt-4 rounded-s" onclick="startChangePwd()">Send Reset Instructions</a>
+
+          <div class="row pt-3 mb-0">
+            <div class="col-6 text-left">
+              <a href="signin" class="color-highlight">Sign In</a>
+            </div>
+            <div class="col-6 text-right">
+              <a href="signup" class="color-highlight">Create Account</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  async function startChangePwd() {
+
+    var Param = {}
+    Param['RAN_NUM'] = $("#RAN_NUM").val()
+    Param['D_NEW_PASS'] = $("#D_NEW_PASS").val()
+    var PW_KEY = "<%=PW_KEY%>"
+    if (PW_KEY == "") {
+      alert("잘못된 접속 경로입니다.")
+      return
+    }
+    Param['PW_KEY'] = PW_KEY
+    if (Param['D_NEW_PASS'] != $("#D_NEW_PASS_CH").val()) {
+      alert("<%=LANG['LANG191'][NUM]%>")
+      return
+    }
+    var valResult = commonLib.objValidate(Param)
+    if (valResult) {
+      alert("<%=LANG['LANG192'][NUM]%>")
+      return
+    }
+    var val = await reqApi({
+      URL: 'chpwd',
+      PARAM: Param
+    })
+    if (val.CHPWD != null) {
+      if (val.CHPWD.RESULT == 0) {
+        alert("<%=LANG['LANG194'][NUM]%>")
+        location.href = '/'
+      } else if (val.CHPWD.RESULT == 1) {
+        alert("<%=LANG['LANG233'][NUM]%>")
+      } else if (val.CHPWD.RESULT == 2) {
+        alert("<%=LANG['LANG233'][NUM]%>")
+      } else {
+        alert("<%=LANG['LANG200'][NUM]%>")
+      }
+    }
+  }
+</script>

@@ -1,0 +1,151 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+
+        <section id="title-section">
+  				<h1>1:1문의 관리</h1>
+  				<div class="row">
+  					<p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+  					<div class="fl-r">
+  						<ul class="row">
+  							<li>게시판 관리</li>
+  							<li><i class="fa fa-angle-right"></i></li>
+  							<li>1:1문의 관리</li>
+  						</ul>
+  					</div>
+  				</div>
+  			</section>
+
+  			<section id="cont-section">
+  				<div class="cont-whitebox">
+
+
+						<div class="conts-box">
+							<div class="from-section">
+								<div class="form-title row">
+									<h2 class="fl-l">1:1문의 분류수정</h2>
+									<div class="fl-r">
+										<a href="" class="btn-excel-down fl-l">추가하기</a>
+									</div>
+								</div>
+
+								<div class="form-tr row">
+									<div class="w100p fl-l">
+										<div class="form-box row">
+											<label class="fl-l">분류명</label>
+											<div class="input-radio-btn-box fl-l">
+												<div class="row">
+													<input type="text" class="input fl-l" value="">
+													<div class="fl-l radio-box">
+														<input type="radio" name="use" id="use1" value="1" checked >
+														<label for="use1">사용</label>
+													</div>
+													<div class="fl-l radio-box">
+														<input type="radio" name="use" id="use2" value="2">
+														<label for="use2">미사용</label>
+													</div>
+													<a class="btn-use-change fl-r">삭제하기</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div><!--form-tr-->
+
+								<div class="form-tr row">
+									<div class="w100p fl-l">
+										<div class="form-box row">
+											<label class="fl-l">분류명</label>
+											<div class="input-radio-btn-box fl-l">
+												<div class="row">
+													<input type="text" class="input fl-l" value="">
+													<div class="fl-l radio-box">
+														<input type="radio" name="use1" id="use1-1" value="1-1" checked >
+														<label for="use1-1">사용</label>
+													</div>
+													<div class="fl-l radio-box">
+														<input type="radio" name="use1" id="use2-1" value="2-1">
+														<label for="use2-1">미사용</label>
+													</div>
+													<a class="btn-use-change fl-r">삭제하기</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div><!--form-tr-->
+
+
+								<div class="form-tr row">
+									<div class="w100p fl-l">
+										<div class="form-box row">
+											<label class="fl-l">분류명</label>
+											<div class="input-radio-btn-box fl-l">
+												<div class="row">
+													<input type="text" class="input fl-l" value="">
+													<div class="fl-l radio-box">
+														<input type="radio" name="use2" id="use1-2" value="1-2" checked >
+														<label for="use1">사용</label>
+													</div>
+													<div class="fl-l radio-box">
+														<input type="radio" name="use2" id="use2-2" value="2-2">
+														<label for="use2-2">미사용</label>
+													</div>
+													<a class="btn-use-change fl-r">삭제하기</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div><!--form-tr-->
+
+
+
+							</div><!--from-section-->
+
+
+							<div class="from-section mb-0">
+
+								<div class="form-btn-box mb-0">
+									<a class="btn-change">변경사항 저장하기</a>
+								</div>
+
+							</div><!--from-section-->
+
+
+						</div><!--conts-box-->
+
+
+  				</div>
+  			</section>
+
+
+  		</div><!--main-wrap-->
+
+  	</div><!--row-->
+
+  </div><!--wrap--->
+
+
+</body>
+
+
+
+
+
+  <script src="../views/include/js/bootstrap.min.js"></script>
+
+        <!-- Menu Plugin JavaScript -->
+  <script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+
+        <!--Wave Effects -->
+        <script src="../views/include/js/waves.js"></script>
+
+
+
+<script>
+	$(".sidebar #side-menu > li.menu10").addClass("active");
+	$(".sidebar #side-menu > li.menu10").find("ul li.submenu3 a").addClass("active");
+</script>

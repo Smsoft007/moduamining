@@ -1,0 +1,13 @@
+[
+	{
+		"name": "modua_wallet",
+		"host": "113.35.179.31",
+		"port": 21,
+		"type": "ftp",
+		"username": "modua3",
+		"password": "modua3",
+		"path": "/",
+		"autosave": true,
+		"confirm": true
+	}
+]

@@ -1,0 +1,477 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+        <section id="title-section">
+          <h1>회원관리</h1>
+          <div class="row">
+            <p class="fl-l">회원을 관리하실 수 있습니다.</p>
+          </div>
+        </section>
+        <section id="cont-section">
+          <div class="cont-whitebox">
+            <div class="conts-box pb-0">
+              <div class="search-box border-l0 border-r0 p-5 mb-20">
+                <div class="row">
+                  <div class="w50p fl-l mb-5">
+                    <div class="search-form-box row pl-5 pr-5">
+                      <label class="fl-l">검색어</label>
+                      <div class="select-input-box fl-l">
+                        <select id="selType">
+                          <option value="1" selected>아이디</option>
+                          <option value="2">이름</option>
+                          <option value="3">전화번호</option>
+                          <option value="4">이메일</option>
+                        </select>
+                        <input type="text" class="input" id="selText">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="w50p fl-l mb-5">
+                    <div class="form-box row">
+                      <label class="fl-l">회원가입일자</label>
+                      <div class="fl-l calendar-input-box" id="Search-time">
+                        <div class="row">
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker1">
+                          </div>
+                          <span class="fl-l"> ~ </span>
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker2">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <link rel="stylesheet" href="../views/include/datepicker.css">
+                  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                  <script>
+                    $(function() {
+                      $("#datepicker1, #datepicker2").datepicker({
+                        dateFormat: 'yy.mm.dd',
+                        showOn: "both",
+                        buttonImage: "../views/images/calendar-5.png",
+                        buttonImageOnly: true,
+                        buttonText: "Select date"
+                      });
+                    });
+                  </script>
+
+                </div>
+              </div>
+              <!--search-box-->
+
+
+              <div class="from-section mb-0">
+
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onClick="getList()">회원검색 하기</a>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+            </div>
+            <!--conts-box-->
+
+            <div class="conts-box pb-0">
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">회원 리스트<span>검색 00명 / 전체 00명</span></h2>
+                  <div class="fl-r">
+                    <a href="#" class="btn-excel-down fl-l" onclick="commonLib.fnExcelReport('excelTable','UserList')">엑셀 다운로드</a>
+
+                    <!-- <select id="SECHER1_TITLE4" name="SECHER1_TITLE4">
+                      <option value="D_DATE">최근가입순</option>
+                      <option value="SECHER_TEXT">아이디 오름차순</option>
+                      <option value="SECHER_TEXT">아이디 내림차순</option>
+                    </select> -->
+                  </div>
+                </div>
+                <div class="table-box mem-list">
+                  <div class="table-over-box">
+                    <table border="0" id="excelTable">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>회원No</th>
+                          <th>회원ID</th>
+                          <th>회원명</th>
+                          <th>회원가입일</th>
+                          <th>이메일</th>
+                          <th>회원연락처</th>
+                          <th>Eth Address</th>
+                          <th>ICK Address</th>
+                          <!-- <th>추천인No</th>
+                          <th>추천인ID</th>
+                          <th>은행명</th>
+                          <th>은행계좌번호</th>
+                          <th>예금주</th>
+                          <th>경고여부</th>
+                          <th>경고횟수</th> -->
+                          <th>관리하기</th>
+                        </tr>
+                      </thead>
+                      <tbody name="tableData">
+
+                      </tbody>
+                    </table>
+                    <!--/CONTENT LIST--->
+                  </div>
+
+                  <div class="row">
+                    <div class="paging fl-r">
+                      <ul class="row" name="paging">
+                        <!-- <li><a><i class="fa fa-angle-left"></i></a></li>
+                        <li><a class="active">1</a></li>
+                        <li><a>2</a></li>
+                        <li><a>3</a></li>
+                        <li><a>4</a></li>
+                        <li><a>5</a></li>
+                        <li><a><i class="fa fa-angle-right"></i></a></li> -->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <!--conts-box-->
+
+          </div>
+        </section>
+
+
+      </div>
+      <!--main-wrap-->
+
+    </div>
+    <!--row-->
+
+  </div>
+  <!--wrap--->
+
+
+  <!--삭제/몰수 팝업-->
+  <!-- <div class="popup-bg"> -->
+
+
+    <!--삭제/몰수 팝업-->
+    <!-- <div id="popup" class="forfeit-cont">
+
+      <div class="pop-title">
+        <h2>회원 삭제/몰수</h2>
+        <a class="close"><i class="sm sm-multiply"></i></a>
+      </div>
+
+      <div class="pop-conts">
+        <div class="pop-form-box row">
+          <p class="fl-l">회원아이디</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="D_UID" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">회원명</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="D_NAME" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">회원연락처</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="D_HP" readonly>
+          </div>
+        </div>
+        <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">동램프 판매대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="L10" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">동램프 입금대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="W10" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">은램프 판매대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="L20" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">은램프 입금대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="W20" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">금램프 판매대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="L30" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">금램프 입금대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="W30" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">요술램프 판매대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="L40" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">요술램프 입금대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="W40" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pop-btn-box">
+          <div class="row mrow">
+            <div class="w33p fl-l">
+              <a class="btn-red close" onClick="delMeber()">회원삭제</a>
+            </div>
+            <div class="w33p fl-l">
+              <a class="btn-pop close">아이템몰수</a>
+            </div>
+            <div class="w33p fl-l">
+              <a class="btn-pop close">닫기</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  <!-- </div> -->
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+  var nowPages = 1;
+  var pageRange = 5;
+  var currentPage = 1;
+  var pageLevel = 0;
+  var totalPage = 0;
+  var sMemberId = "";
+  var data;
+
+  function init() {
+    function open_btc_cancel_reason_withdrawal(url) {
+      $(".popup-bg").fadeIn(200, function() {
+        $("#popup.forfeit-cont").fadeIn(500);
+        $('#btc-forfeit').attr('src', url);
+      });
+    }
+
+    function close_btc_cancel_reason_withdrawal(url) {
+      $("#popup.forfeit-cont").fadeOut(500, function() {
+        $(".popup-bg").fadeOut(200);
+      });
+    }
+    $(".btn-forfeit").click(function() {
+      $(".popup-bg").fadeIn(200, function() {
+        $("#popup.forfeit-cont").fadeIn(500);
+      });
+    });
+    $("#popup.forfeit-cont a.close").click(function() {
+      $("#popup.forfeit-cont").fadeOut(500, function() {
+        $(".popup-bg").fadeOut(200);
+      });
+    });
+  }
+  $(document).ready(() => {
+    getList()
+  })
+
+  function getList() {
+    $("tbody[name=tableData]").empty()
+    var param = {}
+    param['D_SDATE'] = ($("#datepicker1").datepicker("getDate")) ? $("#datepicker1").datepicker("getDate").format("yyyy-MM-dd") : " "
+    param['D_EDATE'] = ($("#datepicker2").datepicker("getDate")) ? $("#datepicker2").datepicker("getDate").format("yyyy-MM-dd") : " "
+    param['SECHER1_TITLE'] = $("#selType").val()
+    param['UN_ESECHER_TEXT'] = ($("#selText").val() == "") ? " " : $("#selText").val()
+    param['CNT'] = 'true'
+    param['CUR_PAGING'] = currentPage + ""
+    param['PAGING_NO'] = "10"
+    reqApiList({
+      URL: 'AgetMemberList',
+      PARAM: param
+    }).then((data) => {
+      console.log(data);
+      if (data.CNT.ALL_CNT != 0) {
+        cnt = data.CNT.ALL_CNT
+        totalPage = Math.floor(cnt / 10) + ((cnt % 10 != 0) ? 1 : 0)
+        pageLevel = Math.floor(currentPage / (pageRange + 1))
+        nowPages = (totalPage - (pageLevel * 5) > 5) ? 5 : totalPage - (pageLevel * 5)
+      }
+      for (var i = 0; i < data.MEMBERLIST.length; i++) {
+        var innerHtml = ""
+        innerHtml += '<tr>';
+        innerHtml += '<td>' + data.MEMBERLIST[i].ROW_NOMBER + '</td>';
+        innerHtml += '<td>' + data.MEMBERLIST[i].D_NO + '</td>';
+        innerHtml += '<td>' + data.MEMBERLIST[i].D_UID + '</td>';
+        innerHtml += '<td>' + data.MEMBERLIST[i].D_NAME + '</td>';
+        innerHtml += '<td>' + data.MEMBERLIST[i].D_DATE + '</td>';
+        innerHtml += '<td>' + data.MEMBERLIST[i].D_EMAIL + '</td>';
+        innerHtml += '<td>' + data.MEMBERLIST[i].D_HP + '</td>';
+        innerHtml += '<td class="break-word">' + data.MEMBERLIST[i].ETH_ADDR + '</td>';
+        innerHtml += '<td class="break-word">' + data.MEMBERLIST[i].ERC_ADDR + '</td>';
+        // innerHtml += '<td>' + data.MEMBERLIST[i].P_NO + '</td>';
+        // innerHtml += '<td>' + data.MEMBERLIST[i].P_UID + '</td>';
+        // innerHtml += '<td>' + data.MEMBERLIST[i].B_NAME + '</td>';
+        // innerHtml += '<td>' + data.MEMBERLIST[i].B_IDNO + '</td>';
+        // innerHtml += '<td>' + data.MEMBERLIST[i].B_OWNER + '</td>';
+        // if (data.MEMBERLIST[i].WARN_YN == 'N') {
+        //   innerHtml += '<td>무</td>';
+        //   innerHtml += '<td>' + data.MEMBERLIST[i].WARN_CNT + ' 회</td>';
+        // } else {
+        //   innerHtml += '<td class="tx-red">유</td>';
+        //   innerHtml += '<td class="tx-red">' + data.MEMBERLIST[i].WARN_CNT + ' 회</td>';
+        // }
+
+        innerHtml += '<td><a href="/default/member_change?dno=' + data.MEMBERLIST[i].D_NO + '" class="btn-table-change">수정하기</a> ';
+
+          if (data.MEMBERLIST[i].STOP_YN == 'N') {
+          innerHtml += '<td><a class="btn-table-change btn-blue btn-forfeit" onclick="chagneStop(' + data.MEMBERLIST[i].D_NO + ',\'' + data.MEMBERLIST[i].STOP_YN + '\')">출금가능</a></td>';
+        } else {
+          innerHtml += '<td><a class="btn-table-change btn-red btn-forfeit" onclick="chagneStop(' + data.MEMBERLIST[i].D_NO + ',\'' + data.MEMBERLIST[i].STOP_YN + '\')">출금정지</a></td>';
+        }
+
+        
+        if (data.MEMBERLIST[i].STOP_YN == 'N') {
+          innerHtml += '<a class="btn-table-change btn-blue btn-forfeit">출금가능</a></td>';
+        } else {
+          innerHtml += '<a class="btn-table-change btn-red btn-forfeit">출금정지</a></td>';
+        }
+
+        // innerHtml += '<a class="btn-table-change btn-forfeit" onClick="getMeberInfo(' + data.MEMBERLIST[i].D_NO + ',\'' + data.MEMBERLIST[i].D_UID + '\')">삭제/몰수</a></td>';
+        innerHtml += '</tr>';
+        $("tbody[name=tableData]").append(innerHtml)
+      }
+      var innerHtml = '';
+      innerHtml += '<li class="" onclick="btnPage(\'bef\')"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>';
+      $("ul[name=paging]").empty()
+      for (var i = 1; i <= nowPages; i++) {
+        if (currentPage == i) {
+          innerHtml += '<li onclick="movePage(' + i + ')"> <a class="active">' + ((pageLevel * 5) + i) + '</a> </li>';
+        } else {
+          innerHtml += '<li onclick="movePage(' + i + ')"> <a>' + ((pageLevel * 5) + i) + '</a> </li>';
+        }
+      }
+      innerHtml += '<li onclick="btnPage(\'next\')"> <a href="#"><i class="fa fa-angle-right"></i></a> </li>';
+      $("ul[name=paging]").append(innerHtml)
+      init()
+    })
+  }
+  async function getMeberInfo(dno, uid) {
+    sMemberId = uid
+    var r = await reqApi({
+      URL: 'AgetMemberDetail',
+      PARAM: {
+        DNO: dno + ""
+      }
+    })
+    var member = r.MEMBERD
+    commonLib.bindValue(member)
+  }
+  async function delMeber() {
+    var Param = {}
+    Param['D_UID'] = sMemberId
+    Param['D_AID'] = ADMINID
+    Param['D_IP'] = await commonLib.getIpAddress()
+    var r = await reqApi({
+      URL: 'AdelMember',
+      PARAM: Param
+    })
+    switch (r.DELMEMBER.RESULT) {
+      case 0:
+        alert("정상 삭제처리 되었습니다.")
+        break;
+      case 1:
+        break;
+        alert("존재하지 않는 회원입니다")
+      case 2:
+        alert("탈퇴한 회원입니다")
+        break;
+      case 3:
+        alert("이미삭제한 회원입니다")
+        break;
+      case 4:
+        alert("보유아이템이 존재합니다")
+        break;
+      case 5:
+        alert("매칭대기중인 아이템이 존재합니다")
+        break;
+    }
+    getList()
+  }
+
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+
+  function btnPage(pos) {
+    if (pos == "bef" && currentPage > 1) {
+      currentPage--
+    } else if (pos == "next" && currentPage < totalPage) {
+      currentPage++
+    }
+    getList()
+  }
+
+
+  function chagneStop(dno, val) {
+    console.log(dno, val);
+    console.log((val == "Y") ? 'N' : 'Y');
+    reqApi({
+      URL: "chagneStop",
+      PARAM: {
+        DNO: dno+"",
+        // CUR_STATUS: 'Y'
+        CUR_STATUS: (val == "Y") ? 'N' : 'Y'
+      }
+    }).then(data => {
+      alert("변경되었습니다")
+      getList()
+      console.log(data);
+    })
+  }
+
+
+</script>

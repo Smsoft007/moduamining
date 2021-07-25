@@ -1,0 +1,74 @@
+<% include ./head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ./left-menu %>
+      <div class="main-wrap">
+        <% include ./header %>
+        <section id="title-section">
+          <h1>조직표</h1>
+          <div class="row">
+            <p class="fl-l">전체 조직표를 확인가능합니다.</p>
+          </div>
+        </section>
+        <section id="cont-section">
+          <div class="cont-whitebox">
+            <div class="conts-box pb-0">
+
+              <div class="from-section border-t1">
+                <div class="form-tr row">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">회원명</label>
+                      <div class="input-box fl-l">
+                        <input type="text" class="input" value="" id="sid">
+                        <p class="error">ex) </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">레벨</label>
+                      <div class="select-box fl-l">
+                        <select>
+                          <option>Level 1</option>
+                          <option>Level 2</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="from-section mb-0">
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onClick="showChart()">그리기</a>
+                </div>
+              </div>
+            </div>
+            <div class="conts-box pb-0">
+              <div class="orgchart">
+                <div id="tree" ref="tree" style="width:100%; height:100vh">
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+  function showChart(){
+    if($("#sid").val()!=""){
+      $("#tree").empty()
+      // var chartHtml = '<iframe src="http://175.126.226.108:45441/orgchart?userId='+$("#sid").val()+'" type="application/pdf" width="100%" height="100%" frameborder="0" style="position:relative;zindex:999" ref="frame"></iframe>'
+      var chartHtml = '<iframe src="https://orgchart.sm-international.biz/koiorgchrt?userId='+$("#sid").val()+'&server=bike&lev=0&step=1" type="application/pdf" width="100%" height="100%" frameborder="0" style="position:relative;zindex:999" ref="frame"></iframe>'
+      $("#tree").append(chartHtml)
+    }
+
+  }
+</script>

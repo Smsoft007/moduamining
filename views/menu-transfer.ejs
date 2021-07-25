@@ -1,0 +1,138 @@
+<div class="menu-title">
+  <h1><%=LANG['LANG257'][NUM]%></h1>
+  <a onclick="reload()" class="close-menu"><i class="fa fa-times-circle"></i></a>
+</div>
+<div class="content mt-0">
+  <div class="input-style input-style-1 input-required">
+    <span class="color-highlight"><%=LANG['LANG268'][NUM]%></span>
+    <em><i class="fa fa-angle-down"></i></em>
+    <select id="selectCoinWallet" onchange="selectCoinWallet(this)">
+      <option value="" disabled selected><%=LANG['LANG268'][NUM]%></option>
+      <option value=1>ICK Wallet</option>
+      <option value=2>ICK Wallet (FEE)</option>
+      <option value=0>ETH Wallet</option>
+    </select>
+  </div>
+  <div class="">
+    <p class="mb-1">
+      <data-tag name="stdCoin"></data-tag> Balance <span class="float-right">
+        <data-tag id="stdCoinB"></data-tag>
+      </span>
+    </p>
+  </div>
+  <div class="input-style input-style-1 input-required">
+    <span class="color-highlight"><%=LANG['LANG304'][NUM]%></span>
+    <em class="badge bg-dark-dark font-11"><i class="fas fa-camera mt-0"></i></em>
+    <input type="text" placeholder="<%=LANG['LANG304'][NUM]%>" id="RECEIVEADDR">
+  </div>
+  <a class="btn btn-full btn-xxs font-600 font-13 bg-dark-dark text-white rounded-s mb-2" onclick="isEthAddr()"><%=LANG['LANG303'][NUM]%></a>
+  <div class="input-style input-style-1 input-required">
+    <span class="color-highlight"><%=LANG['LANG302'][NUM]%></span>
+    <em>(required)</em>
+    <input type="number" placeholder="<%=LANG['LANG302'][NUM]%>" id="QTY">
+  </div>
+  <a class="btn btn-xxs font-600 font-13 bg-dark-dark rounded-s mb-2" onclick="addQTY(10)">10 <data-tag name="stdCoin"></data-tag></a>
+  <a class="btn btn-xxs font-600 font-13 bg-dark-dark rounded-s mb-2" onclick="addQTY(100)">100 <data-tag name="stdCoin"></data-tag></a>
+  <a class="btn btn-xxs font-600 font-13 bg-dark-dark rounded-s mb-2" onclick="addQTY(200)">200 <data-tag name="stdCoin"></data-tag></a>
+  <a class="btn btn-full btn-m font-600 font-13 gradient-highlight text-white rounded-s mt-3" onclick="startTransaction()"><%=LANG['LANG305'][NUM]%></a>
+  <!-- <a data-menu="menu-transfercheck" class="btn btn-full btn-m font-600 font-13 gradient-highlight text-white rounded-s mt-3">Continue</a> -->
+</div>
+<script>
+  var validAddr = false;
+  var coinRate;
+
+  function reload() {
+    $("#QTY").val(0);
+    validAddr = false;
+  }
+
+  function selectCoinWallet(selectBox) {
+    console.log("몇번");
+    if($(selectBox).val() == 2){
+      commonLib.getCoinAmount(null, addresies[1].ADDR).then(data => {
+        $("#stdCoinB").text(data.AMOUNT)
+        coinRate = data.RATE
+      })
+    }else{
+      reqApiList({
+        URL: 'getAddrOutList'
+      }).then(data => {
+        data.OUTADDR[0].forEach(item => {
+          if (item.D_CNAME == addresies[$(selectBox).val()].COINNAME) {
+            $("#RECEIVEADDR").val(item.ADDR)
+          }
+        });
+      })
+      commonLib.bindValueNameData({
+        stdCoin: addresies[$(selectBox).val()].COINNAME
+      })
+      commonLib.getCoinAmount(($(selectBox).val() == 1) ? "0x8177EF6A05ADBa53CB78ca4Da6f4A66766bcF69D" : null, addresies[$(selectBox).val()].ADDR).then(data => {
+        $("#stdCoinB").text(data.AMOUNT)
+        coinRate = data.RATE
+      })
+    }
+  }
+
+  function addQTY(addv) {
+    $("#QTY").val(($("#QTY").val() * 1) + addv)
+  }
+
+  function isEthAddr() {
+    if ($("#RECEIVEADDR").val() != '') {
+      reqApi({
+        URL: 'isAddr',
+        PARAM: {
+          ADDR: $("#RECEIVEADDR").val(),
+          GUBUN: "ETH"
+        }
+      }).then(data => {
+        if (data.ISADDR == "1") {
+          validAddr = true
+          alert("<%=LANG['LANG306'][NUM]%>")
+        } else {
+          alert("<%=LANG['LANG307'][NUM]%>")
+        }
+
+      })
+    }
+  }
+
+  function startTransaction() {
+    if (!validAddr) {
+      alert("<%=LANG['LANG308'][NUM]%>")
+      return
+    }
+    if ($("#selectCoinWallet").val() == null) {
+      alert("<%=LANG['LANG309'][NUM]%>")
+      return
+    }
+    if ($("#QTY").val() == null || $("#QTY").val() == "" || $("#QTY").val() == 0 || $("#QTY").val() == "0") {
+      alert("<%=LANG['LANG400'][NUM]%>")
+      return
+    }
+    var PARAM = {}
+    if($("#selectCoinWallet").val()==2){
+      PARAM['GUBUN'] = 'ETH'
+    }else{
+      PARAM['GUBUN'] = addresies[$("#selectCoinWallet").val()].COINNAME
+    }
+    PARAM['SENDADDR'] = addresies[$("#selectCoinWallet").val()].ADDR
+    PARAM['RECEIVEADDR'] = $("#RECEIVEADDR").val()
+    PARAM['QTY'] = $("#QTY").val()
+    PARAM['RATE'] = coinRate + ""
+    PARAM['REAL_FEE'] = "0"
+    PARAM['CATEGORY'] = "send"
+
+    reqApi({
+      URL: 'sendEth',
+      PARAM: PARAM
+    }).then(data => {
+      console.log(data);
+      if (data.RESULT == 1) {
+        alert("<%=LANG['LANG401'][NUM]%>")
+      } else {
+        openPop("RS", "<%=LANG['LANG402'][NUM]%>")
+      }
+    })
+  }
+</script>

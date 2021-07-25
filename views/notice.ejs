@@ -1,0 +1,162 @@
+<%- include('head') %>
+
+<body class="theme-light">
+
+  <div id="preloader">
+    <div class="spinner-border color-highlight" role="status"></div>
+  </div>
+
+  <div id="page">
+
+    <%- include('footer') %>
+    <div class="page-title page-title-fixed">
+      <h1><%=LANG['LANG167'][NUM]%></h1>
+      <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-light" data-toggle-theme><i class="fa fa-moon"></i></a>
+      <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark" data-toggle-theme><i class="fa fa-lightbulb color-yellow-dark"></i></a>
+      <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i class="fa fa-bars"></i></a>
+    </div>
+    <div class="page-title-clear"></div>
+
+    <div class="page-content" id="boardList">
+
+      <a href="#" class="card card-style mb-2">
+        <div class="content">
+          <p class="font-13 line-height-s mb-1"><%=LANG['LANG291'][NUM]%></p>
+        </div>
+      </a>
+      <a href="notice-view.html" class="card card-style mb-2">
+        <div class="content">
+          <p class="font-11 opacity-70 font-italic line-height-s mb-1">2020-12-12 00:00:00</p>
+          <h4>공지사항입니다.</h4>
+        </div>
+      </a>
+      <a href="/notice-view.html" class="card card-style mb-2">
+        <div class="content">
+          <p class="font-11 opacity-70 font-italic line-height-s mb-1">2020-12-12 00:00:00</p>
+          <h4>공지사항입니다.</h4>
+        </div>
+      </a>
+      <a href="/notice-view.html" class="card card-style mb-2">
+        <div class="content">
+          <p class="font-11 opacity-70 font-italic line-height-s mb-1">2020-12-12 00:00:00</p>
+          <h4>공지사항입니다.</h4>
+        </div>
+      </a>
+
+      <nav aria-label="pagination-demo">
+        <ul class="pagination pagination- justify-content-center mt-3">
+          <li class="page-item">
+            <a class="page-link rounded-xs color-white bg-dark-dark color-white shadow-xl border-0" href="#" tabindex="-1" aria-disabled="true"><i class="fa fa-angle-left"></i></a>
+          </li>
+          <li class="page-item"><a class="page-link rounded-xs bg-dark-dark color-white shadow-l border-0" href="#">1</a></li>
+          <li class="page-item"><a class="page-link rounded-xs bg-dark-dark color-white shadow-l border-0" href="#">2</a></li>
+          <li class="page-item"><a class="page-link rounded-xs bg-highlight color-white shadow-l border-0" href="#">3<span class="sr-only">(current)</span></a></li>
+          <li class="page-item"><a class="page-link rounded-xs bg-dark-dark color-white shadow-l border-0" href="#">4</a></li>
+          <li class="page-item"><a class="page-link rounded-xs bg-dark-dark color-white shadow-l border-0" href="#">5</a></li>
+          <li class="page-item">
+            <a class="page-link rounded-xs color-white bg-dark-dark color-white shadow-l border-0" href="#"><i class="fa fa-angle-right"></i></a>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+
+  </div>
+
+
+</body>
+<script>
+  var nowPages = 1;
+  var pageRange = 5;
+  var currentPage = 1;
+  var pageLevel = 0;
+  var SelectedUpload;
+  var totalPage = 0;
+  var reSeq;
+  var cnt = 0;
+  var totalAmt = 0
+  var LISTPARAM = {
+    B_UID: "<%=MY_INFO.D_UID%>",
+    B_GUBUN: "NOTICE",
+    CNT: "true",
+    IP_NO: " ",
+    D_SDATE: " ",
+    D_EDATE: " ",
+    MY_NOTICE: "0",
+    CUR_PAGING: "1",
+    PAGING_NO: "10"
+  }
+  $(document).ready(() => {
+    getList()
+  })
+  async function getList() {
+    LISTPARAM['CUR_PAGING'] = currentPage + ""
+    reqApiList({
+      URL: 'getInquire',
+      PARAM: LISTPARAM
+    }).then(async (data) => {
+      $("#boardList").empty()
+      listData = data['INQUIRE'][0]
+      getCnt(data)
+      var innerHTML = '';
+      if (listData.length == 0) {
+        innerHTML += '<a href="#" class="card card-style mb-2">';
+        innerHTML += '<div class="content">';
+        innerHTML += '<p class="font-13 line-height-s mb-1"><%=LANG['LANG291'][NUM]%></p>';
+        innerHTML += '</div>';
+        innerHTML += '</a>';
+      }
+      for (var i = 0; i < listData.length; i++) {
+        innerHTML += '<a href="/notice-view?idx=' + listData[i].B_IDX + '" class="card card-style mb-2">';
+        innerHTML += '<div class="content">';
+        innerHTML += '<p class="font-11 opacity-70 font-italic line-height-s mb-1">' + listData[i].B_IDATE + '</p>';
+        innerHTML += '<h4>' + listData[i].B_TITLE + '.</h4>';
+        innerHTML += '</div>';
+        innerHTML += '</a>';
+      }
+      innerHTML += '<nav aria-label="pagination-demo">';
+      innerHTML += '<ul class="pagination pagination- justify-content-center mt-3">';
+      innerHTML += '<li class="page-item">';
+      innerHTML += '<a class="page-link rounded-xs color-white bg-dark-dark color-white shadow-xl border-0" href="#" tabindex="-1" aria-disabled="true"><i class="fa fa-angle-left"></i></a>';
+      innerHTML += '</li>';
+      for (var i = 1; i <= nowPages; i++) {
+        if (((pageLevel * 5) + i) == currentPage) {
+          innerHTML += '<li class="page-item" onclick="movePage(' + i + ')"><a class="page-link rounded-xs bg-highlight color-white shadow-l border-0" href="#">' + ((pageLevel * 5) + i) + '' +
+            '<span class="sr-only">(current)</span></a></li>';
+        } else {
+          innerHTML += '<li class="page-item" onclick="movePage(' + i + ')"><a class="page-link rounded-xs bg-dark-dark color-white shadow-l border-0" href="#">' + ((pageLevel * 5) + i) + '' + '</a></li>';
+        }
+      }
+      innerHTML += '<li class="page-item">';
+      innerHTML += '<a class="page-link rounded-xs color-white bg-dark-dark color-white shadow-l border-0" href="#"><i class="fa fa-angle-right"></i></a>';
+      innerHTML += '</li>';
+      innerHTML += '</ul>';
+      innerHTML += '</nav>';
+      $("#boardList").append(innerHTML);
+    })
+  }
+
+  function getCnt(data) {
+    if (data.CNT.ALL_CNT != 0) {
+      cnt = data.CNT.ALL_CNT
+      totalPage = Math.floor(cnt / 10) + ((cnt % 10 != 0) ? 1 : 0)
+      pageLevel = Math.floor(currentPage / (pageRange + 1))
+      nowPages = (totalPage - (pageLevel * 5) > 5) ? 5 : totalPage - (pageLevel * 5)
+    }
+  }
+
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+
+  function btnPage(pos) {
+    if (pos == "bef" && currentPage > 1) {
+      currentPage--
+      getList()
+    } else if (pos == "next" && currentPage < totalPage) {
+      currentPage++
+      getList()
+    }
+  }
+</script>

@@ -1,0 +1,13 @@
+[
+    {
+        "name" : "dev-server",
+        "host" : "113.35.179.28"
+        "port" : 21,
+        "type" : "ftp",
+        "username" :"smsoft"
+        "password" :"kim973200",
+        "path":"/goldduckCopy",
+        "autosave" :true,
+        "confirm"  :true
+    }
+]

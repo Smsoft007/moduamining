@@ -1,0 +1,247 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+
+        <section id="title-section">
+          <h1>공지사항 관리</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>게시판 관리</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>공지사항 관리</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="cont-section">
+          <div class="cont-whitebox">
+
+
+
+
+            <div class="conts-box pb-0">
+              <div class="search-box border-l0 border-r0 p-5">
+                <div class="row">
+                  <div class="w50p fl-l m-0">
+                    <div class="search-form-box row">
+                      <label class="fl-l">검색어</label>
+                      <div class="select-input-box fl-l">
+                        <select id="selType">
+                          <option value=" ">전체</option>
+                          <option value="1">제목</option>
+                          <option value="2">내용</option>
+                          <option value="3">작성자</option>
+                          <option value="4">제목+내용</option>
+                        </select>
+                        <input type="text" class="input" id="selText">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">작성일자</label>
+                      <div class="fl-l calendar-input-box" id="Search-time">
+                        <div class="row">
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker1">
+                          </div>
+                          <span class="fl-l"> ~ </span>
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker2">
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  <!-- 달력 -->
+                  <link rel="stylesheet" href="../views/include/datepicker.css">
+                  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                  <script>
+                    $(function() {
+                      $("#datepicker1, #datepicker2").datepicker({
+                        dateFormat: 'yy.mm.dd',
+                        showOn: "both",
+                        buttonImage: "../views/images/calendar-5.png",
+                        buttonImageOnly: true,
+                        buttonText: "Select date"
+                      });
+                    });
+                  </script>
+
+                </div>
+              </div>
+              <!--search-box-->
+
+
+              <div class="from-section mb-0 mt-20">
+
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onclick="getList()">검색 하기</a>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+            </div><!-- conts-box -->
+
+
+            <div class="conts-box pb-0">
+
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">공지사항 리스트</h2>
+                  <div class="fl-r">
+                    <a href="/default/notice-list-modify" class="btn-excel-down fl-l">작성하기</a>
+                  </div>
+                </div>
+
+                <div class="table-box mem-list">
+                  <div class="table-over-box">
+                    <table border="0">
+                      <thead>
+                        <tr>
+                          <th>번호</th>
+                          <th>제목</th>
+                          <th>조회수</th>
+                          <th>작성자</th>
+                          <th>작성일</th>
+                          <th>등록자 ID</th>
+                          <th>등록자 이름</th>
+                          <th>내용보기</th>
+                        </tr>
+                      </thead>
+                      <tbody name="tableData">
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="paging fl-r">
+                    <ul class="row" id="paging">
+                      <!-- <li><a><i class="fa fa-angle-left"></i></a></li>
+                      <li><a class="active">1</a></li>
+                      <li><a>2</a></li>
+                      <li><a>3</a></li>
+                      <li><a>4</a></li>
+                      <li><a>5</a></li>
+                      <li><a><i class="fa fa-angle-right"></i></a></li> -->
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <!--conts-box-->
+
+
+          </div>
+        </section>
+
+
+      </div>
+      <!--main-wrap-->
+
+    </div>
+    <!--row-->
+
+  </div>
+  <!--wrap--->
+
+
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+  var nowPages = 1;
+  var pageRange = 5;
+  var currentPage = 1;
+  var pageLevel = 0;
+  var totalPage = 0;
+  var sMemberId = "";
+  var data;
+
+  $(document).ready(() => {
+    getList()
+  })
+
+  function getList() {
+    $("tbody[name=tableData]").empty()
+    var param = {}
+    param['D_SDATE'] = ($("#datepicker1").datepicker("getDate")) ? $("#datepicker1").datepicker("getDate").format("yyyy-MM-dd") : " "
+    param['D_EDATE'] = ($("#datepicker2").datepicker("getDate")) ? $("#datepicker2").datepicker("getDate").format("yyyy-MM-dd") : " "
+    param['SEARCH1_TITLE'] = ($("#selType").val() == "") ? " " : $("#selType").val()
+    param['UN_ESECHER_TEXT'] = ($("#selText").val() == "") ? " " : $("#selText").val()
+    param['CNT'] = 'true'
+    param['B_GUBUN'] = 'NOTICE'
+    param['CUR_PAGING'] = currentPage + ""
+    param['PAGING_NO'] = "10"
+    reqApiList({
+      URL: 'getBoardMain',
+      PARAM: param
+    }).then((data) => {
+      var ListDATA=data.BOARDMAIN
+      if (data.CNT.ALL_CNT != 0) {
+        cnt = data.CNT.ALL_CNT
+        totalPage = Math.floor(cnt / 10) + ((cnt % 10 != 0) ? 1 : 0)
+        pageLevel = Math.floor(currentPage / (pageRange + 1))
+        nowPages = (totalPage - (pageLevel * 5) > 5) ? 5 : totalPage - (pageLevel * 5)
+      }
+      for (var i = 0; i < ListDATA.length; i++) {
+        var innerHtml = ""
+        innerHtml += '<tr>';
+        innerHtml += '<td>' + ListDATA[i].ROW_NOMBER + '</td>';
+        innerHtml += '<td>' + ListDATA[i].B_TITLE + '</td>';
+        innerHtml += '<td>' + ListDATA[i].B_VIEW_CNT + '</td>';
+        innerHtml += '<td>' + ListDATA[i].B_UID + '</td>';
+        innerHtml += '<td>' + ListDATA[i].B_IDATE + '</td>';
+        innerHtml += '<td>' + ListDATA[i].B_AID + '</td>';
+        innerHtml += '<td>' + ListDATA[i].B_ANAME + '</td>';
+        innerHtml += '<td><a href="/default/notice-list-cout?idx='+ListDATA[i].B_IDX+'" class="btn-noti-list-cont">상세보기</a></td>';
+        innerHtml += '</tr>';
+        $("tbody[name=tableData]").append(innerHtml)
+      }
+      var innerHtml = '';
+      innerHtml += '<li class="" onclick="btnPage(\'bef\')"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>';
+      $("ul[name=paging]").empty()
+      for (var i = 1; i <= nowPages; i++) {
+        if (currentPage == i) {
+          innerHtml += '<li onclick="movePage(' + i + ')"> <a class="active">' + ((pageLevel * 5) + i) + '</a> </li>';
+        } else {
+          innerHtml += '<li onclick="movePage(' + i + ')"> <a>' + ((pageLevel * 5) + i) + '</a> </li>';
+        }
+      }
+      innerHtml += '<li onclick="btnPage(\'next\')"> <a href="#"><i class="fa fa-angle-right"></i></a> </li>';
+      $("ul[name=paging]").append(innerHtml)
+    })
+  }
+
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+
+  function btnPage(pos) {
+    if (pos == "bef" && currentPage > 1) {
+      currentPage--
+    } else if (pos == "next" && currentPage < totalPage) {
+      currentPage++
+    }
+    getList()
+  }
+</script>

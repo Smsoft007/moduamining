@@ -1,0 +1,91 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\muind\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js
+
+PATH: 
+  C:\Users\muind\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\muind\bin;C:\Program Files\Microsoft MPI\Bin;C:\Python39\Scripts;C:\Python39;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn;C:\Program Files\Microsoft SQL Server\150\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn;C:\Program Files\Microsoft SQL Server\150\DTS\Binn;C:\Program Files\nodejs;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Bitvise SSH Client;C:\Program Files\MongoDB\Server\4.4\bin;C:\composer;C:\ampp\php;C:\Program Files\Memurai;C:\Users\muind\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Bandizip;C:\Users\muind\AppData\Roaming\npm;C:\Users\muind\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Azure Data Studio\bin;C:\Users\muind\AppData\Local\Programs\Fiddler;C:\Users\muind\AppData\Local\Microsoft\WindowsApps;C:\Users\muind\AppData\Local\Programs\Microsoft VS Code Insiders\bin;C:\Users\muind\AppData\Roaming\Composer\vendor\bin;C:\Program Files (x86)\ESTsoft\ALSee\x64;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.15.4
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/abi-decoder: tunneling socket could not be established, cause=connect ECONNREFUSED 127.0.0.1:80
+      at ClientRequest.onError (C:\Users\muind\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:152235:17)
+      at Object.onceWrapper (events.js:422:26)
+      at ClientRequest.emit (events.js:315:20)
+      at Socket.socketErrorListener (_http_client.js:469:9)
+      at Socket.emit (events.js:315:20)
+      at emitErrorNT (internal/streams/destroy.js:106:8)
+      at emitErrorCloseNT (internal/streams/destroy.js:74:3)
+      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+
+npm manifest: 
+  {
+    "name": "wallet",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+      "start": "nodemon  ./bin/www --ignore views/*"
+    },
+    "dependencies": {
+      "abi-decoder": "^2.2.2",
+      "async-lock": "^1.1.2",
+      "bitcoin": "^3.0.1",
+      "bitcoin-core": "^3.0.0",
+      "body-parser": "~1.18.2",
+      "compression": "^1.7.2",
+      "connect": "^3.6.6",
+      "connect-history-api-fallback": "^1.6.0",
+      "connect-redis": "^3.3.3",
+      "cookie-parser": "~1.4.3",
+      "cookie-signature": "^1.1.0",
+      "cryptico": "^1.0.2",
+      "csurf": "^1.9.0",
+      "curl": "^0.1.4",
+      "debug": "~2.6.9",
+      "demux": "^4.0.0",
+      "demux-eos": "^4.0.1",
+      "ejs": "~2.5.7",
+      "eosjs": "^20.0.0",
+      "ethereumjs-tx": "^2.1.2",
+      "express": "~4.15.5",
+      "express-asyncify": "^1.0.0",
+      "express-session": "^1.15.6",
+      "google-translate-api": "^2.3.0",
+      "helmet": "^3.12.0",
+      "ico": "^0.3.3",
+      "ignore-case": "^0.1.0",
+      "keythereum-pure-js": "^1.1.7",
+      "moment": "^2.21.0",
+      "mssql": "^4.1.0",
+      "multer": "^1.4.2",
+      "node-cache": "^4.1.1",
+      "node-fetch": "^2.6.0",
+      "node-schedule": "^1.3.2",
+      "nodemailer": "^4.5.0",
+      "nodemailer-smtp-pool": "^2.8.3",
+      "p-iteration": "^1.1.5",
+      "qrcode": "^1.2.0",
+      "redis": "^2.8.0",
+      "serve-favicon": "~2.4.5",
+      "serve-index": "^1.9.1",
+      "socket.io": "^2.0.4",
+      "socket.io-client": "^2.3.0",
+      "socket.io-cookie-parser": "^1.0.0",
+      "tedious": "~2.2.4",
+      "web3": "^0.20.6",
+      "winston": "^2.4.0",
+      "winston-daily-rotate-file": "^1.7.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

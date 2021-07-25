@@ -1,0 +1,59 @@
+<div class="menu-title">
+  <h1 class="font-24"><%=LANG['LANG162'][NUM]%></h1>
+  <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
+</div>
+<div class="content mb-0 mt-0">
+  <div class="input-style has-icon input-style-1">
+    <i class="input-icon fa fa-user font-11"></i>
+    <span>ID</span>
+    <input type="name" value="<%=MY_INFO.D_UID%>" readonly>
+  </div>
+  <div class="input-style has-icon input-style-1 input-required">
+    <i class="input-icon fa fa-at"></i>
+    <span><%=LANG['LANG120'][NUM]%></span>
+    <em>(required)</em>
+    <input type="email" value="<%=MY_INFO.D_EMAIL%>" readonly>
+  </div>
+  <!-- <div class="input-style has-icon input-style-1 input-required">
+    <i class="input-icon fa fa-at"></i>
+    <span>은행정보</span>
+    <em>(required)</em>
+    <input type="email" value="은행정보" readonly>
+  </div> -->
+  <div class="row mb-0">
+    <div class="col-3">
+      <div class="input-style input-style-1 input-required">
+        <input type="name" value="<%=MY_INFO.COUNTRY_HP%>" readonly>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="input-style input-style-1 input-required">
+        <span><%=LANG['LANG180'][NUM]%></span>
+        <input type="number" value="<%=MY_INFO.D_HP%>" id="hp">
+      </div>
+    </div>
+  </div>
+  <!-- <div class="input-style has-icon input-style-1 input-required">
+    <i class="input-icon fas fa-users"></i>
+    <span><%=LANG["LANG181"][NUM]%></span>
+    <input type="name" value="<%=MY_INFO.P_UID%>" readonly>
+  </div> -->
+  <!-- <a href="#" class="btn btn-full btn-m shadow-l rounded-s font-600 bg-blue-dark mt-4" onclick="updateHp()">Save</a> -->
+</div>
+<!-- <script>
+  async function updateHp() {
+    var PARAM = {}
+    PARAM['HP'] = $("#hp").val() + ""
+    var valResult = commonLib.objValidate(PARAM)
+    if (valResult) {
+      openPop("F", "<%=LANG['LANG192'][NUM]%>")
+      return
+    }
+    var r = await reqApi({
+      URL: 'updateHp',
+      PARAM: PARAM
+    })
+    alert("변경 완료")
+    location.reload()
+  }
+</script> -->

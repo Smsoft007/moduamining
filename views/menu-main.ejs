@@ -1,0 +1,126 @@
+<div class="card rounded-0 menubg-01" data-card-height="150">
+    <div class="card-top">
+        <a href="#" class="close-menu float-right mr-2 text-center mt-3 icon-40 notch-clear"><i class="fa fa-times color-white"></i></a>
+    </div>
+    <div class="card-bottom">
+        <img src="/views/images/flags/South-Korea.png" alt="" height="30px" class="pl-3 mb-n1">
+        <h1 class="color-white pl-3 mb-n1 font-28"><%=MY_INFO.D_UID%></h1>
+        <p class="mb-2 pl-3 font-12 color-white opacity-50"><%=LANG['LANG281'][NUM]%>
+          <a class="float-right btn btn-xxs mb-3 rounded-xs text-uppercase font-600 shadow-s bg-green-dark mr-3" onclick="logout()">Logout</a>
+        </p>
+    </div>
+    <div class="card-overlay bg-gradient"></div>
+</div>
+
+<div class="mt-4"></div>
+
+<h6 class="menu-divider"><%=LANG['LANG161'][NUM]%></h6>
+<div class="list-group list-custom-small list-menu">
+  <a id="nav-components" data-menu="menu-myinfo">
+    <i class="fa fa-user gradient-blue color-white"></i>
+    <span><%=LANG['LANG162'][NUM]%></span>
+    <i class="fa fa-angle-right"></i>
+  </a>
+  <a id="nav-pages" data-menu="menu-withdrawaddress">
+    <i class="fas fa-wallet gradient-pink color-white"></i>
+    <span><%=LANG['LANG282'][NUM]%></span>
+    <i class="fa fa-angle-right"></i>
+  </a>
+  <a id="nav-pages" data-menu="menu-passchange">
+    <i class="fas fa-shield-alt gradient-dark color-white"></i>
+    <span><%=LANG['LANG164'][NUM]%></span>
+    <i class="fa fa-angle-right"></i>
+  </a>
+</div>
+
+<h6 class="menu-divider"><%=LANG['LANG283'][NUM]%></h6>
+<div class="list-group list-custom-small list-menu">
+  <a id="nav-components" data-menu="menu-charge">
+    <i class="fas fa-charging-station gradient-mint color-white"></i>
+    <span><%=LANG['LANG284'][NUM]%></span>
+    <i class="fa fa-angle-right"></i>
+  </a>
+  <% if (MY_INFO.STOP_YN=='N') { %>
+  <a id="nav-pages" data-menu="menu-transfer">
+  <% } else { %>
+    <a onclick="openPop('F','<%=LANG['LANG403'][NUM]%>')">
+  <% } %>
+  <!-- <a id="nav-pages" data-menu="menu-transfer"> -->
+    <i class="fas fa-sync-alt gradient-brown color-white"></i>
+    <span><%=LANG['LANG285'][NUM]%></span>
+    <i class="fa fa-angle-right"></i>
+  </a>
+  <a id="nav-pages" data-menu="menu-history">
+    <i class="fas fa-history gradient-red color-white"></i>
+    <span><%=LANG['LANG286'][NUM]%></span>
+    <i class="fa fa-angle-right"></i>
+  </a>
+</div>
+
+<h6 class="menu-divider"><%=LANG['LANG287'][NUM]%></h6>
+<div class="list-group list-custom-small list-menu">
+  <a id="nav-welcome" href="notice">
+    <i class="fas fa-bullhorn gradient-magenta color-white"></i>
+    <span><%=LANG['LANG167'][NUM]%></span>
+    <i class="fa fa-angle-right"></i>
+  </a>
+  <a id="nav-contact" href="#">
+    <i class="far fa-building gradient-dark color-white"></i>
+    <span><%=LANG['LANG288'][NUM]%></span>
+    <i class="fa fa-angle-right"></i>
+  </a>
+</div>
+
+<h6 class="menu-divider mt-4">settings</h6>
+<div class="list-group list-custom-small list-menu">
+    <a data-menu="menu-walletshare">
+        <i class="fas fa-share-alt gradient-teal color-white"></i>
+        <span><%=LANG['LANG289'][NUM]%></span>
+        <i class="fa fa-angle-right"></i>
+    </a>
+    <!-- <a onclick="sendInviteCode()">
+        <i class="fas fa-share-alt gradient-teal color-white"></i>
+        <span>지갑공유하기</span>
+        <i class="fa fa-angle-right"></i>
+    </a> -->
+    <a id="menu_share" data-menu="menu-share">
+        <i class="fas fa-plus gradient-orange color-white"></i>
+        <span><%=LANG['LANG290'][NUM]%></span>
+        <i class="fa fa-angle-right"></i>
+    </a>
+    <a href="#" data-menu="menu-langChange">
+        <i class="fas fa-language gradient-yellow color-white"></i>
+        <span><%=LANG['LANG177'][NUM]%></span>
+        <i class="fa fa-angle-right"></i>
+    </a>
+    <a href="#" data-toggle-theme data-trigger-switch="switch-dark-mode">
+        <i class="fa fa-moon gradient-mint color-white"></i>
+        <span>Dark Mode</span>
+        <div class="custom-control scale-switch ios-switch highlight-switch switch-s">
+            <input type="checkbox" class="ios-input" id="switch-22">
+            <label class="custom-control-label" for="switch-1"></label>
+        </div>
+    </a>
+</div>
+<script>
+  function logout() {
+    reqApi({
+      URL: 'logout',
+    })
+    alert("<%=LANG['LANG179'][NUM]%>")
+    location.href = '/'
+  }
+  async function sendInviteCode() {
+    if(commonLib.isApp()=="Android"){
+      var url = "http://175.126.226.108:45435/signup?recId=<%=MY_INFO.D_UID%>"
+      try {
+        await window.navigator.share({
+          title: "ICKCoin",
+          text: "초대 링크",
+          url: decodeURI(url),
+        });
+      } catch (e) {
+      }
+    }
+  }
+</script>

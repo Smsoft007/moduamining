@@ -1,0 +1,173 @@
+<div class="menu-title">
+  <h1 class="font-24"><%=LANG['LANG266'][NUM]%></h1>
+  <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
+</div>
+<div class="content mb-0 mt-0">
+  <div class="input-style input-style-1">
+    <span><%=LANG['LANG267'][NUM]%></span>
+    <input type="name" placeholder="<%=LANG['LANG204'][NUM]%>" id="outAddrTtitle">
+  </div>
+  <div class="input-style input-style-1">
+    <span class="color-highlight"><%=LANG['LANG268'][NUM]%></span>
+    <em><i class="fa fa-angle-down"></i></em>
+    <select id="selectedOutAddrCoin">
+      <option value="default" disabled selected><%=LANG['LANG268'][NUM]%></option>
+      <option value="ICK">ICK</option>
+      <option value="ETH">ETH</option>
+    </select>
+  </div>
+  <div class="input-style input-style-1 input-required">
+    <span><%=LANG['LANG205'][NUM]%></span>
+    <em>(required)</em>
+    <input type="name" placeholder="Wallet address" id="outAddress">
+  </div>
+  <a class="btn btn-full btn-xxs font-600 font-13 bg-dark-dark rounded-s mb-2" onclick="withAddrSendEmail()"><%=LANG['LANG188'][NUM]%></a>
+  <div class="input-style input-style-1 input-required">
+    <span><%=LANG['LANG186'][NUM]%></span>
+    <em>(required)</em>
+    <input type="text" placeholder="Authentication Code" class="font-16" id="SMS_NO">
+  </div>
+  <a href="#" class="btn btn-full btn-m shadow-l rounded-s font-600 bg-blue-dark mt-4" onclick="addWithAddress()"><%=LANG['LANG187'][NUM]%></a>
+
+  <div class="divider mt-3 mb-3"></div>
+
+  <div class="card card-style mx-0 mb-2 p-3" id="outAddrList">
+    <div class="row">
+      <div class="col-5">
+        <h5 class="color-green-dark mb-0">지갑 별명</h5>
+      </div>
+      <div class="col-7">
+        <p class="text-right">2020-12-12 00:00:00</p>
+      </div>
+    </div>
+    <h6 class="break-word">sd65f4s6d5f465sd4f65s4df65s4d65f4s6d5f46s5d4f</h6>
+    <a class="btn btn-full btn-xxs font-600 font-13 bg-red-dark rounded-s mb-2">삭제</a>
+  </div>
+
+</div>
+<script>
+  var seletedCoin = 0;
+  var D_IDX;
+  var UCOINLIST;
+  var bankName = "<%=MY_INFO.B_NAME%>"
+  $(document).ready(() => {
+    //getAddrOutList()
+  })
+
+  function getAddrOutList() {
+    reqApiList({
+      URL: 'getAddrOutList'
+    }).then(data => {
+      $("#outAddrList").empty()
+      var innerOpionHtml = ''
+      data.OUTADDR[0].forEach(item => {
+        innerOpionHtml += '<div class="row">';
+        innerOpionHtml += '<div class="col-5">';
+        innerOpionHtml += '<h5 class="color-green-dark mb-0">'+item.D_CNAME+'</h5>';
+        innerOpionHtml += '</div>';
+        innerOpionHtml += '<div class="col-7">';
+        innerOpionHtml += '<p class="text-right">'+item.D_CDATE+'</p>';
+        innerOpionHtml += '</div>';
+        innerOpionHtml += '</div>';
+        innerOpionHtml += '<h6 class="break-word">'+item.ADDR+'</h6>';
+        innerOpionHtml += '<a class="btn btn-full btn-xxs font-600 font-13 bg-red-dark rounded-s mb-2" onclick="delOutAddr(\''+item.D_SEQ+'\',\''+item.D_GUBUN+'\')"><%=LANG['LANG206'][NUM]%></a>';
+      });
+      $("#outAddrList").append(innerOpionHtml)
+    })
+  }
+  async function withAddrSendEmail() {
+    var EmailParam = {}
+    EmailParam['D_MAIL'] = "<%=MY_INFO.D_EMAIL%>"
+    EmailParam['TITLE'] = "Add Withdraw Address Mail"
+    EmailParam['D_FLAG'] = "001"
+    var valResult = commonLib.objValidate(EmailParam)
+    if (valResult) {
+      alert(lang(valResult))
+      return
+    }
+    var r = await reqApi({
+      URL: 'mailSender/purchSendMail',
+      PARAM: EmailParam
+    })
+    if (r.SENDMAIL == -1) {
+      openPop("F", "<%=LANG['LANG189'][NUM]%>")
+    } else {
+      openPop("S", "<%=LANG['LANG190'][NUM]%>")
+      D_IDX = r.NMAIL
+    }
+  }
+
+  async function delOutAddr(val,SNAME) {
+    var r = await reqApi({
+      URL: 'delOutAddr',
+      PARAM: {
+        IDX: val + "",
+        SNAME:SNAME
+      }
+    })
+    if (r.DELADDR.RESULT == 0) {
+      openPop("RS", "<%=LANG['LANG207'][NUM]%>")
+      getAddrOutList()
+    } else {
+      openPop("F", "<%=LANG['LANG208'][NUM]%>")
+    }
+  }
+  async function addWithAddress() {
+    var mailConfParam = {}
+    mailConfParam['D_FLAG'] = "001"
+    mailConfParam['D_SMSNO'] = $("#SMS_NO").val()
+    mailConfParam['D_IDX'] = D_IDX + ""
+    if (mailConfParam['D_IDX'] == undefined) {
+      openPop("F", "<%=LANG['LANG269'][NUM]%>")
+      return
+    }
+    if (mailConfParam['D_SMSNO'] == "") {
+      openPop("F", "<%=LANG['LANG270'][NUM]%>")
+      return
+    }
+    var mailConfirm = await reqApi({
+      URL: 'mailConfirm',
+      PARAM: mailConfParam
+    })
+    if (mailConfirm.MAILCONF.RESULT == 0) {
+      var PARAM = {}
+      PARAM['SNAME'] = $("#selectedOutAddrCoin").val()
+      PARAM['UN_EAD_NAME'] = $("#outAddrTtitle").val()
+      PARAM['ADDR'] = $("#outAddress").val()
+      PARAM['D_KEY'] = D_IDX + ""
+
+      var valResult = commonLib.objValidate(PARAM)
+      if (valResult) {
+        openPop("F", "<%=LANG['LANG192'][NUM]%>")
+        return
+      }
+      var r = await reqApi({
+        URL: 'reqAddOutAddr',
+        PARAM: PARAM
+      })
+
+      var BANKR = r.ADDOUTADDR.RESULT
+      if (BANKR == 0) {
+        openPop("RS", "<%=LANG['LANG271'][NUM]%>")
+      } else if (BANKR == 1) {
+        openPop("F", "<%=LANG['LANG272'][NUM]%>")
+      } else if (BANKR == 2) {
+        openPop("F", "<%=LANG['LANG273'][NUM]%>")
+      } else if (BANKR == 3) {
+        openPop("F", "<%=LANG['LANG274'][NUM]%>")
+      } else if (BANKR == 4) {
+        openPop("F", "<%=LANG['LANG275'][NUM]%>")
+      } else if (BANKR == 5) {
+        openPop("F", "<%=LANG['LANG276'][NUM]%>")
+      } else if (BANKR == 6) {
+        openPop("F", "<%=LANG['LANG277'][NUM]%>")
+      }
+    } else if (mailConfirm.MAILCONF.RESULT == 1) {
+      openPop("F", "<%=LANG['LANG278'][NUM]%>")
+    } else if (mailConfirm.MAILCONF.RESULT == 2) {
+      openPop("F", "<%=LANG['LANG279'][NUM]%>")
+    } else if (mailConfirm.MAILCONF.RESULT == 3) {
+      openPop("F", "<%=LANG['LANG280'][NUM]%>")
+    }
+  }
+</script>

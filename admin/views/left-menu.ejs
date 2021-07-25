@@ -1,0 +1,89 @@
+﻿		<div class="left-wrap">
+		  <div class="left-top">
+		    <div class="left-logo-box">
+		      <div class="logo-box">
+		        <img src="../views/images/logo1.png">
+		      </div>
+		    </div>
+		    <h1>ICKCOIN ADMIN</h1>
+
+		  </div>
+
+		  <div class="left-menu">
+
+		    <div class="navbar-default sidebar" role="navigation">
+		      <div class="sidebar-nav navbar-collapse">
+		        <ul class="nav" id="side-menu">
+							<h4>기본메뉴</h4>
+		          <li class="user-pro menu3">
+		            <a href="#" class="waves-effect"><span class="hide-menu">회원관리<span class="fa arrow"></span></span>
+		            </a>
+		            <ul class="nav nav-second-level">
+		              <li class="submenu1"><a href="/default/member_list">회원관리</a></li>
+		              <!-- <li class="submenu2"><a href="/org_chart">조직표</a></li> -->
+		            </ul>
+		          </li>
+							<li class="user-pro menu10">
+								<a href="#" class="waves-effect"><span class="hide-menu">게시판관리<span class="fa arrow"></span></span>
+								</a>
+								<ul class="nav nav-second-level">
+									<li class="submenu1"><a href="../default/notice-list">공지사항관리</a></li>
+									<!-- <li class="submenu2"><a href="../default/faq-list">FAQ관리</a></li> -->
+									<li class="submenu3"><a href="../default/inquiry-list">1:1문의 관리</a></li>
+									<!-- <li class="submenu4"><a href="../default/pop-list">팝업 관리</a></li> -->
+								</ul>
+							</li>
+
+							<h4>코인관련메뉴</h4>
+							<li class="user-pro menu5">
+								<a href="#" class="waves-effect"><span class="hide-menu">코인내역조회<span class="fa arrow"></span></span>
+								</a>
+								<ul class="nav nav-second-level">
+									<li class="submenu1"><a href="/coin/memwallet-list">회원지갑조회</a></li>
+									<li class="submenu2"><a href="/coin/transaction-details">ETH 입출금내역</a></li>
+									<li class="submenu3"><a href="/coin/transaction-details?type=TOKEN">ICK 입출금내역</a></li>
+									<li class="submenu4"><a href="/coin/withdrawal-restriction">출금제한 이력조회</a></li>
+								</ul>
+							</li>
+							<!-- <li class="user-pro menu6">
+								<a href="#" class="waves-effect"><span class="hide-menu">USD입출금관리<span class="fa arrow"></span></span>
+								</a>
+								<ul class="nav nav-second-level">
+									<li class="submenu1"><a href="/coin/krw-deposit-application">USD 입출금내역</a></li>
+									<li class="submenu3"><a href="/coin/krw-forced-payment">USD 강제입금</a></li>
+								</ul>
+							</li> -->
+							<!--<li class="user-pro menu8">
+								<a href="#" class="waves-effect"><span class="hide-menu">거래내역<span class="fa arrow"></span></span>
+								</a>
+								<ul class="nav nav-second-level">
+									<li><a href="#">강제출금</a></li>
+									 <li><a href="#">강제 일괄매칭</a></li>
+									<li><a href="/coin/trade-exchange-list-btc">아이템 거래내역</a></li>
+									<li><a href="#">거래 통계</a></li> 
+								</ul>
+							</li>-->
+
+
+		        </ul>
+		      </div>
+		    </div>
+
+		  </div>
+		  <!--left-menu-->
+
+		</div>
+
+		<script>
+		  $(document).ready(function() {
+		    $(function() {
+		      $(".preloader").fadeOut(), $("#side-menu").metisMenu()
+		    }), $(function() {
+		      var e = window.location,
+		        i = $("ul.nav a").filter(function() {
+		          return this.href == e || 0 == e.href.indexOf(this.href)
+		        }).addClass("active").parent().parent().addClass("in").parent();
+		      i.is("li") && i.addClass("active")
+		    })
+		  })
+		</script>

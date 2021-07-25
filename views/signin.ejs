@@ -1,0 +1,143 @@
+<%- include('head') %>
+<body class="theme-light">
+
+<div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
+
+<div id="page">
+
+    <div class="header header-fixed header-logo-center header-auto-show">
+        <a href="index" class="header-title">Subscriptions</a>
+        <a href="#" data-back-button class="header-icon header-icon-1"><i class="fas fa-chevron-left"></i></a>
+        <a href="#" data-menu="menu-main" class="header-icon header-icon-4"><i class="fas fa-bars"></i></a>
+        <a href="#" data-toggle-theme class="header-icon header-icon-3 show-on-theme-dark"><i class="fas fa-sun"></i></a>
+        <a href="#" data-toggle-theme class="header-icon header-icon-3 show-on-theme-light"><i class="fas fa-moon"></i></a>
+    </div>
+
+
+    <div class="page-content pb-0">
+
+
+        <div class="card rounded-0" data-card-height="cover" style="background-image:url(images/sign-bg2.jpg); background-position: center center; background-size: cover;">
+            <div class="card-center pl-3">
+                <div class="text-center">
+                    <img src="images/simbol.png" alt="ICKCOIN logo" style="width: 30%;">
+                    <h1 class="font-30 font-500 pt-2 pb-2 color-highlight">MODUA<span class="font-800">BIT</span></h1>
+                </div>
+
+                <div class="ml-3 mr-4 mb-n3 sign-inputbox">
+                    <div class="input-style input-light input-style-1 input-required">
+                        <span class="color-highlight"><%=LANG['LANG119'][NUM]%></span>
+                        <em>(required)</em>
+                        <input type="text" placeholder="<%=LANG['LANG119'][NUM]%>" id="inUser_ID">
+                    </div>
+
+                    <div class="input-style input-light input-style-1 input-required mb-3">
+                        <span class="color-highlight"><%=LANG['LANG183'][NUM]%></span>
+                        <em>(required)</em>
+                          <input type="password" placeholder="<%=LANG['LANG183'][NUM]%>" id="inUser_Pwd">
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-check icon-check text-left float-left">
+                        <input class="form-check-input" type="checkbox" value="" id="check4">
+                        <label class="form-check-label color-white font-13" for="check4"><%=LANG['LANG296'][NUM]%></label>
+                        <i class="icon-check-1 far fa-circle color-gray-dark font-14"></i>
+                        <i class="icon-check-2 fa fa-check-circle font-14 color-highlight"></i>
+                    </div>
+
+                    <a href="page-forgot" class="font-11 font-600 float-right color-white opacity-90"><%=LANG['LANG234'][NUM]%>?</a>
+                    <div class="clearfix"></div>
+                </div>
+
+
+                <a href="#" class="btn btn-center-l gradient-highlight rounded-sm btn-l font-13 font-600 mt-5 border-0" onclick="signin()"><%=LANG['LANG123'][NUM]%></a>
+                <a href="signup" class="btn btn-center-l gradient-red rounded-sm btn-l font-13 font-600 mt-2 border-0"><%=LANG['LANG124'][NUM]%></a>
+                <span class="text-center d-block font-600 color-white opacity-50 mt-3 mb-3">or</span>
+                <div class="text-center">
+                    <a href="#" class="btn btn-icon btn-center-l text-left btn-l font-600 font-13 bg-phone mt-2 rounded-sm" onclick="checkPhone()"><i class="fa fa-phone text-center"></i><%=LANG['LANG297'][NUM]%></a>
+                </div>
+
+
+
+            </div>
+            <div class="card-overlay bg-dark opacity-80"></div>
+        </div>
+    </div>
+
+    <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors" data-menu-height="480"></div>
+
+
+</div>
+</body>
+<script>
+  function checkPhone() {
+    var win = window.open("/phoneCheckPop", "PopupWin", "width=500,height=600");
+  }
+  async function signin() {
+    var Param = {}
+    Param['inUser_ID'] = $("#inUser_ID").val()
+    Param['inUser_Pwd'] = $("#inUser_Pwd").val()
+    var valResult = commonLib.objValidate(Param)
+    if (valResult) {
+      alert("<%=LANG['LANG235'][NUM]%>")
+      return
+    }
+    var r = await reqApi({
+      URL: 'signin',
+      PARAM: Param
+    })
+    if (r.USERSIGNIN != 0) {
+      location.href = "/index"
+
+    } else {
+      alert("<%=LANG['LANG236'][NUM]%>")
+    }
+  }
+  function successPhoneConfirm(number) {
+    ConfirmNumber = number + "";
+    reqApi({
+      URL: 'signin',
+      PARAM: {
+        D_HP: ConfirmNumber.replace(ConfirmNumber.substring(0, 2), "0")
+      }
+    }).then(data => {
+      if (data.USERSIGNIN != 0) {
+        location.href = "/index"
+      } else {
+        alert("<%=LANG['LANG236'][NUM]%>")
+      }
+    })
+  }
+  function langChange(num) {
+    if (num != -1) {
+      reqApi({
+        URL: 'langChange',
+        PARAM: {
+          langNum: num + ""
+        }
+      })
+      location.reload()
+    }
+  }
+</script>
+
+<script>
+  reqApi({
+    URL: 'isLogin'
+  }).then(data => {
+    if (data.LOGIN) {
+      location.href = "/index"
+    }
+  })
+  $(document).ready(function() {
+    // setTimeout(()=>{$("#notice").showMenu();},500)
+    $(".langinput").focus(function() {
+      $(".langlist").slideDown(200);
+    });
+    $(".langlist a").click(function() {
+      $(".langlist").slideUp(200);
+    });
+    $(".langinput").blur(function() {
+      $(".langlist").slideUp(200);
+    });
+  });
+</script>

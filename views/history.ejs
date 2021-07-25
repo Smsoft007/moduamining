@@ -1,0 +1,195 @@
+<%- include('head') %>
+
+<body class="theme-light">
+
+  <div id="preloader">
+    <div class="spinner-border color-highlight" role="status"></div>
+  </div>
+
+  <div id="page">
+
+    <%- include('footer') %>
+    <div class="page-title page-title-fixed">
+      <h1><%=LANG['LANG258'][NUM]%></h1>
+      <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-light" data-toggle-theme><i class="fa fa-moon"></i></a>
+      <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark" data-toggle-theme><i class="fa fa-lightbulb color-yellow-dark"></i></a>
+      <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i class="fa fa-bars"></i></a>
+    </div>
+    <div class="page-title-clear"></div>
+
+    <div class="page-content">
+      <div class="content mt-0 mb-2">
+        <div class="row mb-2">
+          <div class="col-6">
+            <div class="input-style input-style-1 input-required">
+              <span class="color-highlight">2020-12-12</span>
+              <em><i class="fa fa-angle-down"></i></em>
+              <input type="date" id="sdate">
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="input-style input-style-1 input-required">
+              <span class="color-highlight">2020-12-12</span>
+              <em><i class="fa fa-angle-down"></i></em>
+              <input type="date" id="edate">
+            </div>
+          </div>
+          <div class="col-12">
+            <a class="btn btn-xxs btn-full rounded-m text-uppercase font-900 shadow-s bg-dark-dark" onclick="searchList()"><i class="fas fa-search"></i> <%=LANG['LANG48'][NUM]%></a>
+          </div>
+        </div>
+
+        <div class="row mb-0">
+          <p class="col-8 mb-0 pt-2"><%=TYPE%> Balance : <span>
+              <data-tag name="<%=TYPE%>Amount"></data-tag> <%=TYPE%>
+            </span>
+          </p>
+          <div class="col-4">
+            <div class="input-style input-style-2 mb-0">
+              <em><i class="fa fa-angle-down"></i></em>
+              <select class="form-control font-14" id="LEVEL">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">50</option>
+                <option value="40">100</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- content -->
+
+      <div class="content">
+        <div class="tab-controls tabs-round tab-animated tabs-medium tabs-rounded shadow-xl" data-tab-items="3" data-tab-active="bg-blue-dark color-white">
+          <a href="#" data-tab="taball" onclick="getList(1)" id="bt1" data-tab-active>All</a>
+          <a href="#" data-tab="tabsell" onclick="getList(2)" id="bt2"><%=LANG['LANG0'][NUM]%></a>
+          <a href="#" data-tab="tabbuy" onclick="getList(3)" id="bt3"><%=LANG['LANG257'][NUM]%></a>
+        </div>
+        <div class="clearfix mb-3"></div>
+        <div class="tab-content" id="taball">
+          <!-- <div class="card card-style mx-0 mb-2 p-3">
+            <div class="row mb-1">
+              <div class="col-7 pr-1">
+                <h5 class="font-300 font-14 mb-1">2020-12-12 00:00:00.000</h5>
+                <h4 class="font-600 font-14 mb-0 color-blue-dark">Send address</h4>
+                <p class="font-300 font-12 mb-0 break-word">0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B</p>
+              </div>
+              <div class="col-5 pl-1">
+                <div class="card card-style m-0 p-2 bg-blue-dark color-white text-center">
+                  <h4 class="color-white">Charge</h4>
+                  <p class="color-white">+ 251.<span class="font-10">00000 MDA</span></p>
+                </div>
+              </div>
+              <div class="col-12">
+                <p class="font-300 font-10 mb-0 break-word line-height-s text-right">TXID : 0x24bb2d677eb950cda345cab059749a0ccf76b8943b4ae9f4e562a32fa251bac4z</p>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- <div class="card card-style mx-0 mb-2 p-3">
+            <div class="row mb-1">
+              <div class="col-7 pr-1">
+                <h5 class="font-300 font-14 mb-1">2020-12-12 00:00:00.000</h5>
+                <h4 class="font-600 font-14 mb-0 color-red-dark">Received address</h4>
+                <p class="font-300 font-12 mb-0 break-word">0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B</p>
+              </div>
+              <div class="col-5 pl-1">
+                <div class="card card-style m-0 p-2 bg-red-dark color-white text-center">
+                  <h4 class="color-white">Transfer</h4>
+                  <p class="color-white">- 251.<span class="font-10">00000 MDA</span></p>
+                </div>
+              </div>
+              <div class="col-12">
+                <p class="font-300 font-10 mb-0 break-word line-height-s text-center">TXID : 0x24bb2d677eb950cda345cab059749a0ccf76b8943b4ae9f4e562a32fa251bac4z</p>
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <div class="tab-content" id="tabsell">
+        </div>
+        <div class="tab-content" id="tabbuy">
+        </div>
+
+      </div><!-- content -->
+
+    </div>
+    <!-- Page content ends here-->
+  </div>
+</body>
+<script>
+  var index = ("<%=TYPE%>" == "ETH") ? 0 : 1
+  init()
+
+  function init() {
+    if (addresies[index].ADDR != "") {
+      commonLib.getCoinAmount((addresies[index].COINNAME == "ICK") ? "0x8177EF6A05ADBa53CB78ca4Da6f4A66766bcF69D" : null, addresies[index].ADDR).then(data => {
+        var BINDVALUEDATA = {}
+        BINDVALUEDATA[addresies[index].COINNAME + "Amount"] = data.AMOUNT
+        BINDVALUEDATA[addresies[index].COINNAME + "Price"] = data.RATE * data.AMOUNT
+        BINDVALUEDATA[addresies[index].COINNAME + "Rate"] = data.RATE
+        commonLib.bindValueNameData(BINDVALUEDATA)
+      })
+      // commonLib.getEthList((addresies[index].COINNAME == "ICK") ? "0x8177EF6A05ADBa53CB78ca4Da6f4A66766bcF69D" : null, "0xEfF4CbAfD4a1eD9BD7C9E91FE4fd51fA2389f8b3").then(data => {
+      commonLib.getEthList((addresies[index].COINNAME == "ICK") ? "0x8177EF6A05ADBa53CB78ca4Da6f4A66766bcF69D" : null, addresies[index].ADDR).then(data => {
+        $("#taball").empty()
+        $("#tabsell").empty()
+        $("#tabbuy").empty()
+        data.forEach((item, i) => {
+          var innerHtml ='';
+          var fixedData={}
+          if(addresies[index].COINNAME == "ICK"){
+            fixedData['value']=(item.value*0.00000001)+""
+          }else{
+            fixedData['value']=(item.value*0.000000000000000001)+""
+          }
+          // if("0xEfF4CbAfD4a1eD9BD7C9E91FE4fd51fA2389f8b3".toUpperCase()==item.to.toUpperCase()){
+          if(addresies[index].ADDR.toUpperCase()==item.to.toUpperCase()){
+            innerHtml += '<div class="card card-style mx-0 mb-2 p-3">';
+            innerHtml += '<div class="row mb-1">';
+            innerHtml += '<div class="col-7 pr-1">';
+            innerHtml += '<h5 class="font-300 font-14 mb-1">'+new Date(item.timeStamp*1000)+'</h5>';
+            innerHtml += '<h4 class="font-600 font-14 mb-0 color-blue-dark"><%=LANG['LANG259'][NUM]%></h4>';
+            innerHtml += '<p class="font-300 font-12 mb-0 break-word">'+item.from+'</p>';
+            innerHtml += '</div>';
+            innerHtml += '<div class="col-5 pl-1">';
+            innerHtml += '<div class="card card-style m-0 p-2 bg-blue-dark color-white text-center">';
+            innerHtml += '<h4 class="color-white"><%=LANG['LANG0'][NUM]%></h4>';
+            innerHtml += '<p class="color-white">+ '+fixedData.value+' <%=TYPE%></p>';
+            // innerHtml += '<p class="color-white">+ 251.<span class="font-10">'+item.from+' <%=TYPE%></span></p>';
+            innerHtml += '</div>';
+            innerHtml += '</div>';
+            innerHtml += '<div class="col-12">';
+            innerHtml += '<p class="font-300 font-10 mb-0 break-word line-height-s text-right">TXID : '+item.hash+'</p>';
+            innerHtml += '</div>';
+            innerHtml += '</div>';
+            innerHtml += '</div>';
+            $("#tabsell").append(innerHtml)
+          }else{
+            innerHtml += '<div class="card card-style mx-0 mb-2 p-3">';
+            innerHtml += '<div class="row mb-1">';
+            innerHtml += '<div class="col-7 pr-1">';
+            innerHtml += '<h5 class="font-300 font-14 mb-1">'+new Date(item.timeStamp*1000)+'</h5>';
+            innerHtml += '<h4 class="font-600 font-14 mb-0 color-red-dark"><%=LANG['LANG260'][NUM]%></h4>';
+            innerHtml += '<p class="font-300 font-12 mb-0 break-word">'+item.to+'</p>';
+            innerHtml += '</div>';
+            innerHtml += '<div class="col-5 pl-1">';
+            innerHtml += '<div class="card card-style m-0 p-2 bg-red-dark color-white text-center">';
+            innerHtml += '<h4 class="color-white"><%=LANG['LANG257'][NUM]%></h4>';
+            innerHtml += '<p class="color-white">- '+fixedData.value+' <%=TYPE%></p>';
+            // innerHtml += '<p class="color-white">- 251.<span class="font-10">00000 <%=TYPE%></span></p>';
+            innerHtml += '</div>';
+            innerHtml += '</div>';
+            innerHtml += '<div class="col-12">';
+            innerHtml += '<p class="font-300 font-10 mb-0 break-word line-height-s text-center">TXID : '+item.hash+'</p>';
+            innerHtml += '</div>';
+            innerHtml += '</div>';
+            innerHtml += '</div>';
+            $("#tabbuy").append(innerHtml)
+          }
+          $("#taball").append(innerHtml)
+        });
+
+      })
+    }
+  }
+</script>

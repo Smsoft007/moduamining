@@ -1,0 +1,247 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+
+        <section id="title-section">
+          <h1>공지사항 관리</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>게시판 관리</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>공지사항 관리</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="cont-section">
+          <div class="cont-whitebox">
+
+            <div class="conts-box">
+              <div class="from-section">
+                <div class="form-title">
+                  <h2>공지사항 수정하기</h2>
+                </div>
+
+                <div class="form-tr row">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">작성일자</label>
+                      <div class="fl-l calendar-input-box" id="Search-time">
+                        <div class="calendar-input-btn-box w100p">
+                          <input type="text" id="schDate" name="schDate">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <!-- 달력 -->
+                  <link rel="stylesheet" href="../views/include/datepicker.css">
+                  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                  <script>
+                    $(function() {
+                      $("#schDate").datepicker({
+                        dateFormat: 'yy.mm.dd',
+                        showOn: "both",
+                        buttonImage: "../views/images/calendar-5.png",
+                        buttonImageOnly: true,
+                        buttonText: "Select date"
+                      });
+                    });
+                  </script>
+
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">조회수</label>
+                      <div class="input-box fl-l">
+                        <input type="text" class="input" id="">
+                        <p class="error">ex) </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--form-tr-->
+
+                <div class="form-tr row">
+                  <div class="w100p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">제목</label>
+                      <div class="input-box fl-l">
+                        <input type="text" class="input" id="B_TITLE">
+                        <p class="error">ex) </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--form-tr-->
+
+                <div class="form-tr row">
+                  <div class="w100p">
+                    <div class="form-box row">
+                      <label class="fl-l">내용</label>
+                      <div class="input-box fl-l">
+                        <textarea id="B_CONTENTS"></textarea>
+                        <p class="error">ex) </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--form-tr-->
+
+              </div>
+              <!--from-section-->
+
+              <div class="from-section mb-0">
+
+                <div class="form-btn-group-box row">
+                  <div id="btnsDiv">
+
+                  </div>
+                  <div class="fl-l">
+                    <a href="/default/notice-list" class="btn-change">목록보기</a>
+                  </div>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+
+
+            </div>
+            <!--conts-box-->
+
+
+          </div>
+        </section>
+
+
+      </div>
+      <!--main-wrap-->
+
+    </div>
+    <!--row-->
+
+  </div>
+  <!--wrap--->
+
+
+</body>
+
+
+
+
+
+<script src="../views/include/js/bootstrap.min.js"></script>
+
+<!-- Menu Plugin JavaScript -->
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+
+<!--Wave Effects -->
+<script src="../views/include/js/waves.js"></script>
+
+
+
+<script>
+  $(".sidebar #side-menu > li.menu10").addClass("active");
+  $(".sidebar #side-menu > li.menu10").find("ul li.submenu1 a").addClass("active");
+</script>
+<script>
+  var IDX = commonLib.getParameter("idx")
+  $(document).ready(() => {
+
+    var innerHtml = "";
+    if (IDX != undefined) {
+      getList()
+      innerHtml += '<div class="fl-r">';
+      // innerHtml += '<a class="btn-change">수정하기</a>';
+      innerHtml += '<a class="btn-change btn-cancel-approval" onclick="save()">수정하기</a>';
+      innerHtml += '</div>';
+    } else {
+      innerHtml += '<div class="fl-r">';
+      innerHtml += '<a class="btn-change btn-cancel-approval" onclick="save()">저장하기</a>';
+      innerHtml += '</div>';
+    }
+    $("#btnsDiv").append(innerHtml)
+    //getList()
+  })
+
+  function save() {
+    var param = {}
+    param['B_UID'] = 'admin'
+    param['B_GUBUN'] = 'NOTICE'
+    param['B_COUNTRY'] = commonLib.getCountry().split('-')[1]
+    param['UN_EB_TITLE'] = $("#B_TITLE").val()
+    param['UN_EB_CONTENTS'] = $("#B_CONTENTS").val()
+    param['B_FILE_PATH1'] = ' '
+    param['B_FILE_PATH2'] = ' '
+    param['B_FILE_PATH3'] = ' '
+    param['B_FILE_PATH4'] = ' '
+    param['B_FILE_PATH5'] = ' '
+    param['BIDX'] = (IDX != undefined) ? IDX + "" : " "
+    var valiad = commonLib.objValidate(param)
+    if (valiad) {
+      alert("값을 모두 입력해주세요")
+      return
+    }
+    reqApi({
+      URL: (IDX == undefined)?'boardWrite':'boardUpdate',
+      PARAM: param
+    }).then((data) => {
+      if(data.BOARDWRITE.RESULT==0){
+        alert("성공하였습니다")
+        location.href='/default/notice-list'
+      }else{
+        alert("실패하였습니다")
+      }
+    })
+  }
+
+  function getList() {
+    var param = {}
+    param['B_GUBUN'] = 'NOTICE'
+    param['B_IDX'] = commonLib.getParameter("idx") + ""
+    reqApi({
+      URL: 'getBoardView',
+      PARAM: param
+    }).then((data) => {
+      commonLib.bindValue(data.BOARDVIEW)
+    })
+  }
+
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+
+  function delBoard() {
+    if (confirm("삭제 하시겠습니까?")) {
+      var param = {}
+      param['B_IDX'] = commonLib.getParameter("idx") + ""
+      reqApi({
+        URL: 'delBoard',
+        PARAM: param
+      }).then(data => {
+        console.log(data.DELBOARD);
+        alert("삭제되었습니다")
+        location.href = '/default/notice-list'
+      })
+    }
+  }
+
+  function btnPage(pos) {
+    if (pos == "bef" && currentPage > 1) {
+      currentPage--
+    } else if (pos == "next" && currentPage < totalPage) {
+      currentPage++
+    }
+    getList()
+  }
+</script>

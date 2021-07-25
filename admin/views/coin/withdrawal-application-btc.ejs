@@ -1,0 +1,591 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+        <section id="title-section">
+          <h1><%=GUBUN%> 출금신청내역</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>코인출금신청관리</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li><%=GUBUN%> 출금신청내역</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section id="cont-section">
+          <div class="cont-whitebox">
+            <ul class="row main-teb-menu">
+              <li><a class="active" id="teb-menu1" href="withdrawal-application-btc.ejs"><%=GUBUN%>출금신청내역</a></li>
+              <li><a id="teb-menu2" href="withdrawal-application-complete-btc.ejs"><%=GUBUN%>출금완료내역</a></li>
+              <li><a id="teb-menu3" href="withdrawal-application-cancel-btc.ejs"><%=GUBUN%>출금취소내역</a></li>
+            </ul>
+            <div class="main-teb-cont">
+              <div class="teb-conts teb-cont1 p-0">
+                <div class="conts-box pb-0">
+                  <div class="search-box border-l0 border-r0 p-5 bg-grey mb-30">
+                    <div class="row mrow">
+                      <div class="w10p fl-l">
+                        <div class="imgbox p-5 bg-white">
+                          <img alt="" id="qrcode">
+                        </div>
+                      </div>
+                      <div class="w90p fl-l">
+                        <h4 id="AD_ADDRESS"></h4>
+                        <a class="btn-grey mt-10 w20p" onclick="copyAddress()">Copy</a>
+                      </div>
+                    </div>
+                    <div class="row ">
+                      <div class="w50p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l">Rate</label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" id="RATE" readonly>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w50p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l"><%=GUBUN%> 예상출금액</label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" value="0" readonly>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row ">
+                      <div class="w50p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l"><%=GUBUN%> server 잔액</label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" id="COINDATA" readonly>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w50p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l"><%=GUBUN%> database 잔액</label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" readonly id="DB_AMT">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--search-box-->
+                  <div class="search-box border-l0 border-r0 p-5">
+                    <div class="row">
+                      <div class="w50p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l">검색어</label>
+                          <div class="select-input-box fl-l">
+                            <select id="SECHER1_TITLE">
+                              <option value="1">아이디</option>
+                              <option value="2">이름</option>
+                              <option value="3">전화번호</option>
+                              <option value="4">이메일</option>
+                            </select>
+                            <input type="text" class="input" id="SECHER_TEXT">
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <!--search-box-->
+                  <div class="from-section">
+                    <div class="form-tr row">
+                      <div class="w50p fl-l">
+                        <div class="form-box row">
+                          <label class="fl-l">신청사이트</label>
+                          <div class="fl-l select-box">
+                            <select id="siteList">
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w50p fl-l">
+                        <div class="form-box row">
+                          <label class="fl-l">출금신청일자</label>
+                          <div class="fl-l calendar-input-box" id="Search-time">
+                            <div class="row">
+                              <div class="calendar-input-btn-box fl-l">
+                                <input type="text" id="datepicker1">
+                              </div>
+                              <span class="fl-l"> ~ </span>
+                              <div class="calendar-input-btn-box fl-l">
+                                <input type="text" id="datepicker2">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 달력 -->
+                      <link rel="stylesheet" href="../views/include/datepicker.css">
+                      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                      <script>
+                        $(function() {
+                          $("#datepicker1, #datepicker2").datepicker({
+                            dateFormat: 'yy.mm.dd',
+                            showOn: "both",
+                            buttonImage: "../views/images/calendar-5.png",
+                            buttonImageOnly: true,
+                            buttonText: "Select date"
+                          });
+                        });
+                      </script>
+                    </div>
+                    <!--form-tr-->
+                  </div>
+                  <!--from-section-->
+                  <div class="from-section mb-0">
+                    <div class="form-btn-box mb-0">
+                      <a class="btn-change" onclick="searchList()">회원검색 하기</a>
+                    </div>
+                  </div>
+                  <!--from-section-->
+                </div>
+                <!--conts-box-->
+                <div class="conts-box pb-0">
+                  <div class="from-section">
+                    <div class="form-title row">
+                      <h2 class="fl-l"><%=GUBUN%> 출금신청내역</h2>
+                      <div class="fl-r mt-10">
+                        <a href="#" class="btn-excel-down btn-red fl-l mr-10">일괄전송</a>
+                        <a href="#" class="btn-excel-down fl-l" onclick="commonLib.fnExcelReport('excelTable','<%=GUBUN%>WithdrawalList')">엑셀 다운로드</a>
+                      </div>
+                    </div>
+                    <div class="table-box with-app-btc">
+                      <div class="table-over-box">
+                        <table border="0" id="excelTable">
+                          <thead>
+                            <tr>
+                              <th>번호</th>
+                              <th>신청사이트</th>
+                              <th>아이디</th>
+                              <th>출금주소</th>
+                              <th class="tx-r">출금신청금액</th>
+                              <th class="tx-r">출금수수료</th>
+                              <th class="tx-r">출금금액</th>
+                              <th class="tx-r">출금코인</th>
+                              <th>신청일자</th>
+                              <th>관리하기</th>
+                            </tr>
+                          </thead>
+                          <tbody id="tableData">
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="paging fl-r">
+                        <ul class="row" id="pageDiv">
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!--출금취소 팝업-->
+  <div class="popup-bg">
+    <!--출금완료 팝업-->
+    <div id="popup" class="completion-withdrawal">
+
+      <div class="pop-title">
+        <h2 id="popTitle"><%=GUBUN%> 출금승인</h2>
+        <a class="close"><i class="sm sm-multiply"></i></a>
+      </div>
+
+      <div class="pop-conts">
+        <div class="pop-form-box row">
+          <p class="fl-l">신청자 아이디</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="MS_IUSER" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">출금 신청일</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="MS_IDATE" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">가입사이트</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="APP_SITE" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">출금주소</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="MS_RECIVEADDR" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">출금신청금액</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="MS_AMOUNT" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">출금수수료</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="MS_FEE" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">출금금액</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="MS_SAMOUNT" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">시세</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="MS_RATE" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">수량</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="MS_SQTY" readonly>
+          </div>
+        </div>
+        <div id="cancelORaccept">
+
+        </div>
+      </div>
+    </div>
+
+    <!--출금취소내용 팝업-->
+    <!-- <div id="popup" class="cancel-withdrawal-cont">
+      <div class="pop-title">
+        <h2><%=GUBUN%> 출금취소이유</h2>
+        <a class="close"><i class="sm sm-multiply"></i></a>
+      </div>
+      <div class="pop-conts">
+        <div class="pop-form-box row">
+          <p class="fl-l">신청자 아이디</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" value="mail@mail.com" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">출금 신청일</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" value="2018.03.25" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">가입사이트</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" value="Exchange Korea" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">출금주소</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" value="HFEgSHHFqMD2H63JenYkXBEbRpEMHmHtMp" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">출금신청금액</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" value="456990.00000000" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">출금수수료</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" value="456990.00000000" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">출금금액</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" value="456990.00000000" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">취소사유</p>
+          <div class="pop-input-box fl-l">
+            <textarea readonly disabled>
+				</textarea>
+          </div>
+        </div>
+
+        <div class="pop-btn-box">
+          <a class="btn-pop close">닫기</a>
+        </div>
+
+      </div>
+
+    </div> -->
+
+
+    <!-- <script>
+
+      $("#popup.cancel-withdrawal-cont a.close").click(function() {
+        $("#popup.cancel-withdrawal-cont").fadeOut(500, function() {
+          $(".popup-bg").fadeOut(200);
+        });
+      });
+      $("#popup.completion-withdrawal a.close").click(function() {
+        $("#popup.completion-withdrawal").fadeOut(500, function() {
+          $(".popup-bg").fadeOut(200);
+        });
+      });
+    </script> -->
+
+
+  </div>
+  <!--popup-bg-->
+
+
+
+
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+  var nowPages = 1;
+  var pageRange = 5;
+  var currentPage = 1;
+  var pageLevel = 0;
+  var gubun = "<%=GUBUN%>"
+  var totalPage = 0;
+  var cnt = 0;
+  var selectedVal;
+  var listData;
+  var totalAmt = 0
+  var LISTPARAM = {
+    SECHER1_TITLE: "1",
+    SECHER_TEXT: " ",
+    GUBUN: gubun,
+    SITE_CODE: "BTC",
+    CNT: "true",
+    D_SDATE: " ",
+    D_EDATE: " ",
+    CUR_PAGING: "1",
+    PAGING_NO: "10"
+  }
+
+  $(document).ready(() => {
+    reqApiList({
+      URL: 'AgetCoinInfo'
+    }).then(data => {
+      selectedVal = data.COININFO
+      console.log(selectedVal);
+      for (var i = 0; i < selectedVal.length; i++) {
+        if (selectedVal[i].GUBUN == gubun) {
+          selectedVal = selectedVal[i]
+          break
+        }
+      }
+      commonLib.bindValue(selectedVal)
+      getList()
+      reqApi({
+        URL: 'getRateNBalance',
+        PARAM: {
+          ADDR: selectedVal['AD_ADDRESS'],
+          GUBUN: gubun
+        }
+      }).then(data => {
+        if (gubun == "ETH") data['COINDATA'] = data['COINDATA'] / 1000000000000000000
+        $("#qrcode").attr("src", data['QRCODE'])
+        commonLib.bindValue(data)
+      })
+    })
+    reqApiList({
+      URL: 'AgetSiteList'
+    }).then(data => {
+      var SITELIST = data.SITELIST
+      var innerHTML = '';
+      $("#siteList").empty()
+      for (var i = 0; i < SITELIST.length; i++) {
+        innerHTML += '<option value="' + SITELIST[i].Q_CODE + '">' + SITELIST[i].Q_KNAME + '</option>';
+      }
+      $("#siteList").append(innerHTML)
+      // datepicker1
+    })
+  })
+
+  function copyAddress() {
+    commonLib.copyText(selectedVal['AD_ADDRESS'])
+  }
+
+  function searchList() {
+    LISTPARAM['SECHER1_TITLE'] = $("#SECHER1_TITLE").val()
+    LISTPARAM['SECHER_TEXT'] = ($("#SECHER_TEXT").val() == '') ? " " : $("#SECHER_TEXT").val()
+    LISTPARAM['SITE_CODE'] = $("#siteList").val()
+    LISTPARAM['D_SDATE'] = ($("#datepicker1").val() == '') ? " " : $("#datepicker1").val()
+    LISTPARAM['D_EDATE'] = ($("#datepicker2").val() == '') ? " " : $("#datepicker2").val()
+    getList()
+  }
+
+  function getList() {
+    LISTPARAM['CUR_PAGING'] = currentPage + ""
+    reqApiList({
+      URL: 'AgetWithdList',
+      PARAM: LISTPARAM
+    }).then((data) => {
+      $("#tableData").empty()
+      listData = data.AWITHLIST
+      if (data.CNT.ALL_CNT != 0) {
+        cnt = data.CNT.ALL_CNT
+        totalPage = Math.floor(cnt / 10) + ((cnt % 10 != 0) ? 1 : 0)
+        pageLevel = Math.floor(currentPage / (pageRange + 1))
+        nowPages = (totalPage - (pageLevel * 5) > 5) ? 5 : totalPage - (pageLevel * 5)
+      }
+      var innerHTML = '';
+      for (var i = 0; i < listData.length; i++) {
+        totalAmt = listData[i].ALLAMT
+        innerHTML += '<tr>';
+        innerHTML += '<td>' + listData[i].ROW_NOMBER + '</td>';
+        innerHTML += '<td>' + listData[i].APP_SITE + '</td>';
+        innerHTML += '<td>' + listData[i].USERID + '</td>';
+        innerHTML += '<td>' + listData[i].RECIVERADDR + '</td>';
+        innerHTML += '<td class="tx-r">' + listData[i].MS_AMOUNT + '</td>';
+        innerHTML += '<td class="tx-r">' + listData[i].MS_FEE + '</td>';
+        innerHTML += '<td class="tx-r">' + listData[i].MS_SAMOUNT + '</td>';
+        innerHTML += '<td class="tx-r">' + listData[i].MS_SQTY + '</td>';
+        innerHTML += '<td>' + listData[i].MS_IDATE + '</td>';
+        innerHTML += '<td>';
+        innerHTML += '<a class="btn-table-change btn-completion-withdrawal mr-5" onclick="openPop(\'reqWithd\',' + i + ')")">출금승인</a>';
+        innerHTML += '<a class="btn-table-change btn-cancel-withdrawal" onclick="openPop(\'reqCancel\',' + i + ')")">출금취소</a>';
+        innerHTML += '</td>';
+        innerHTML += '</tr>';
+      }
+      var pageHtml = '';
+
+      pageHtml += '<li><a><i class="fa fa-angle-left"></i></a></li>';
+      for (var i = 1; i <= nowPages; i++) {
+        if (((pageLevel * 5) + i) == currentPage) {
+          pageHtml += '<li onclick="movePage(' + i + ')"><a class="active">' + ((pageLevel * 5) + i) + '' + '</a></li>';
+        } else {
+          pageHtml += '<li onclick="movePage(' + i + ')"><a>' + ((pageLevel * 5) + i) + '' + '</a></li>';
+        }
+      }
+      pageHtml += '<li><a><i class="fa fa-angle-right"></i></a></li>';
+      $("#pageDiv").append(pageHtml)
+      $("#tableData").append(innerHTML)
+
+      // $(".btn-cancel-withdrawal").click(function() {
+      //   $(".popup-bg").fadeIn(200, function() {
+      //     $("#popup.cancel-withdrawal").fadeIn(500);
+      //   });
+      // });
+      $("#popup.completion-withdrawal a.close").click(function() {
+        $("#popup.completion-withdrawal").fadeOut(500, function() {
+          $(".popup-bg").fadeOut(200);
+        });
+      });
+      // $("#popup.cancel-withdrawal a.close").click(function() {
+      //   $("#popup.cancel-withdrawal").fadeOut(500, function() {
+      //     $(".popup-bg").fadeOut(200);
+      //   });
+      // });
+
+    })
+  }
+
+  async function openPop(id, key) {
+    var r = await reqApi({
+      URL: 'getWithDetil',
+      PARAM: {
+        IDX: listData[key].MS_KEY,
+      }
+    })
+    commonLib.bindValue(r.DETAIL)
+    $("#cancelORaccept").empty()
+    var innerHTML = '';
+    $(".popup-bg").fadeIn(200, function() {
+      $("#popup.completion-withdrawal").fadeIn(500);
+    });
+    if (id == 'reqWithd') {
+      $("#popTitle").html("출금 승인")
+      // innerHTML += '<div class="pop-form-box row">'
+      // innerHTML += '<p class="fl-l">메세지 전송</p>'
+      // innerHTML += '<div class="checkbox-box fl-l mr-10">'
+      // innerHTML += '<input type="checkbox" name="sms-confirm" id="sms-confirm" value="1" checked>'
+      // innerHTML += '<label for="sms-confirm">SMS 전송</label>'
+      // innerHTML += '</div>'
+      // innerHTML += '<div class="checkbox-box">'
+      // innerHTML += '<input type="checkbox" name="mail-confirm" id="mail-confirm" value="1">'
+      // innerHTML += '<label for="mail-confirm">Mail 전송</label>'
+      // innerHTML += '</div>'
+      // innerHTML += '</div>'
+      // innerHTML += '<div class="pop-form-box row">'
+      // innerHTML += '<div class="checkbox-box fl-l">'
+      // innerHTML += '<input type="checkbox" name="sms-confirm" id="sms-confirm" value="1" checked>'
+      // innerHTML += '<label for="sms-confirm">입금완료 메시지를 전송합니다.</label>'
+      // innerHTML += '</div>'
+      // innerHTML += '</div>'
+      innerHTML += '<div class="pop-btn-box">'
+      innerHTML += '<a class="btn-pop close" onclick="parent.close_btc_completion_withdrawal();">출금 완료하기</a>'
+      innerHTML += '</div>'
+    } else {
+      $("#popTitle").html("출금 취소")
+      innerHTML += '<div class="pop-form-box row">'
+      innerHTML += '<p class="fl-l">취소사유</p>'
+      innerHTML += '<div class="pop-input-box fl-l">'
+      innerHTML += '<textarea id="cancMsg"></textarea>'
+      innerHTML += '</div>'
+      innerHTML += '</div>'
+      innerHTML += '<div class="pop-btn-box">'
+      innerHTML += '<a class="btn-pop close" onclick="cancelWith('+key+')">출금 취소하기</a>'
+      innerHTML += '</div>'
+      // $(".popup-bg").fadeIn(200, function() {
+      //   $("#popup.cancel-withdrawal-cont").fadeIn(500);
+      // });
+    }
+    $("#cancelORaccept").append(innerHTML)
+  }
+  async function cancelWith(key){
+    var r = await reqApi({
+      URL: 'cancelWith',
+      PARAM: {
+        IDX: listData[key].MS_KEY,
+        MESSAGE: ($("#cancMsg").val()=='')?" ":$("#cancMsg").val(),
+      }
+    })
+    if(r.CANCELWITH[""]==0){
+      alert("정상 처리 되었습니다")
+      $("#popup.completion-withdrawal").fadeOut(500, function() {
+        $(".popup-bg").fadeOut(200);
+      });
+      getList()
+    }else{
+      alert("실패 하였습니다.")
+    }
+  }
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+
+  function btnPage(pos) {
+    if (pos == "bef" && currentPage > 1) {
+      currentPage--
+      getList()
+    } else if (pos == "next" && currentPage < totalPage) {
+      currentPage++
+      getList()
+    }
+  }
+</script>

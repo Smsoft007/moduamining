@@ -1,0 +1,521 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+        <section id="title-section">
+          <h1>USD 강제입금</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>USD입출금관리</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>USD 강제입금</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="cont-section">
+  				<div class="cont-whitebox">
+
+  					<ul class="row main-teb-menu">
+
+  <!--선택 시 a class="active" -->
+
+  						<li><a class="active">강제입금</a></li>
+  						<!-- <li><a id="teb-menu2" href="krw-forced-withdrawal.jsp">강제출금</a></li> -->
+  					</ul>
+
+  					<div class="main-teb-cont">
+
+  						<div class="teb-conts teb-cont1 p-0">
+
+  							<div class="conts-box pb-0">
+  								<!-- <div class="search-box border-l0 border-r0 p-5">
+  									<div class="row">
+  										<div class="w100p fl-l m-0">
+  											<div class="search-form-box row pl-5 pr-5">
+  												<label class="fl-l">아이디검색</label>
+  												<div class="input-btn-box fl-l">
+  													<input type="text" class="input">
+  													<a class="btn-input">검색하기</a>
+  												</div>
+  											</div>
+  										</div>
+
+  									</div>
+  								</div> -->
+
+  								<div class="from-section">
+
+  									<div class="form-tr row bg-grey">
+  										<div class="w50p fl-l">
+  											<div class="form-box row">
+  												<label class="fl-l">회원ID</label>
+  												<div class="input-box fl-l">
+  													<input type="text" class="input"  id="D_UID">
+  													<p class="error">ex) </p>
+  												</div>
+  											</div>
+  										</div>
+  										<!-- <div class="w50p fl-l">
+  											<div class="form-box row">
+  												<label class="fl-l">연락처</label>
+  												<div class="input-box fl-l">
+  													<input type="text" class="input">
+  													<p class="error">ex) </p>
+  												</div>
+  											</div>
+  										</div> -->
+  									</div>
+
+  									<!-- <div class="form-tr row bg-grey">
+  										<div class="w50p fl-l">
+  											<div class="form-box row">
+  												<label class="fl-l">회원등급</label>
+  												<div class="input-box fl-l">
+  													<input type="text" class="input" value="1등급회원" readonly>
+  													<p class="error">ex) </p>
+  												</div>
+  											</div>
+  										</div>
+  										<div class="w50p fl-l">
+  											<div class="form-box row">
+  												<label class="fl-l">승인여부</label>
+  												<div class="input-box fl-l">
+  													<input type="text" class="input" value="승인" readonly>
+  													<p class="error">ex) </p>
+  												</div>
+  											</div>
+  										</div>
+  									</div> -->
+
+  									<!-- <div class="form-tr row bg-grey">
+  										<div class="w50p fl-l">
+  											<div class="form-box row">
+  												<label class="fl-l">회원가입사이트</label>
+  												<div class="input-box fl-l">
+  													<input type="text" class="input" value="Exchange Korea" readonly>
+  													<p class="error">ex) </p>
+  												</div>
+  											</div>
+  										</div>
+  										<div class="w50p fl-l">
+  											<div class="form-box row">
+  												<label class="fl-l">가입일자</label>
+  												<div class="input-box fl-l">
+  													<input type="text" class="input" value="2018.03.15" readonly>
+  													<p class="error">ex) </p>
+  												</div>
+  											</div>
+  										</div>
+  									</div> -->
+
+  									<div class="form-tr row">
+  										<div class="w50p fl-l">
+  											<div class="form-box row">
+  												<label class="fl-l">입금금액</label>
+  												<div class="input-box fl-l">
+  													<input type="number" class="input" id="AMOUNT">
+  													<p class="error">ex) </p>
+  												</div>
+  											</div>
+  										</div>
+                      <div class="w50p fl-l">
+                        <div class="form-box row">
+                          <label class="fl-l">입금구분</label>
+                          <div class="fl-l select-box">
+                            <select id="selectList">
+                              <option value="01">1</option>
+                              <option value="02">2</option>
+                              <option value="03">3</option>
+                              <option value="04">4</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+  									</div><!--form-tr-->
+
+  									<div class="form-tr row">
+  										<div class="w100p">
+  											<div class="form-box row">
+  												<label class="fl-l">입금사유</label>
+  												<div class="input-box fl-l">
+  													<textarea id="MESSAGE"></textarea>
+  												</div>
+  											</div>
+  										</div>
+  									</div><!--form-tr-->
+
+  								</div><!--from-section-->
+
+  								<div class="from-section mb-0">
+
+  									<div class="form-btn-box mb-0">
+  										<a class="btn-change" onclick="doForceInsert()">강제입금 진행하기</a>
+  									</div>
+
+  								</div><!--from-section-->
+
+  							</div><!--conts-box-->
+
+
+  							<div class="conts-box pb-0">
+
+  								<div class="from-section">
+  									<div class="form-title row">
+  										<h2 class="fl-l">강제입금완료내역</h2>
+  										<div class="fl-r mt-10">
+  											<a href="#" class="btn-excel-down fl-l">엑셀 다운로드</a>
+  										</div>
+  									</div>
+
+  									<div class="table-box">
+  										<div class="table-over-box">
+  											<table border="0">
+  												<thead>
+  													<tr>
+  														<th>번호</th>
+  														<th>아이디</th>
+  														<th>휴대전화번호</th>
+  														<th class="tx-r">입금금액</th>
+  														<th>신청일자</th>
+  														<th>처리일자</th>
+  														<th>처리자아이디</th>
+  														<th>처리자이름</th>
+  													</tr>
+  												</thead>
+  												<tbody name="tableData">
+  													<tr>
+  														<td>1</td>
+  														<td>mail@mail.com</td>
+  														<td>010 0000 0000</td>
+  														<td class="tx-r">9,699,000</td>
+  														<td>2018.03.15</td>
+  														<td>2018.03.15<a class="btn-forced-deposit"><i class="icon icon-Search"></i></a></td>
+  														<td>admin</td>
+  														<td>관리자이름</td>
+  													</tr>
+  													<tr>
+  														<td>2</td>
+  														<td>mail@mail.com</td>
+  														<td>010 0000 0000</td>
+  														<td class="tx-r">9,699,000</td>
+  														<td>2018.03.15</td>
+  														<td>2018.03.15<a class="btn-forced-deposit"><i class="icon icon-Search"></i></a></td>
+  														<td>admin</td>
+  														<td>관리자이름</td>
+  													</tr>
+  												</tbody>
+  											</table>
+  										</div>
+  									</div>
+
+        						<div class="row">
+        							<div class="paging fl-r">
+        								<ul class="row">
+        									<li><a><i class="fa fa-angle-left"></i></a></li>
+        									<li><a class="active">1</a></li>
+        									<li><a>2</a></li>
+        									<li><a>3</a></li>
+        									<li><a>4</a></li>
+        									<li><a>5</a></li>
+        									<li><a><i class="fa fa-angle-right"></i></a></li>
+        								</ul>
+        							</div>
+        						</div>
+
+  								</div>
+
+  							</div><!--conts-box-->
+
+  						</div><!--teb-cont1-->
+
+
+
+  					</div><!--main-teb-cont-->
+
+  				</div>
+  			</section>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!--강제입출금취소 팝업-->
+<div class="popup-bg">
+
+
+
+<!--입금 팝업-->
+<!-- <div id="popup" class="forced-deposit-proceed">
+
+	<div class="pop-title">
+		<h2>KRW 강제입금</h2>
+		<a class="close"><i class="sm sm-multiply"></i></a>
+	</div>
+	<div class="pop-conts">
+		<div class="pop-form-box row">
+			<p class="fl-l">신청자 아이디</p>
+			<div class="pop-input-box fl-l">
+				<input type="text" class="input" value="mail@mail.com" readonly>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">신청자 휴대전화번호</p>
+			<div class="pop-input-box fl-l">
+				<input type="text" class="input" value="010 0000 0000" readonly>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">입금 신청일</p>
+			<div class="pop-input-box fl-l">
+				<input type="text" class="input" value="2018.03.25" readonly>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">입금 처리일</p>
+			<div class="pop-input-box fl-l">
+				<input type="text" class="input" value="2018.03.25" readonly>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">가입사이트</p>
+			<div class="pop-input-box fl-l">
+				<input type="text" class="input" value="Exchange Korea" readonly>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">입금자명</p>
+			<div class="pop-input-box fl-l">
+				<input type="text" class="input" value="2018.03.25" readonly>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">입금금액</p>
+			<div class="pop-input-box fl-l">
+				<input type="text" class="input" value="9,699,000" readonly>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">입금사유</p>
+			<div class="pop-input-box fl-l">
+				<textarea readonly disabled></textarea>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">메세지 전송</p>
+			<div class="checkbox-box fl-l mr-10">
+				<input type="checkbox" name="sms-confirm" id="sms-confirm" value="1" checked>
+				<label for="sms-confirm">SMS 전송</label>
+			</div>
+			<div class="checkbox-box">
+				<input type="checkbox" name="mail-confirm" id="mail-confirm" value="1">
+				<label for="mail-confirm">Mail 전송</label>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<div class="checkbox-box fl-l">
+				<input type="checkbox" name="sms-confirm" id="sms-confirm" value="1" checked>
+				<label for="sms-confirm">입금완료 메시지를 전송합니다.</label>
+			</div>
+		</div>
+
+		<div class="pop-btn-box">
+			<a class="btn-pop close">강제입금 진행하기</a>
+		</div>
+
+	</div>
+
+</div> -->
+
+
+<script>
+
+$(".btn-forced-deposit-proceed").click(function(){
+	$(".popup-bg").fadeIn(200, function(){
+		$("#popup.forced-deposit-proceed").fadeIn(500);
+	});
+});
+
+$("#popup.forced-deposit-proceed a.close").click(function(){
+	$("#popup.forced-deposit-proceed").fadeOut(500, function(){
+		$(".popup-bg").fadeOut(200);
+	});
+});
+
+</script>
+
+
+<!--입금취소 팝업-->
+<div id="popup" class="forced-deposit">
+
+	<div class="pop-title">
+		<h2>KRW 강제입금 사유</h2>
+		<a class="close"><i class="sm sm-multiply"></i></a>
+	</div>
+
+  <div class="pop-conts">
+		<div class="pop-form-box row">
+			<p class="fl-l">신청자 아이디</p>
+			<div class="pop-input-box fl-l">
+				<input type="text" class="input" value="mail@mail.com" readonly>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">신청자 휴대전화번호</p>
+			<div class="pop-input-box fl-l">
+				<input type="text" class="input" value="010 0000 0000" readonly>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">입금 신청일</p>
+			<div class="pop-input-box fl-l">
+				<input type="text" class="input" value="2018.03.25" readonly>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">입금 처리일</p>
+			<div class="pop-input-box fl-l">
+				<input type="text" class="input" value="2018.03.25" readonly>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">가입사이트</p>
+			<div class="pop-input-box fl-l">
+				<input type="text" class="input" value="Exchange Korea" readonly>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">입금자명</p>
+			<div class="pop-input-box fl-l">
+				<input type="text" class="input" value="2018.03.25" readonly>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">입금금액</p>
+			<div class="pop-input-box fl-l">
+				<input type="text" class="input" value="9,699,000" readonly>
+			</div>
+		</div>
+		<div class="pop-form-box row">
+			<p class="fl-l">입금사유</p>
+			<div class="pop-input-box fl-l">
+				<textarea readonly disabled></textarea>
+			</div>
+		</div>
+
+		<div class="pop-btn-box">
+			<a class="btn-pop close" onclick="parent.close_forced_deposit_reason();">닫기</a>
+		</div>
+
+	</div>
+
+</div>
+<script>
+$(".btn-forced-deposit").click(function(){
+	$(".popup-bg").fadeIn(200, function(){
+		$("#popup.forced-deposit").fadeIn(500);
+	});
+});
+$("#popup.forced-deposit a.close").click(function(){
+	$("#popup.forced-deposit").fadeOut(500, function(){
+		$(".popup-bg").fadeOut(200);
+	});
+});
+</script>
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+  var buyParam = {
+    SECHER1_TITLE: " ",
+    SECHER_TEXT: " ",
+    GUBUN: "  ",
+    D_SDATE: " ",
+    D_EDATE: " ",
+    CUR_PAGING: "1",
+    PAGING_NO: "10"
+  }
+  var ListDATA = []
+  $(document).ready(() => {
+    reqApiList({
+      URL: 'getWalletGubun'
+    }).then(data => {
+      $("#selectList").empty()
+      var selecthtml=""
+      data.WALLETGUBUN.forEach(item => {
+        selecthtml+='<option value="'+item.Q_CODE+'">'+item.Q_KNAME+'</option>'
+      });
+      $("#selectList").append(selecthtml)
+      getList()
+    })
+  })
+  function doForceInsert(){
+    var forceParam={}
+    forceParam['A_UID']='admin'
+    forceParam['D_UID']=$("#D_UID").val()
+    forceParam['GUBUN']=$("#selectList").val()
+    forceParam['AMOUNT']=$("#AMOUNT").val()
+    forceParam['MESSAGE']=$("#MESSAGE").val()
+    reqApi({
+      URL: 'usdInput',
+      PARAM:forceParam
+    }).then(data=>{
+      if(data.USDIN.RESULT==0){
+        alert("정상처리하였습니다")
+        getList()
+      }else if(data.USDIN.RESULT==1){
+        alert("존재하지 않는 회원입니다")
+      }else if(data.USDIN.RESULT==2){
+        alert("존재하지 않는 관리자로 처리 시도중입니다")
+      }else if(data.USDIN.RESULT==3){
+        alert("금액을 입력하세요")
+      }else if(data.USDIN.RESULT==4){
+        alert("입금구분자를 선택해주세요")
+      }else if(data.USDIN.RESULT==9){
+        alert("시세템에러")
+      }
+    })
+  }
+  function getList() {
+    buyParam['GUBUN'] = " "
+    buyParam['SECHER1_TITLE'] = " "
+    buyParam['UN_ESECHER_TEXT'] = " "
+    buyParam['CNT'] = "True"
+    buyParam['D_SDATE'] = " "
+    buyParam['D_EDATE'] = " "
+    reqApiList({
+      URL: 'AgetUSDIOList',
+      PARAM: buyParam
+    }).then(data => {
+      $("tbody[name=tableData]").empty()
+      ListDATA = data.AIOULIST
+      var innerHtml = ""
+      for (var i = 0; i < ListDATA.length; i++) {
+        innerHtml += '<tr>';
+        innerHtml += '<td>' + ListDATA[i].ROW_NOMBER + '</td>';
+        innerHtml += '<td>' + ListDATA[i].USERID + '</td>';
+        innerHtml += '<td>' + ListDATA[i].REMARK + '</td>';
+        innerHtml += '<td class="tx-r">' + ListDATA[i].MS_AMT1 + '</td>';
+        innerHtml += '<td>' + ListDATA[i].MS_AMT2 + '</td>';
+        innerHtml += '<td>' + ListDATA[i].MS_IDATE + '<a class="btn-forced-deposit"><i class="icon icon-Search"></i></a></td>';
+        innerHtml += '<td>' + ListDATA[i].BALANCE + '</td>';
+        innerHtml += '<td>' + ListDATA[i].MESSAGE + '</td>';
+      }
+      $("tbody[name=tableData]").append(innerHtml)
+      $("#popup.purchase-application a.close").click(function() {
+        $("#p`opup.purchase-application").fadeOut(500, function() {
+          $(".popup-bg").fadeOut(200);
+        });
+      });
+    })
+  }
+</script>

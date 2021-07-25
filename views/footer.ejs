@@ -1,0 +1,101 @@
+<div class="header header-fixed header-logo-center header-auto-show">
+    <a href="index.html" class="header-title">MDB Wallet</a>
+    <a href="#" data-back-button class="header-icon header-icon-1"><i class="fas fa-chevron-left"></i></a>
+    <a href="#" data-menu="menu-main" class="header-icon header-icon-4"><i class="fas fa-bars"></i></a>
+    <a href="#" data-toggle-theme class="header-icon header-icon-3 show-on-theme-dark"><i class="fas fa-sun"></i></a>
+    <a href="#" data-toggle-theme class="header-icon header-icon-3 show-on-theme-light"><i class="fas fa-moon"></i></a>
+  </div>
+  
+  <div id="footer-bar" class="footer-bar-6">
+    <a href="#" data-menu="menu-charge"><i class="fas fa-charging-station"></i><span><%=LANG['LANG0'][NUM]%></span></a>
+    <% if (MY_INFO.STOP_YN=='N') { %>
+    <a href="#" data-menu="menu-transfer"><i class="fas fa-sync-alt"></i><span><%=LANG['LANG257'][NUM]%></span></a>
+    <% } else { %>
+    <a onclick="openPop('F','<%=LANG['LANG403'][NUM]%>')"><i class="fas fa-sync-alt"></i><span><%=LANG['LANG257'][NUM]%></span></a>
+    <% } %>
+  
+    <a href="index" class="circle-nav active-nav"><i class="fa fa-home"></i><span><%=LANG['LANG2'][NUM]%></span></a>
+    <a href="#" data-menu="menu-history"><i class="fas fa-history"></i><span><%=LANG['LANG258'][NUM]%></span></a>
+    <a href="#" data-menu="menu-main"><i class="fa fa-bars"></i><span><%=LANG['LANG4'][NUM]%></span></a>
+  </div>
+  <div id="menu-main" class="menu menu-box-left rounded-0 bg-theme" data-menu-load="menu-main" data-menu-width="280" data-menu-active="nav-pages"></div>
+  <div id="menu-share" class="menu menu-box-bottom rounded-m bg-theme" data-menu-load="menu-share" data-menu-height="370" data-menu-active="menu_share"></div>
+  <div id="menu-colors" class="menu menu-box-bottom rounded-m bg-theme" data-menu-load="menu-colors" data-menu-height="480"></div>
+  <div id="menu-charge" class="menu menu-box-modal rounded-m bg-theme" data-menu-height="410" data-menu-width="350" data-menu-load="menu-charge">
+  </div>
+  <div id="menu-transfer" class="menu menu-box-modal rounded-m bg-theme" data-menu-height="430" data-menu-width="350" data-menu-load="menu-transfer">
+  </div>
+  <div id="menu-transfercheck" class="menu menu-box-modal rounded-m bg-theme" data-menu-height="410" data-menu-width="350" data-menu-load="menu-transfercheck">
+  </div>
+  <div id="menu-history" class="menu menu-box-modal rounded-m bg-theme" data-menu-height="200" data-menu-width="350" data-menu-load="menu-history"></div>
+  <div id="menu-langChange" class="menu menu-box-modal rounded-m bg-theme" data-menu-height="365" data-menu-width="350" data-menu-load="/menu-langChange"></div>
+  <div id="menu-myinfo" class="menu menu-box-modal rounded-m bg-theme" data-menu-height="410" data-menu-width="350" data-menu-load="/menu-myinfo"></div>
+  <div id="menu-withdrawaddress" class="menu menu-box-modal rounded-m bg-theme" data-menu-height="560" data-menu-width="350" data-menu-load="/menu-withdrawaddress"></div>
+  <div id="menu-passchange" class="menu menu-box-modal rounded-m bg-theme" data-menu-height="445" data-menu-width="350" data-menu-load="/menu-passchange"></div>
+  <div id="menu-walletshare" class="menu menu-box-modal rounded-m bg-theme" data-menu-height="250" data-menu-width="350" data-menu-load="/menu-walletshare"></div>
+  <div id="menu-success-2" class="menu menu-box-modal bg-green-dark rounded-m" data-menu-height="310" data-menu-width="350">
+    <h1 class="text-center mt-4"><i class="fa fa-3x fa-check-circle scale-box color-white shadow-xl rounded-circle"></i></h1>
+    <h1 class="text-center mt-3 font-700 color-white"><%=LANG['LANG23'][NUM]%></h1>
+    <p class="boxed-text-l color-white opacity-70" id="scontent">
+    </p>
+    <a href="#" class="btn btn-m btn-center-m button-s shadow-l rounded-s text-uppercase font-600 bg-white color-black" onclick="closePop('menu-success-2',false)"><%=LANG['LANG24'][NUM]%></a>
+  </div>
+  <div id="menu-success-3" class="menu menu-box-modal bg-green-dark rounded-m" data-menu-height="310" data-menu-width="350">
+    <h1 class="text-center mt-4"><i class="fa fa-3x fa-check-circle scale-box color-white shadow-xl rounded-circle"></i></h1>
+    <h1 class="text-center mt-3 font-700 color-white"><%=LANG['LANG23'][NUM]%></h1>
+    <p class="boxed-text-l color-white opacity-70" id="scontent1">
+    </p>
+    <a href="#" class="btn btn-m btn-center-m button-s shadow-l rounded-s text-uppercase font-600 bg-white color-black" onclick="closePop('menu-success-3',true)"><%=LANG['LANG24'][NUM]%></a>
+  </div>
+  <div id="menu-warning-1" class="menu menu-box-modal rounded-m" data-menu-height="140" data-menu-width="350">
+    <div class="menu-title">
+      <i class="fa fa-times-circle float-left mr-3 scale-box ml-3 fa-4x color-red-dark"></i>
+      <p class="color-highlight"><%=LANG['LANG25'][NUM]%></p>
+      <h1><%=LANG['LANG26'][NUM]%></h1>
+      <a href="#" onclick="closePop('menu-warning-1')"><i class="fa fa-times-circle"></i></a>
+    </div>
+    <div class="content mb-0 mt-0">
+      <p class="pr-3" id="fcontent">
+      </p>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var addresies = [{
+      COINNAME: "ETH",
+      ADDR: "<%=ETHADDR%>",
+      QRADDR: "<%=ETHADDRQR%>"
+    }, {
+      COINNAME: "MDB",
+      ADDR: "<%=MDBADDR%>",
+      QRADDR: "<%=MDBADDRQR%>"
+    }]
+    var BINDVALUEDATA = {}
+    var selectedCoin = 0;
+  
+    function closePop(id, reload, page) {
+      $('#' + id).hideMenu();
+      if (reload) location.reload()
+      if (page) location.href = page
+    }
+  
+    function openPop(type, msg) {
+      if (type == 'S') {
+        $('#menu-success-2').showMenu();
+        $("#scontent").text(msg)
+      } else if (type == 'RS') {
+        $('#menu-success-3').showMenu();
+        $("#scontent1").text(msg)
+      } else if (type == 'WR') {
+        $('#menu-warning-2').showMenu();
+        $("#warnContent").text(msg)
+      } else if (type == 'WRF') {
+        $('#menu-warning-3').showMenu();
+      } else if (type == 'S1') {
+        $('#menu-success-4').showMenu();
+      } else {
+        $('#menu-warning-1').showMenu();
+        $("#fcontent").text(msg)
+      }
+    }
+  </script>
+  

@@ -1,0 +1,248 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+
+        <section id="title-section">
+          <h1>1:1문의 관리</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>게시판 관리</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>1:1문의 관리</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="cont-section">
+          <div class="cont-whitebox">
+
+
+            <div class="conts-box pb-0">
+              <div class="search-box border-l0 border-r0 p-5">
+                <div class="row">
+                  <div class="w50p fl-l m-0">
+                    <div class="search-form-box row">
+                      <label class="fl-l">검색어</label>
+                      <div class="select-input-box fl-l">
+                        <select id="selType">
+                          <option value=" ">전체</option>
+                          <option value="1">제목</option>
+                          <option value="2">내용</option>
+                          <option value="3">작성자</option>
+                          <option value="4">제목+내용</option>
+                        </select>
+                        <input type="text" class="input" id="selText">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">작성일자</label>
+                      <div class="fl-l calendar-input-box" id="Search-time">
+                        <div class="row">
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker1">
+                          </div>
+                          <span class="fl-l"> ~ </span>
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker2">
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  <!-- 달력 -->
+
+                  <script>
+                    $(function() {
+                      $("#datepicker1, #datepicker2").datepicker({
+                        dateFormat: 'yy.mm.dd',
+                        showOn: "both",
+                        buttonImage: "../views/images/calendar-5.png",
+                        buttonImageOnly: true,
+                        buttonText: "Select date"
+                      });
+                    });
+                  </script>
+
+                </div>
+              </div>
+              <div class="from-section mb-0 mt-20">
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onclick="getList()">검색 하기</a>
+                </div>
+              </div>
+            </div><!-- conts-box -->
+            <div class="conts-box pb-0">
+
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">1:1문의 리스트</h2>
+                  <div class="fl-r">
+                    <a href="/default/inquiry-class-change" class="btn-excel-down fl-l">분류관리하기</a>
+                  </div>
+                </div>
+
+                <div class="table-box mem-list">
+                  <div class="table-over-box">
+                    <table border="0">
+                      <thead>
+                        <tr>
+                          <th>번호</th>
+                          <th>분류</th>
+                          <th>제목</th>
+                          <th>조회수</th>
+                          <th>작성일</th>
+                          <th>작성자 ID</th>
+                          <th>답변자 ID</th>
+                          <th>답변자 이름</th>
+                          <th>답변일</th>
+                          <th>상세보기</th>
+                        </tr>
+                      </thead>
+                      <tbody name="tableData">
+                        <!-- <tr>
+                          <td>2</td>
+                          <td>분류명 001</td>
+                          <td>Exchange Korea</td>
+                          <td>800</td>
+                          <td>2018.03.15</td>
+                          <td>mail@mail.com</td>
+                          <td colspan="4"><a href="/default/inquiry-list-modify" class="btn-noti-list-cont w100p btn-block">답변 작성하기</a></td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td>분류명 001</td>
+                          <td>Exchange Korea</td>
+                          <td>800</td>
+                          <td>2018.03.15</td>
+                          <td>mail@mail.com</td>
+                          <td>testid</td>
+                          <td>홍길동</td>
+                          <td>2018.03.15</td>
+                          <td><a href="/default/inquiry-list-cont" class="btn-noti-list-cont">상세보기</a></td>
+                        </tr> -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="paging fl-r">
+                    <ul class="row" id="paging">
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+  var nowPages = 1;
+  var pageRange = 5;
+  var currentPage = 1;
+  var pageLevel = 0;
+  var totalPage = 0;
+  var sMemberId = "";
+  var data;
+
+  $(document).ready(() => {
+     getList()
+  })
+
+  function getList() {
+    $("tbody[name=tableData]").empty()
+    var param = {}
+    param['D_SDATE'] = ($("#datepicker1").datepicker("getDate")) ? $("#datepicker1").datepicker("getDate").format("yyyy-MM-dd") : " "
+    param['D_EDATE'] = ($("#datepicker2").datepicker("getDate")) ? $("#datepicker2").datepicker("getDate").format("yyyy-MM-dd") : " "
+    param['SECHER1_TITLE'] = ($("#selType").val() == "") ? " " : $("#selType").val()
+    param['UN_ESECHER_TEXT'] = ($("#selText").val() == "") ? " " : $("#selText").val()
+    param['CNT'] = 'true'
+    param['IP'] = 'true'
+    param['B_GUBUN'] = 'USER'
+    param['CUR_PAGING'] = currentPage + ""
+    param['PAGING_NO'] = "10"
+    reqApiList({
+      URL: 'getBoardUser',
+      PARAM: param
+    }).then((data) => {
+      var ListDATA = data.BOARDUSER
+      console.log(ListDATA);
+      if (data.CNT.ALL_CNT != 0) {
+        cnt = data.CNT.ALL_CNT
+        totalPage = Math.floor(cnt / 10) + ((cnt % 10 != 0) ? 1 : 0)
+        pageLevel = Math.floor(currentPage / (pageRange + 1))
+        nowPages = (totalPage - (pageLevel * 5) > 5) ? 5 : totalPage - (pageLevel * 5)
+      }
+      for (var i = 0; i < ListDATA.length; i++) {
+        var innerHtml = ""
+        var gubun=(ListDATA[i].B_REP_GUBUN=='U')?"1:1문의":""
+        innerHtml += '<tr>';
+        innerHtml += '<td>'+ListDATA[i].ROWNUMBER+'</td>';
+        innerHtml += '<td>'+gubun+'</td>';
+        innerHtml += '<td>'+ListDATA[i].B_TITLE+'</td>';
+        innerHtml += '<td>'+ListDATA[i].B_VIEW_CNT+'</td>';
+        innerHtml += '<td>'+ListDATA[i].B_IDATE+'</td>';
+        innerHtml += '<td>'+ListDATA[i].B_UID+'</td>';
+        if (true) {
+        // if (ListDATA[i].B_AID==null) {
+          innerHtml += '<td colspan="4"><a href="/default/inquiry-list-modify?idx='+ListDATA[i].B_IDX+'" class="btn-noti-list-cont w100p btn-block">답변 작성하기</a></td>';
+        } else {
+          innerHtml += '<td>'+ListDATA[i].B_AID+'</td>';
+          innerHtml += '<td>'+ListDATA[i].B_ANAME+'</td>';
+          innerHtml += '<td>'+ListDATA[i].B_OKDATE+'</td>';
+          innerHtml += '<td><a href="/default/inquiry-list-cont?idx='+ListDATA[i].B_IDX+'" class="btn-noti-list-cont">상세보기</a></td>';
+        }
+        innerHtml += '</tr>';
+        $("tbody[name=tableData]").append(innerHtml)
+      }
+      var innerHtml = '';
+      innerHtml += '<li class="" onclick="btnPage(\'bef\')"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>';
+      $("ul[name=paging]").empty()
+      for (var i = 1; i <= nowPages; i++) {
+        if (currentPage == i) {
+          innerHtml += '<li onclick="movePage(' + i + ')"> <a class="active">' + ((pageLevel * 5) + i) + '</a> </li>';
+        } else {
+          innerHtml += '<li onclick="movePage(' + i + ')"> <a>' + ((pageLevel * 5) + i) + '</a> </li>';
+        }
+      }
+      innerHtml += '<li onclick="btnPage(\'next\')"> <a href="#"><i class="fa fa-angle-right"></i></a> </li>';
+      $("ul[name=paging]").append(innerHtml)
+    })
+  }
+
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+
+  function btnPage(pos) {
+    if (pos == "bef" && currentPage > 1) {
+      currentPage--
+    } else if (pos == "next" && currentPage < totalPage) {
+      currentPage++
+    }
+    getList()
+  }
+</script>

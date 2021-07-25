@@ -1,0 +1,84 @@
+<% include ../head %>
+
+<body>
+
+
+	<div class="wrap">
+
+		<div class="signin-bg">
+			<div class="signin-box">
+
+				<div class="row">
+					<div class="signin-left">
+						<h5>Welcome to the</h5>
+						<h2>
+							ICK COIN<br>
+							Admin Mode
+						</h2>
+						<p>login to access your account</p>
+					</div>
+					<div class="signin-right">
+						<div class="form-box">
+							<select>
+								<option>한국어</option>
+								<option>영어</option>
+								<option>중국어</option>
+								<option>일본어</option>
+							</select>
+						</div>
+						<div class="form-box">
+							<input type="text" class="input" placeholder="ADMIN ID" id="inUser_ID">
+						</div>
+						<div class="form-box">
+							<input type="password" class="input" placeholder="PASSWORD" id="inUser_Pwd">
+						</div>
+						<div class="form-box">
+							<p class="signin-guide">
+								You can only log in as a website manager.<br>
+								Pay attention to security.
+							</p>
+						</div>
+						<div class="form-box">
+							<a onClick="signin()" class="btn-signin">sign in</a>
+						</div>
+						<p class="signin-footer">ⓒ ICKCOIN</p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	<!--wrap--->
+
+
+</body>
+<script>
+	async function signin() {
+    var Param = {}
+
+    Param['D_UID'] = $("#inUser_ID").val()
+    Param['D_PASS'] = $("#inUser_Pwd").val()
+    // Param['D_IP'] = await commonLib.getIpAddress()
+    Param['D_BROWSER'] = commonLib.getBrowserInfo()
+    Param['D_OS'] = commonLib.getOSInfo()
+    Param['D_COUNTRY'] = commonLib.getCountry()
+    var valResult = commonLib.objValidate(Param)
+    if (valResult) {
+      alert(lang(valResult))
+      return
+    }
+    var r = await reqApi({
+      URL: 'adminLogin',
+      PARAM: Param
+    })
+		console.log(r);
+    if (r.ADSIGNIN.RESULT == 0) {
+			location.href = "/default/member_list"
+    } else if(r.ADSIGNIN.RESULT == 1){
+      alert("아이디를 확인하여 주십시오!")
+    } else if(r.ADSIGNIN.RESULT == 2){
+      alert("비밀번호를 확인하여 주십시오!")
+    }
+  }
+</script>

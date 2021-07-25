@@ -1,0 +1,281 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+        <section id="title-section">
+          <h1>회원리스트</h1>
+          <div class="row">
+            <p class="fl-l">회원리스트를 확인하실 수 있습니다.</p>
+          </div>
+        </section>
+        <section id="cont-section">
+          <div class="cont-whitebox">
+            <div class="conts-box pb-0">
+              <div class="search-box border-l0 border-r0 p-5 mb-20">
+                <div class="row">
+                  <div class="w50p fl-l mb-5">
+                    <div class="search-form-box row pl-5 pr-5">
+                      <label class="fl-l">검색어</label>
+                      <div class="select-input-box fl-l">
+                        <select id="selType">
+                          <option value="1" selected>아이디</option>
+                          <option value="2">이름</option>
+                          <option value="3">전화번호</option>
+                          <option value="4">이메일</option>
+                        </select>
+                        <input type="text" class="input" id="selText">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="w50p fl-l mb-5">
+                    <div class="form-box row">
+                      <label class="fl-l">회원가입일자</label>
+                      <div class="fl-l calendar-input-box" id="Search-time">
+                        <div class="row">
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker1">
+                          </div>
+                          <span class="fl-l"> ~ </span>
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker2">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <link rel="stylesheet" href="../views/include/datepicker.css">
+                  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                  <script>
+                    $(function() {
+                      $("#datepicker1, #datepicker2").datepicker({
+                        dateFormat: 'yy.mm.dd',
+                        showOn: "both",
+                        buttonImage: "../views/images/calendar-5.png",
+                        buttonImageOnly: true,
+                        buttonText: "Select date"
+                      });
+                    });
+                  </script>
+
+                </div>
+              </div>
+              <!--search-box-->
+
+
+              <div class="from-section mb-0">
+
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onClick="getList()">회원검색 하기</a>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+            </div>
+            <!--conts-box-->
+
+            <div class="conts-box pb-0">
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">회원 리스트<span>검색 00명 / 전체 00명</span></h2>
+                  <div class="fl-r">
+                    <a href="#" class="btn-excel-down fl-l" onclick="commonLib.fnExcelReport('excelTable','UserList')">엑셀 다운로드</a>
+
+                    <!-- <select id="SECHER1_TITLE4" name="SECHER1_TITLE4">
+                      <option value="D_DATE">최근가입순</option>
+                      <option value="SECHER_TEXT">아이디 오름차순</option>
+                      <option value="SECHER_TEXT">아이디 내림차순</option>
+                    </select> -->
+                  </div>
+                </div>
+                <div class="table-box mem-list">
+                  <div class="table-over-box">
+                    <table border="0" id="excelTable">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>회원No</th>
+                          <th>회원ID</th>
+                          <th>회원명</th>
+                          <th>회원가입일</th>
+                          <th>이메일</th>
+                          <th>회원연락처</th>
+                          <th>추천인No</th>
+                          <th>추천인ID</th>
+                          <th>은행명</th>
+                          <th>은행계좌번호</th>
+                          <th>예금주</th>
+                          <th>경고여부</th>
+                          <th>경고횟수</th>
+                          <th>관리하기</th>
+                        </tr>
+                      </thead>
+                      <tbody name="tableData">
+
+                      </tbody>
+                    </table>
+                    <!--/CONTENT LIST--->
+                  </div>
+
+                  <div class="row">
+                    <div class="paging fl-r">
+                      <ul class="row" name="paging">
+                        <!-- <li><a><i class="fa fa-angle-left"></i></a></li>
+                        <li><a class="active">1</a></li>
+                        <li><a>2</a></li>
+                        <li><a>3</a></li>
+                        <li><a>4</a></li>
+                        <li><a>5</a></li>
+                        <li><a><i class="fa fa-angle-right"></i></a></li> -->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <!--conts-box-->
+
+          </div>
+        </section>
+
+
+      </div>
+      <!--main-wrap-->
+
+    </div>
+    <!--row-->
+
+  </div>
+  <!--wrap--->
+
+
+  <!--삭제/몰수 팝업-->
+  <div class="popup-bg">
+
+
+    <!--삭제/몰수 팝업-->
+    <div id="popup" class="forfeit-cont">
+
+      <div class="pop-title">
+        <h2>회원 삭제/몰수</h2>
+        <a class="close"><i class="sm sm-multiply"></i></a>
+      </div>
+
+      <div class="pop-conts">
+        <div class="pop-form-box row">
+          <p class="fl-l">회원아이디</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="D_UID" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">회원명</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="D_NAME" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">회원연락처</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="D_HP" readonly>
+          </div>
+        </div>
+        <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">동램프 판매대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="L10" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">동램프 입금대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="W10" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">은램프 판매대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="L20" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">은램프 입금대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="W20" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">금램프 판매대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="L30" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">금램프 입금대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="W30" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">요술램프 판매대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="L40" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">요술램프 입금대기</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="W40" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pop-btn-box">
+          <div class="row mrow">
+            <div class="w33p fl-l">
+              <a class="btn-red close" onClick="delMeber()">회원삭제</a>
+            </div>
+            <div class="w33p fl-l">
+              <a class="btn-pop close">아이템몰수</a>
+            </div>
+            <div class="w33p fl-l">
+              <a class="btn-pop close">닫기</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>

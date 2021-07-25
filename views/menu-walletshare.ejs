@@ -1,0 +1,35 @@
+<div class="menu-title">
+    <p class="color-highlight">Tap a link to</p>
+    <h1>Wallet Share</h1>
+    <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
+</div>
+<div class="divider divider-margins mt-3 mb-0"></div>
+<div class="content mt-0">
+    <div class="list-group list-custom-small list-icon-0">
+        <a onclick="shareAddress(0)">
+            <span>ETH Wallet</span>
+            <i class="fa fa-angle-right pr-1"></i>
+        </a>
+        <a onclick="shareAddress(1)">
+            <span>MDB Wallet</span>
+            <i class="fa fa-angle-right pr-1"></i>
+        </a>
+
+    </div>
+</div>
+<script>
+  async function shareAddress(val) {
+    if(commonLib.isApp()=="Android"){
+      try {
+        await window.navigator.share({
+          title: addresies[val].COINNAME+" Coin Address",
+          text: addresies[val].ADDR
+          //url: addresies[val].ADDR,
+        });
+      } catch (e) {
+        //alert(e)
+      }
+    }
+  }
+
+</script>

@@ -1,0 +1,310 @@
+
+<%- include('head') %>
+
+<body class="theme-light">
+
+  <div id="preloader">
+    <div class="spinner-border color-highlight" role="status"></div>
+  </div>
+
+  <div id="page">
+
+    <div class="page-content pt-3">
+
+      <div class="card card-style">
+        <div class="content">
+          <p class="color-highlight mb-1 font-14">Let's Get Started</p>
+          <h1 class="font-30"><%=LANG['LANG38'][NUM]%></h1>
+          <!-- <p>
+                    Create an account, it's free and gives you tones of benefits!
+                </p> -->
+
+          <div class="input-style has-icon input-style-1 input-required langbox">
+            <i class="input-icon fas fa-globe-americas"></i>
+            <span class="color-highlight">Country</span>
+            <!-- LANG237 -->
+            <em><i class="fa fa-angle-down"></i></em>
+            <input type="text" value="Korea" class="langinput font-16" id="countryName">
+            <ul class="langlist font-16" id="countrys">
+            </ul>
+          </div>
+
+          <div class="row mb-0">
+                  <div class="col-3">
+                    <div class="input-style input-style-1 input-required">
+                      <input type="name" value="82" id="D_COUNTRY_HP" readonly class="font-16" readonly>
+                    </div>
+                  </div>
+                  <div class="col-9">
+                    <div class="input-style input-style-1 input-required">
+                      <span><%=LANG['LANG180'][NUM]%></span>
+                      <input type="number" placeholder="<%=LANG['LANG180'][NUM]%>" id="D_HP" class="font-16">
+                    </div>
+                  </div>
+                </div> 
+          <a class="btn btn-full btn-xxs font-600 font-13 bg-dark-dark rounded-s mb-2" onclick="checkPhone()"><%=LANG['LANG298'][NUM]%></a>
+          <div class="input-style has-icon input-style-1 input-required">
+            <i class="input-icon fa fa-user"></i>
+            <span><%=LANG['LANG119'][NUM]%></span>
+            <em>(required)</em>
+            <input type="name" placeholder="<%=LANG['LANG119'][NUM]%>" id="M_UID" autocomplete="false" class="font-16">
+          </div>
+          <a class="btn btn-full btn-xxs font-600 font-13 bg-dark-dark rounded-s mb-2" onclick="startIdCheck()"><%=LANG['LANG238'][NUM]%></a>
+
+          <div class="input-style has-icon input-style-1 input-required">
+            <i class="input-icon fa fa-lock"></i>
+            <span><%=LANG['LANG183'][NUM]%></span>
+            <em>(required)</em>
+            <input type="<%=LANG['LANG183'][NUM]%>" placeholder="Password" id="D_PASS" autocomplete="false">
+          </div>
+          <div class="input-style has-icon input-style-1 input-required">
+            <i class="input-icon fa fa-lock"></i>
+            <span><%=LANG['LANG185'][NUM]%></span>
+            <em>(required)</em>
+            <input type="<%=LANG['LANG185'][NUM]%>" placeholder="Confirm Password" id="D_PASS_CONF">
+          </div>
+
+          <div class="input-style has-icon input-style-1 input-required">
+            <i class="input-icon fa fa-user"></i>
+            <span><%=LANG['LANG120'][NUM]%></span>
+            <em>(required)</em>
+            <input type="email" placeholder="<%=LANG['LANG120'][NUM]%>" id="D_EMAIL" class="font-16">
+          </div>
+          <a class="btn btn-full btn-xxs font-600 font-13 bg-dark-dark rounded-s mb-2" onclick="sendEmail()"><%=LANG['LANG188'][NUM]%></a>
+          <div class="input-style has-icon input-style-1 input-required">
+            <i class="input-icon fa fa-lock"></i>
+            <span><%=LANG['LANG186'][NUM]%></span>
+            <em>(required)</em>
+            <input type="text" placeholder="<%=LANG['LANG186'][NUM]%>" id="SMS_NO" class="font-16">
+          </div>
+
+
+          <a href="#" class="btn btn-full btn-l font-600 font-13 gradient-highlight mt-4 rounded-s" onclick="signup()"><%=LANG['LANG292'][NUM]%></a>
+
+          <div class="row pt-3 mb-3">
+            <div class="col-6 text-left">
+              <a href="page-forgot"><%=LANG['LANG234'][NUM]%></a>
+            </div>
+            <div class="col-6 text-right">
+              <a href="signin"><%=LANG['LANG299'][NUM]%></a>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+<!--
+          <a href="#" class="btn btn-icon text-left btn-full btn-l font-600 font-13 bg-facebook mt-4 rounded-s"><i class="fab fa-facebook-f text-center"></i>Sign up with Facebook</a>
+          <a href="#" class="btn btn-icon text-left btn-full btn-l font-600 font-13 bg-twitter mt-2 rounded-s"><i class="fab fa-twitter text-center"></i>Sign up with Twitter</a>
+          <a href="#" class="btn btn-icon text-left btn-full btn-l font-600 font-13 bg-dark-dark mt-2 rounded-s"><i class="fab fa-apple text-center"></i>Sign up with Apple</a> -->
+
+
+        </div>
+      </div>
+
+
+    </div>
+    <!-- <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-pages"></div>
+    <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>
+    <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> -->
+  </div>
+</body>
+<script>
+  var ConfirmNumber;
+
+  function checkPhone() {
+    var win = window.open("/phoneCheckPop", "PopupWin", "width=500,height=600");
+  }
+
+  function successPhoneConfirm(number) {
+    ConfirmNumber = number + "";
+    reqApi({
+      URL: 'checkHp',
+      PARAM: {
+        D_HP: ConfirmNumber.replace(ConfirmNumber.substring(0, 2), "0")
+      }
+    }).then(data => {
+      if(data.HP.D_UID!=undefined){
+        ConfirmNumber=null;
+        alert("<%=LANG['LANG300'][NUM]%>")
+      }
+    })
+  }
+  var selectedCountry = 210;
+  $(document).ready(() => {
+    var Ruid = "<%=R_UID%>"
+    if (Ruid != "") {
+      $("#D_Recom").val(Ruid)
+      $("#RidSearch").hide();
+    }
+    reqApi({
+      URL: 'countryCode',
+    }).then((data) => {
+      $(".langinput").focus(function() {
+        $(".langlist").slideDown(200);
+      });
+      $(".langlist a").click(function() {
+        $(".langlist").slideUp(200);
+      });
+      $(".langinput").blur(function() {
+        $(".langlist").slideUp(200);
+      });
+      $(".langlist").slideUp(200);
+      countrys = data.COUNTRYDATA
+      for (var i = 0; i < data.COUNTRYDATA.length; i++) {
+        var inneroption = '';
+        // inneroption += '<option value="' + i + '">' + data.COUNTRYDATA[i].label + '</option>';
+        inneroption += '<li onclick="selectCounty(' + i + ')"><a><img src="https://www.countryflags.io/' + data.COUNTRYDATA[i].alpha2Code + '/flat/64.png" alt=""> ' + data.COUNTRYDATA[i].label + '</a></li>';
+        $("#countrys").append(inneroption)
+      }
+      $("#countrys").val(210)
+    })
+  })
+
+
+  var idcheckresult = ""
+  var countrys;
+  var D_IDX;
+  var emailConf = ""
+  var selectSearch = ""
+
+  async function signup() {
+    if (ConfirmNumber == null) {
+      alert("<%=LANG['LANG301'][NUM]%>");
+      return
+    }
+    if ($("#D_PASS_CONF").val() != $("#D_PASS").val()) {
+      alert("<%=LANG['LANG240'][NUM]%>")
+      return
+    }
+    if (idcheckresult == "") {
+      alert("<%=LANG['LANG241'][NUM]%>")
+      return
+    }
+    if (D_IDX == "") {
+      alert("<%=LANG['LANG215'][NUM]%>")
+      return
+    }
+    var Param = {}
+    Param['D_UID'] = $("#M_UID").val()
+    Param['D_EMAIL'] = $("#D_EMAIL").val()
+    Param['D_HP'] = ConfirmNumber.replace(ConfirmNumber.substring(0, 2), "0")
+    Param['CONTRY'] = selectedCountry + ""
+    Param['CONTRY_NAME'] = countrys[selectedCountry].alpha2Code
+    Param['C+ONTRY_HP'] = countrys[selectedCountry].value[0]
+    Param['D_PASS'] = $("#D_PASS").val()
+    Param['D_SMSTYPE'] = "001"
+    Param['D_SMSNO'] = $("#SMS_NO").val()
+    Param['D_IDX'] = D_IDX + ""
+    var valResult = commonLib.objValidate(Param)
+    if (valResult) {
+      alert("<%=LANG['LANG192'][NUM]%>")
+      return
+    }
+    var r = await reqApi({
+      URL: 'signup',
+      PARAM: Param
+    })
+    if (r.ADDDIS.RESULT == "200") {
+      alert("<%=LANG['LANG242'][NUM]%>")
+      location.href = "/"
+    } else if (r.ADDDIS.RESULT != "200") {
+      alert(alertResultMsg(r.ADDDIS.RESULT))
+    } else {
+      alert("<%=LANG['LANG249'][NUM]%>")
+    }
+  }
+
+  async function sendEmail() {
+    if (idcheckresult == "") {
+      alert("<%=LANG['LANG241'][NUM]%>")
+      return
+    }
+    var EmailParam = {}
+    EmailParam['D_UID'] = $("#M_UID").val()
+    EmailParam['D_MAIL'] = $("#D_EMAIL").val()
+    EmailParam['TITLE'] = "Signup mail"
+    EmailParam['D_FLAG'] = "001"
+    var valResult = commonLib.objValidate(EmailParam)
+    if (valResult) {
+      alert("<%=LANG['LANG251'][NUM]%>")
+      return
+    }
+    var r = await reqApi({
+      URL: 'mailSender/sendMail',
+      PARAM: EmailParam
+    })
+    if (r.SENDMAIL == -1) {
+      alert("<%=LANG['LANG189'][NUM]%>")
+    } else if (r.SENDMAIL == 0) {
+      alert("<%=LANG['LANG255'][NUM]%>")
+    } else {
+      alert("<%=LANG['LANG126'][NUM]%>")
+      console.log(r);
+      D_IDX = r.SENDMAIL
+    }
+  }
+
+  function selectRid(val) {
+    $("#D_Recom").val(val)
+    closeMenu()
+  }
+
+  function findID() {
+    if ($("#SEARCHID").val().length > 3) {
+      var Param = {}
+      Param['SEARCH_ID'] = $("#SEARCHID").val()
+      reqApiList({
+        URL: 'findID',
+        PARAM: Param,
+        LOADING: true
+      }).then(r => {
+        var result = r.FINDID[0]
+        if (r.FINDIDh != 0) $("#searchIdList").empty()
+        for (var i = 0; i < result.length; i++) {
+          var innerHtml = '';
+          innerHtml += '<a onclick="selectRid(\'' + result[i].D_UID + '\')">';
+          innerHtml += '<img src="images/avatars/2s.png">';
+          innerHtml += '<span>' + result[i].D_UID + '</span>';
+          // innerHtml += '<span class="badge bg-red-dark color-white font-10">MANAGER</span>';
+          innerHtml += '<i class="fa fa-angle-right"></i>';
+          innerHtml += '</a>';
+          innerHtml += '<tr>';
+          $("#searchIdList").append(innerHtml)
+        }
+      })
+
+    }
+  }
+
+  function selectCounty(val) {
+    selectedCountry = val
+    $("#D_COUNTRY_HP").val(countrys[selectedCountry].value[0])
+    $("#countryName").val(countrys[selectedCountry].label)
+  }
+  async function startIdCheck(bt) {
+    var Param = {}
+    Param['D_UID'] = $("#M_UID").val()
+    var valResult = commonLib.objValidate(Param)
+    if (valResult) {
+      alert("<%=LANG['LANG252'][NUM]%>")
+      return
+    }
+    var r = await reqApi({
+      URL: 'idcheck',
+      PARAM: Param
+    })
+    if (r.CHECKID.REJULT == 'Y') {
+      alert("<%=LANG['LANG253'][NUM]%>")
+      $("#M_UID").attr('disabled', true);
+      idcheckresult = $("#M_UID").val()
+    } else {
+      alert("<%=LANG['LANG254'][NUM]%>")
+    }
+  }
+</script>
+
+<!-- <script>
+  $(document).ready(function() {
+
+
+  });
+</script> -->

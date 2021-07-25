@@ -1,0 +1,244 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+
+        <section id="title-section">
+  				<h1>1:1문의 관리</h1>
+  				<div class="row">
+  					<p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+  					<div class="fl-r">
+  						<ul class="row">
+  							<li>게시판 관리</li>
+  							<li><i class="fa fa-angle-right"></i></li>
+  							<li>1:1문의 관리</li>
+  						</ul>
+  					</div>
+  				</div>
+  			</section>
+
+  			<section id="cont-section">
+  				<div class="cont-whitebox">
+
+
+						<div class="conts-box">
+
+							<div class="from-section">
+								<div class="form-title row">
+									<h2 class="fl-l">1:1문의 상세보기</h2>
+								</div>
+
+								<div class="table-box mem-list">
+									<div class="table-over-box">
+										<table border="0">
+											<thead>
+												<tr>
+													<th>번호</th>
+													<th>분류</th>
+													<th>제목</th>
+													<th>조회수</th>
+													<th>작성일</th>
+													<th>작성자 ID</th>
+													<th>답변자 ID</th>
+													<th>답변자 이름</th>
+													<th>답변일</th>
+												</tr>
+											</thead>
+                      <tbody name="tableData">
+                      </tbody>
+												<!-- <tr>
+													<td>2</td>
+													<td>분류명 001</td>
+													<td>Exchange Korea</td>
+													<td>800</td>
+													<td>2018.03.15</td>
+													<td>mail@mail.com</td>
+													<td>testid</td>
+													<td>홍길동</td>
+													<td>2018.03.15</td>
+												</tr>
+												<tr>
+													<td colspan="9" class="tx-l p-15">
+													</td>
+												</tr>
+											</tbody> -->
+											<thead>
+												<tr>
+													<th colspan="9">답변내용</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td colspan="9" class="tx-l">
+														<textarea class="inquiry-textarea" id="B_CONTENTS"></textarea>
+													</td>
+												</tr>
+											</tbody>
+
+										</table>
+									</div>
+								</div>
+
+							</div><!--from-section-->
+
+							<div class="from-section mb-0">
+
+								<div class="form-btn-group-box row">
+
+									<div class="fl-r">
+										<a class="btn-change" onclick="save()">답변 저장하기</a>
+										<a class="btn-change btn-cancel-approval">답변 삭제하기</a>
+									</div>
+
+									<div class="fl-l">
+										<a href="/default/inquiry-list" class="btn-change">목록보기</a>
+									</div>
+								</div>
+
+							</div><!--from-section-->
+
+
+						</div><!--conts-box-->
+
+
+  				</div>
+  			</section>
+
+
+  		</div><!--main-wrap-->
+
+  	</div><!--row-->
+
+  </div><!--wrap--->
+
+
+</body>
+
+
+
+
+
+  <script src="../views/include/js/bootstrap.min.js"></script>
+
+        <!-- Menu Plugin JavaScript -->
+  <script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+
+        <!--Wave Effects -->
+        <script src="views/include/js/waves.js"></script>
+
+
+
+<script>
+	$(".sidebar #side-menu > li.menu10").addClass("active");
+	$(".sidebar #side-menu > li.menu10").find("ul li.submenu3 a").addClass("active");
+</script>
+<script>
+  var ListDATA;
+  var IDX = commonLib.getParameter("idx")
+  $(document).ready(() => {
+
+    var innerHtml = "";
+    if (IDX != undefined) {
+      getList()
+    }
+    $("#btnsDiv").append(innerHtml)
+    //getList()
+  })
+
+  function save() {
+    var param = {}
+    param['B_UID'] = ListDATA.B_UID
+    param['B_GUBUN'] = 'USER'
+    param['B_COUNTRY'] = commonLib.getCountry().split('-')[1]
+    param['UN_EB_TITLE'] = ListDATA.B_TITLE
+    param['UN_EB_CONTENTS'] = $("#B_CONTENTS").val()
+    param['B_FILE_PATH1'] = ' '
+    param['B_FILE_PATH2'] = ' '
+    param['B_FILE_PATH3'] = ' '
+    param['B_FILE_PATH4'] = ' '
+    param['B_FILE_PATH5'] = ' '
+    param['B_IDX'] = (IDX != undefined) ? IDX + "" : " "
+    param['B_AID'] = 'admin'
+    param['B_ANAME'] = 'admin'
+    var valiad = commonLib.objValidate(param)
+    if (valiad) {
+      alert("값을 모두 입력해주세요")
+      return
+    }
+    reqApi({
+      URL: 'repBoard',
+      PARAM: param
+    }).then((data) => {
+      if(data.REPBOARD.RESULT==0){
+        alert("성공하였습니다")
+        location.href='/default/notice-list'
+      }else{
+        alert("실패하였습니다")
+      }
+    })
+  }
+
+  function getList() {
+    var param = {}
+    param['B_GUBUN'] = 'USER'
+    param['B_IDX'] = commonLib.getParameter("idx") + ""
+    reqApi({
+      URL: 'getBoardUserView',
+      PARAM: param
+    }).then((data) => {
+      ListDATA = data.BOARDVIEW
+      console.log(ListDATA);
+      var gubun=(ListDATA.B_REP_GUBUN=='U')?"1:1문의":""
+      var innerHtml = ""
+      innerHtml += '<tr>';
+      innerHtml += '<td>' + ListDATA.ROWNUMBER + '</td>';
+      innerHtml += '<td>' + gubun + '</td>';
+      innerHtml += '<td>' + ListDATA.B_TITLE + '</td>';
+      innerHtml += '<td>' + ListDATA.B_VIEW_CNT + '</td>';
+      innerHtml += '<td>' + ListDATA.B_IDATE + '</td>';
+      innerHtml += '<td>' + ListDATA.B_UID + '</td>';
+      innerHtml += '<td>' + ListDATA.B_AID + '</td>';
+      innerHtml += '<td>' + ListDATA.B_ANAME + '</td>';
+      innerHtml += '<td>' + ListDATA.B_OKDATE + '</td>';
+      innerHtml += '</tr>';
+      innerHtml += '<tr>';
+      innerHtml += '<td colspan="7" class="tx-l p-15">';
+      innerHtml += ListDATA.B_CONTENTS
+      innerHtml += '</td>';
+      innerHtml += '</tr>';
+      $("tbody[name=tableData]").append(innerHtml)
+    })
+  }
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+
+  function delBoard() {
+    if (confirm("삭제 하시겠습니까?")) {
+      var param = {}
+      param['B_IDX'] = commonLib.getParameter("idx") + ""
+      reqApi({
+        URL: 'delBoard',
+        PARAM: param
+      }).then(data => {
+        console.log(data.DELBOARD);
+        alert("삭제되었습니다")
+        location.href = '/default/notice-list'
+      })
+    }
+  }
+
+  function btnPage(pos) {
+    if (pos == "bef" && currentPage > 1) {
+      currentPage--
+    } else if (pos == "next" && currentPage < totalPage) {
+      currentPage++
+    }
+    getList()
+  }
+</script>

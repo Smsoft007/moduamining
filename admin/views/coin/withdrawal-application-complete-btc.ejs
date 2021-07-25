@@ -1,0 +1,297 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+
+        <section id="title-section">
+  				<h1>BTC 출금신청내역</h1>
+  				<div class="row">
+  					<p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+  					<div class="fl-r">
+  						<ul class="row">
+  							<li>코인출금신청관리</li>
+  							<li><i class="fa fa-angle-right"></i></li>
+  							<li>BTC 출금신청내역</li>
+  						</ul>
+  					</div>
+  				</div>
+  			</section>
+
+  			<section id="cont-section">
+  				<div class="cont-whitebox">
+
+  					<ul class="row main-teb-menu">
+
+  						<li><a id="teb-menu1" href="withdrawal-application-btc.ejs">BTC출금신청내역</a></li>
+  						<li><a class="active" id="teb-menu2" href="withdrawal-application-complete-btc.ejs">BTC출금완료내역</a></li>
+  						<li><a id="teb-menu3" href="withdrawal-application-cancel-btc.ejs">BTC출금취소내역</a></li>
+  					</ul>
+
+  					<div class="main-teb-cont">
+
+  						<div class="teb-conts teb-cont1 p-0">
+
+  							<div class="conts-box pb-0">
+
+  								<div class="search-box border-l0 border-r0 p-5 bg-grey mb-30">
+  									<div class="row ">
+  										<div class="w50p fl-l m-0">
+  											<div class="search-form-box row pl-5 pr-5">
+  												<label class="fl-l">BTC server 잔액</label>
+  												<div class="input-box fl-l">
+  													<input type="text" class="input" value="564064.54646587 BTC" readonly>
+  												</div>
+  											</div>
+  										</div>
+  										<div class="w50p fl-l m-0">
+  											<div class="search-form-box row pl-5 pr-5">
+  												<label class="fl-l">BTC database 잔액</label>
+  												<div class="input-box fl-l">
+  													<input type="text" class="input" value="564064.54646587 BTC" readonly>
+  												</div>
+  											</div>
+  										</div>
+  									</div>
+  								</div><!--search-box-->
+
+  								<div class="search-box border-l0 border-r0 p-5">
+  									<div class="row">
+  										<div class="w50p fl-l m-0">
+  											<div class="search-form-box row">
+  												<label class="fl-l">검색어</label>
+  												<div class="select-input-box fl-l">
+  													<select>
+  														<option>아이디</option>
+  														<option>이름</option>
+  														<option>전화번호</option>
+  														<option>이메일</option>
+  													</select>
+  													<input type="text" class="input">
+  												</div>
+  											</div>
+  										</div>
+
+
+  										<div class="w50p fl-l">
+  											<div class="search-form-box row">
+  												<label class="fl-l">신청사이트</label>
+  												<div class="fl-l select-box">
+  													<select>
+  														<option>Exchange Korea</option>
+  														<option>Exchange English</option>
+  														<option>Exchange Chinese</option>
+  														<option>Exchange Japanese</option>
+  													</select>
+  												</div>
+  											</div>
+  										</div>
+
+  									</div>
+  								</div><!--search-box-->
+
+  								<div class="from-section">
+
+  									<div class="form-tr row">
+  										<div class="w50p fl-l">
+  											<div class="form-box row">
+  												<label class="fl-l">출금신청일자</label>
+  										<div class="fl-l calendar-input-box"  id="Search-time1">
+  											<div class="row">
+  												<div class="calendar-input-btn-box fl-l">
+  													<input type="text" id="datepicker3">
+  												</div>
+  												<span class="fl-l"> ~ </span>
+  												<div class="calendar-input-btn-box fl-l">
+  													<input type="text" id="datepicker4">
+  												</div>
+  											</div>
+  										</div>
+
+  									</div>
+  								</div>
+
+
+  						<!-- 달력 -->
+  							  <link rel="stylesheet" href="../views/include/datepicker.css">
+  							  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  							  <script>
+  								$(function() {
+  									$("#datepicker3, #datepicker4").datepicker({
+  										dateFormat: 'yy.mm.dd',
+  									  showOn: "both",
+  									  buttonImage: "../views/images/calendar-5.png",
+  									  buttonImageOnly: true,
+  									  buttonText: "Select date"
+  									});
+  								});
+  							  </script>
+  										<div class="w50p fl-l">
+  											<div class="form-box row">
+  												<label class="fl-l">출금처리일자</label>
+  										<div class="fl-l calendar-input-box"  id="Search-time2">
+  											<div class="row">
+  												<div class="calendar-input-btn-box fl-l">
+  													<input type="text" id="datepicker5">
+  												</div>
+  												<span class="fl-l"> ~ </span>
+  												<div class="calendar-input-btn-box fl-l">
+  													<input type="text" id="datepicker6">
+  												</div>
+  											</div>
+  										</div>
+
+  									</div>
+  								</div>
+
+
+  						<!-- 달력 -->
+  							  <link rel="stylesheet" href="../views/include/datepicker.css">
+  							  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  							  <script>
+  								$(function() {
+  									$("#datepicker5, #datepicker6").datepicker({
+  										dateFormat: 'yy.mm.dd',
+  									  showOn: "both",
+  									  buttonImage: "../views/images/calendar-5.png",
+  									  buttonImageOnly: true,
+  									  buttonText: "Select date"
+  									});
+  								});
+  							  </script>
+  									</div><!--form-tr-->
+
+  								</div><!--from-section-->
+
+  								<div class="from-section mb-0">
+
+  									<div class="form-btn-box mb-0">
+  										<a class="btn-change">회원검색 하기</a>
+  									</div>
+
+  								</div><!--from-section-->
+
+  							</div><!--conts-box-->
+
+
+  							<div class="conts-box pb-0">
+
+  								<div class="from-section">
+  									<div class="form-title row">
+  										<h2 class="fl-l">BTC 출금완료내역</h2>
+  										<div class="fl-r mt-10">
+  											<a href="#" class="btn-excel-down fl-l">엑셀 다운로드</a>
+  										</div>
+  									</div>
+
+  									<div class="table-box with-app-btc">
+  										<div class="table-over-box">
+  											<table border="0">
+  												<thead>
+  													<tr>
+  														<th>번호</th>
+  														<th>신청사이트</th>
+  														<th>아이디</th>
+  														<th>출금주소</th>
+  														<th class="tx-r">출금신청금액</th>
+  														<th class="tx-r">출금수수료</th>
+  														<th class="tx-r">출금금액</th>
+  														<th>신청일자</th>
+  														<th>처리일자</th>
+  														<th>처리자아이디</th>
+  														<th>처리자이름</th>
+  													</tr>
+  												</thead>
+  												<tbody>
+  													<tr>
+  														<td>2</td>
+  														<td>Exchange Korea</td>
+  														<td>mail@mail.com</td>
+  														<td>HFEgSHHFqMD2H63JenYkXBEbRpEMHmHtMp</td>
+  														<td class="tx-r">456990.00000000</td>
+  														<td class="tx-r">456990.00000000</td>
+  														<td class="tx-r">456990.00000000</td>
+  														<td>2018.03.15</td>
+  														<td>2018.03.15</td>
+  														<td>admin</td>
+  														<td>관리자이름</td>
+  													</tr>
+  													<tr>
+  														<td>2</td>
+  														<td>Exchange Korea</td>
+  														<td>mail@mail.com</td>
+  														<td>HFEgSHHFqMD2H63JenYkXBEbRpEMHmHtMp</td>
+  														<td class="tx-r">456990.00000000</td>
+  														<td class="tx-r">456990.00000000</td>
+  														<td class="tx-r">456990.00000000</td>
+  														<td>2018.03.15</td>
+  														<td>2018.03.15</td>
+  														<td>admin</td>
+  														<td>관리자이름</td>
+  													</tr>
+  												</tbody>
+  											</table>
+  										</div>
+  									</div>
+
+        						<div class="row">
+        							<div class="paging fl-r">
+        								<ul class="row">
+        									<li><a><i class="fa fa-angle-left"></i></a></li>
+        									<li><a class="active">1</a></li>
+        									<li><a>2</a></li>
+        									<li><a>3</a></li>
+        									<li><a>4</a></li>
+        									<li><a>5</a></li>
+        									<li><a><i class="fa fa-angle-right"></i></a></li>
+        								</ul>
+        							</div>
+        						</div>
+
+  								</div>
+
+  							</div><!--conts-box-->
+
+  						</div><!--teb-cont2-->
+
+
+  					</div><!--main-teb-cont-->
+
+  				</div>
+  			</section>
+
+
+		</div><!--main-wrap-->
+
+	</div><!--row-->
+
+</div><!--wrap--->
+
+
+
+
+
+</body>
+
+
+
+
+
+  <script src="../views/include/js/bootstrap.min.js"></script>
+
+        <!-- Menu Plugin JavaScript -->
+  <script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+
+        <!--Wave Effects -->
+        <script src="../views/include/js/waves.js"></script>
+
+
+<script>
+
+	$(".sidebar #side-menu > li.menu5").addClass("active");
+	$(".sidebar #side-menu > li.menu5").find("ul li.submenu1 a").addClass("active");
+
+</script>

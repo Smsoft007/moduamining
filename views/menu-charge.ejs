@@ -1,0 +1,153 @@
+<div class="menu-title">
+    <h1>MDB QR CODE</h1>
+    <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
+</div>
+<div class="content mt-0">
+
+  <div class="tab-controls tabs-round tab-animated tabs-medium tabs-rounded clearfix shadow-xl mb-4"
+       data-tab-items="2"
+       data-tab-active="bg-highlight activated color-white">
+      <a href="#" class="font-12" data-tab-active data-tab="tab-1">Ethereum</a>
+      <a href="#" class="font-12" data-tab="tab-2">MDB</a>
+  </div>
+
+  <div class="tab-content" id="tab-1">
+    <!-- 지갑없을시 -->
+    <div class="text-center">
+      <p class="font-40 mb-2 opacity-50"><i class="fas fa-wallet"></i></p>
+      <p class="mb-3 opacity-70">NO WALLET</p>
+      <a href="#" class="btn btn-center-l gradient-green rounded-sm btn-m font-13 font-600 mt-3 border-0"><%=LANG['LANG262'][NUM]%></a>
+    </div>
+
+    <!-- 지갑있을시 -->
+    <div class="card card-style p-3">
+      <div class="row mb-0">
+        <div class="col-5 pr-1">
+          <img class="generate-qr-auto mx-auto polaroid-effect shadow-l rounded-m" src="images/qr-img.jpg" style="width: 100%;">
+        </div>
+        <div class="col-7 pl-1">
+          <!-- 야간모드일시 coin-logo-w.png -->
+          <!-- 이더리움 coin-logo2.png -->
+          <!-- 이더리움 야간모드 coin-logo2-w.png -->
+          <img src="images/coin-logo.png" alt="" style="height: 30px;">
+          <p class="text-right">1 MDB = $ 0.8000</p>
+        </div>
+        <div class="col-12 mt-2">
+          <p>0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B &nbsp;<a href="#" class="icon color-green-dark"><i class="far fa-copy"></i></a></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tab-content" id="tab-2">
+    <div class="text-center">
+      <!-- 야간모드일시 coin-logo-w.png -->
+      <!-- 이더리움 coin-logo2.png -->
+      <!-- 이더리움 야간모드 coin-logo2-w.png -->
+      <img src="images/coin-logo.png" alt="" style="height: 30px;">
+      <img class="generate-qr-auto mx-auto polaroid-effect shadow-l rounded-m mt-2" src="images/qr-img.jpg" style="width: 35%;">
+      <div class="d-flex justify-content-center mt-4">
+          <div class="spinner-border color-blue-dark" role="status">
+              <span class="sr-only">Loading...</span>
+          </div>
+      </div>
+      <p class="opacity-50">Loding...</p>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+<script>
+  var tab = $('.tab-controls');
+  changeSelecedCoin(0)
+
+  function changeSelecedCoin(i) {
+    selectedCoin = i
+    for (var i = 0; i < 2; i++) {
+      var innerHtml = '';
+      if (addresies[i].ADDR == "") {
+        innerHtml += '<div class="text-center">';
+        innerHtml += '<p class="font-40 mb-2 opacity-50"><i class="fas fa-wallet"></i></p>';
+        innerHtml += '<p class="mb-3 opacity-70"><%=LANG['LANG265'][NUM]%></p>';
+        innerHtml += '<a class="btn btn-center-l gradient-green rounded-sm btn-m font-13 font-600 mt-3 border-0" onclick="createAddr(\'' + addresies[i].COINNAME + '\')">' + addresies[i].COINNAME + ' <%=LANG['LANG262'][NUM]%></a>';
+        innerHtml += '</div>';
+      } else {
+        var logo = (i == 0) ? 'logo' : 'logo'
+        innerHtml += '<div class="card card-style p-3">';
+        innerHtml += '<div class="row mb-0">';
+        innerHtml += '<div class="col-5 pr-1">';
+        innerHtml += '<img class="generate-qr-auto mx-auto polaroid-effect shadow-l rounded-m" src="'+addresies[i].QRADDR+'" style="width: 100%;">';
+        innerHtml += '</div>';
+        innerHtml += '<div class="col-7 pl-1">';
+        innerHtml += '<img src="images/coin-' + logo + '.png" alt="" style="height: 30px;">';
+        innerHtml += '<p class="text-right">1 ' + addresies[i].COINNAME + ' = <data-tag name="' + addresies[i].COINNAME + 'Rate"></data-tag></p>';
+        innerHtml += '</div>';
+        innerHtml += '<div class="col-12 mt-2">';
+        innerHtml += '<p>' + addresies[i].ADDR + ' &nbsp;<a class="icon color-green-dark"><i class="far fa-copy" onclick="commonLib.copyText(\'' + addresies[i].ADDR + '\')"></i></a></p>';
+        innerHtml += '</div>';
+        innerHtml += '</div>';
+        innerHtml += '</div>';
+      }
+      $("#tab-" + (i + 1)).empty()
+      $("#tab-" + (i + 1)).append(innerHtml)
+      commonLib.bindValueNameData(BINDVALUEDATA)
+    }
+  }
+
+  function activate_tabs() {
+    var tabTrigger = $('.tab-controls a');
+    tab.each(function() {
+      var tabItems = $(this).parent().find('.tab-controls').data('tab-items');
+      var tabWidth = $(this).width();
+      var tabActive = $(this).find('a[data-tab-active]');
+      var tabID = $('#' + tabActive.data('tab'));
+      var tabBg = $(this).data('tab-active');
+      $(this).find('a[data-tab]').css("width", (100 / tabItems) + '%');
+      tabActive.addClass(tabBg);
+      tabActive.addClass(tabBg);
+      tabID.slideDown(0);
+    });
+    tabTrigger.on('click', function() {
+      var tabData = $(this).data('tab');
+      var tabID = $('#' + tabData);
+      var tabContent = $(this).parent().parent().find('.tab-content');
+      var tabContent = $(this).parent().parent().parent().find('.tab-content');
+      var tabOrder = $(this).data('tab-order');
+      var tabBg = $(this).parent().parent().find('.tab-controls').data('tab-active');
+      $(this).parent().find(tabTrigger).removeClass(tabBg);
+      $(this).addClass(tabBg);
+      $(this).parent().find('a').removeClass('no-click');
+      $(this).addClass('no-click');
+      tabContent.slideUp(250);
+      tabID.slideDown(250);
+    });
+  }
+  activate_tabs()
+
+  function createAddr(GUBUN) {
+    console.log('1, ==============================');
+    console.log(`2, createaddr :  ${GUBUN} `);
+    $('#menu-charge').hideMenu();
+    reqApi({
+      URL: 'createAddrTypebit',
+      PARAM: {
+        GUBUN: GUBUN
+      }
+    }).then(data => {
+      if (data.COINSTATUS == 0) {
+        openPop("RS", "<%=LANG['LANG264'][NUM]%>")
+      } else {
+        alert(alertResultMsg(data.COINSTATUS.RESULT))
+      }
+    }).catch(error => {
+        console.log(error);
+        alert('코인 서버에 문제로 인하여 \n잠시후 다시 사용하여 주십시오!\n(시스템관리자에게 문의하여주십시오!)');
+    });
+    
+    
+  }
+</script>

@@ -1,0 +1,286 @@
+<% include ./head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ./left-menu %>
+      <div class="main-wrap">
+        <% include ./header %>
+        <section id="title-section">
+          <h1>USD관리</h1>
+          <div class="row">
+            <p class="fl-l">USD 입출금 내역을 조회 할 수 있습니다. </p>
+          </div>
+        </section>
+        <section id="cont-section">
+          <div class="cont-whitebox">
+            <div class="conts-box pb-0">
+              <div class="search-box border-l0 border-r0 pt-5 pb-5 pl-0 pr-0">
+                <div class="row">
+                  <div class="w50p fl-l m-0">
+                    <div class="search-form-box row pl-10 pr-10">
+                      <label class="fl-l">검색어</label>
+                      <div class="select-input-box fl-l">
+                        <select id="selType">
+                          <option value="1" selected>아이디</option>
+                          <option value="2">이름</option>
+                          <option value="3">전화번호</option>
+                          <option value="4">이메일</option>
+                        </select>
+                        <input type="text" class="input" id="selText">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w50p fl-l m-0">
+                    <div class="search-form-box row pl-10 pr-10">
+                      <label class="fl-l">입출금 구분</label>
+                      <div class="select-input-box fl-l">
+                        <select id="gubun">
+                          <option value="0" selected>전체</option>
+                          <option value="1">이더리움</option>
+                          <option value="2">아이템</option>
+                          <option value="3">이체</option>
+                          <option value="4">매직볼전환</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="from-section">
+                <div class="form-tr row">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">금액범위(USD)</label>
+                      <div class="fl-l rangeslider-box">
+                        <div id="range_04"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">입출금일자</label>
+                      <div class="fl-l calendar-input-box" id="Search-time">
+                        <div class="row">
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker1">
+                          </div>
+                          <span class="fl-l"> ~ </span>
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker2">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <link rel="stylesheet" href="../views/include/datepicker.css">
+                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                <script>
+                  $(function() {
+                    $("#datepicker1, #datepicker2").datepicker({
+                      dateFormat: 'yy.mm.dd',
+                      showOn: "both",
+                      buttonImage: "../views/images/calendar-5.png",
+                      buttonImageOnly: true,
+                      buttonText: "Select date"
+                    });
+                  });
+                </script>
+              </div>
+              <!--from-section-->
+
+              <div class="from-section mb-0">
+
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onClick="getList()">검색하기</a>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+            </div>
+            <!--conts-box-->
+
+            <div class="conts-box pb-0">
+
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">USD 입출금내역</h2>
+                  <div class="fl-r mt-10">
+                    <a href="#" class="btn-excel-down fl-l" onclick="commonLib.fnExcelReport('excelTable','InOutLIst')">엑셀 다운로드</a>
+                  </div>
+                </div>
+                <div class="table-box krw-dep-app">
+                  <div class="table-over-box">
+                    <table border="0" id="excelTable">
+                      <thead>
+                        <tr>
+                          <th>NO</th>
+                          <th>입출금</th>
+                          <th>회원ID</th>
+                          <th>받은계좌</th>
+                          <th>보낸주소</th>
+                          <th class="tx-r">입금금액</th>
+                          <th class="tx-r">출금금액</th>
+                          <th class="tx-r">수수료</th>
+                          <th>입출금일시</th>
+                          <th>TXID</th>
+                        </tr>
+                      </thead>
+                      <tbody name="tableData">
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="paging fl-r">
+                    <ul class="row" name="paging">
+                      <!-- <li><a><i class="fa fa-angle-left"></i></a></li>
+                      <li><a class="active">1</a></li>
+                      <li><a>2</a></li>
+                      <li><a>3</a></li>
+                      <li><a>4</a></li>
+                      <li><a>5</a></li>
+                      <li><a><i class="fa fa-angle-right"></i></a></li> -->
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <!--conts-box-->
+
+
+          </div>
+        </section>
+
+
+
+
+
+      </div>
+      <!--main-wrap-->
+
+    </div>
+    <!--row-->
+
+  </div>
+  <!--wrap--->
+
+</body>
+
+
+
+
+<script src="../views/include/js/bootstrap.min.js"></script>
+
+<!-- Menu Plugin JavaScript -->
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+
+<script src="../views/include/ion-rangeslider/js/ion-rangeSlider/ion.rangeSlider.min.js"></script>
+
+<!--Wave Effects -->
+<script src="../views/include/js/waves.js"></script>
+
+<script>
+  var from = 0;
+  var to = 1000;
+  var nowPages = 1;
+  var pageRange = 5;
+  var currentPage = 1;
+  var pageLevel = 0;
+  var totalPage = 0;
+  var sMemberId = "";
+  var data;
+  var saveResult = function(data) {
+    from = data.from;
+    to = data.to;
+  };
+  $("#range_04").ionRangeSlider({
+    type: "double",
+    grid: true,
+    min: 00,
+    max: 1000,
+    from: 00,
+    to: 1000,
+    onChange: saveResult,
+    onFinish: saveResult
+  });
+
+  $(document).ready(() => {
+    getList()
+  })
+
+  function getList() {
+    var param = {}
+    param['D_SDATE'] = ($("#datepicker1").datepicker("getDate")) ? $("#datepicker1").datepicker("getDate").format("yyyy-MM-dd") : " "
+    param['D_EDATE'] = ($("#datepicker2").datepicker("getDate")) ? $("#datepicker2").datepicker("getDate").format("yyyy-MM-dd") : " "
+    param['SECHER1_TITLE'] = $("#selType").val()
+    param['UN_ESECHER_TEXT'] = ($("#selText").val() == "") ? " " : $("#selText").val()
+    param['GUBUN'] = $("#gubun").val()
+    param['USD_S'] = from + ""
+    param['USD_E'] = to + ""
+    param['CNT'] = 'true'
+    param['CUR_PAGING'] = currentPage + ""
+    param['PAGING_NO'] = "10"
+    reqApiList({
+      URL: 'AgetUSDIOList',
+      PARAM: param
+    }).then((data) => {
+      $("tbody[name=tableData]").empty()
+      if (data.CNT.ALL_CNT != 0) {
+        cnt = data.CNT.ALL_CNT
+        totalPage = Math.floor(cnt / 10) + ((cnt % 10 != 0) ? 1 : 0)
+        pageLevel = Math.floor(currentPage / (pageRange + 1))
+        nowPages = (totalPage - (pageLevel * 5) > 5) ? 5 : totalPage - (pageLevel * 5)
+      }
+      for (var i = 0; i < data.AIOULIST.length; i++) {
+        var innerHtml = ""
+        innerHtml += '<tr>';
+        innerHtml += '<td>' + data.AIOULIST[i].ROW_NOMBER + '</td>';
+        innerHtml += '<td class="tx-blue">' + data.AIOULIST[i].REMARK + '</td>';
+        innerHtml += '<td>' + data.AIOULIST[i].USERID + '</td>';
+        innerHtml += '<td>' + data.AIOULIST[i].RECIVERADDR + '</td>';
+        innerHtml += '<td>' + data.AIOULIST[i].MS_SENDADDR + '</td>';
+        innerHtml += '<td class="tx-r">' + data.AIOULIST[i].MS_AMT1 + '</td>';
+        innerHtml += '<td class="tx-r">' + data.AIOULIST[i].MS_AMT2 + '</td>';
+        innerHtml += '<td class="tx-r">' + data.AIOULIST[i].MS_FEE + '</td>';
+        innerHtml += '<td>' + data.AIOULIST[i].MS_IDATE + '</td>';
+        innerHtml += '<td>' + data.AIOULIST[i].MS_TXID + '</td>';
+        innerHtml += '</tr>';
+        $("tbody[name=tableData]").append(innerHtml)
+      }
+      var innerHtml = '';
+      innerHtml += '<li class="" onclick="btnPage(\'bef\')"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>';
+      $("ul[name=paging]").empty()
+      for (var i = 1; i <= nowPages; i++) {
+        if (currentPage == i) {
+          innerHtml += '<li onclick="movePage(' + i + ')"> <a class="active">' + ((pageLevel * 5) + i) + '</a> </li>';
+        } else {
+          innerHtml += '<li onclick="movePage(' + i + ')"> <a>' + ((pageLevel * 5) + i) + '</a> </li>';
+        }
+      }
+      innerHtml += '<li onclick="btnPage(\'next\')"> <a href="#"><i class="fa fa-angle-right"></i></a> </li>';
+      $("ul[name=paging]").append(innerHtml)
+    })
+  }
+
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+
+  function btnPage(pos) {
+    if (pos == "bef" && currentPage > 1) {
+      currentPage--
+    } else if (pos == "next" && currentPage < totalPage) {
+      currentPage++
+    }
+    getList()
+  }
+</script>

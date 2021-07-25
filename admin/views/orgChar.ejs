@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width">
+  <title>ORGChart</title>
+  <link rel="stylesheet" href="css/Treant.css">
+  <link rel="stylesheet" href="css/basic-example1.css">
+
+</head>
+
+<body>
+  <div class="chart" id="basic-example"></div>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="js/raphael.js"></script>
+  <script src="js/Treant.js"></script>
+  <script>
+    // var clicked = false,
+    //   clickY;
+    // $(document).on({
+    //   'mousemove': function(e) {
+    //     clicked && updateScrollPos(e);
+    //   },
+    //   'mousedown': function(e) {
+    //     clicked = true;
+    //     clickY = e.pageY;
+    //   },
+    //   'mouseup': function() {
+    //     clicked = false;
+    //     $('html').css('cursor', 'auto');
+    //   }
+    // });
+    //
+    // var updateScrollPos = function(e) {
+    //   $('html').css('cursor', 'row-resize');
+    //   $(window).scrollTop($(window).scrollTop() + (clickY - e.pageY));
+    // }
+
+    function getParamName(name) {
+      try {
+        var url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+        return results[2];
+      } catch (e) {
+        console.log(e);
+        alert("잘못된 접근 경로입니다.");
+        // window.close();
+        // return
+      }
+
+    }
+
+    var chart_config = {
+      chart: {
+        container: "#basic-example",
+        //animateOnInit: true,
+        connectors: {
+          type: 'curve', //bCurve,curve,step,straight
+          style: {
+            "stroke-width": 1
+          }
+        },
+        // animateOnInit: true,
+        node: {
+          HTMLclass: 'nodeExample1',
+          collapsable: true
+        },
+        animation: {
+          nodeAnimation: "easeOutBounce",
+          nodeSpeed: 700,
+          //connectorsAnimation: "bounce",
+          connectorsSpeed: 700
+        }
+      },
+      nodeStructure: {
+
+      }
+    };
+    // var cid = getParamName('type')
+    $.ajax({
+      url: "/api/getOrgData",
+      data: {
+        id: 1
+      },
+      method: "GET",
+      dataType: "json"
+    }).done((data) => {
+      console.log(data);
+      chart_config.nodeStructure = data
+      new Treant(chart_config);
+    }).fail((err) => {
+      alert("서버 오류입니다 관리자에게 문의하세요");
+      window.close();
+    })
+  </script>
+</body>
+
+</html>

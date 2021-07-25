@@ -1,0 +1,65 @@
+<%- include('head') %>
+
+<body class="theme-light">
+  <div id="preloader">
+    <div class="spinner-border color-highlight" role="status"></div>
+  </div>
+  <div id="page">
+    <div class="page-content pt-3">
+      <div class="card card-style">
+        <div class="content">
+          <p class="font-600 color-highlight mb-n1"><%=LANG['LANG295'][NUM]%></p>
+          <h1 class="font-30"><%=LANG['LANG234'][NUM]%></h1>
+          <p>
+            <%=LANG['LANG293'][NUM]%>
+          </p>
+          <div class="input-style has-icon input-style-1 input-required">
+            <!-- <i class="input-icon fa fa-at"></i> -->
+            <span><%=LANG['LANG119'][NUM]%></span>
+            <em>(required)</em>
+            <input type="name" placeholder="<%=LANG['LANG119'][NUM]%>" id="D_UID">
+          </div>
+          <div class="input-style has-icon input-style-1 input-required">
+            <i class="input-icon fa fa-at"></i>
+            <span><%=LANG['LANG120'][NUM]%></span>
+            <em>(required)</em>
+            <input type="name" placeholder="<%=LANG['LANG120'][NUM]%>" id="EMAIL">
+          </div>
+          <a class="btn btn-full btn-l font-600 font-13 gradient-highlight mt-4 rounded-s" onclick="findPwd()"><%=LANG['LANG294'][NUM]%></a>
+          <div class="row pt-3 mb-0">
+            <div class="col-6 text-left">
+              <a href="signin" class="color-highlight"><%=LANG['LANG123'][NUM]%></a>
+            </div>
+            <div class="col-6 text-right">
+              <a href="signup" class="color-highlight"><%=LANG['LANG292'][NUM]%></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-menu-load="menu-footer"></div>
+    </div>
+  </div>
+</body>
+<script>
+  async function findPwd() {
+    var Param = {}
+    Param['D_UID'] = $("#D_UID").val()
+    Param['EMAIL'] = $("#EMAIL").val()
+    var valResult = commonLib.objValidate(Param)
+    if (valResult) {
+      alert("<%=LANG['LANG125'][NUM]%>")
+      return
+    }
+    var r = await reqApi({
+      URL: 'pwdChangeMail',
+      PARAM: Param
+    })
+    if (r.FINDPWD.RESULT == 0) {
+      alert("<%=LANG['LANG126'][NUM]%>")
+    } else if (r.FINDPWD.RESULT == 1) {
+      alert("<%=LANG['LANG127'][NUM]%>")
+    } else {
+      alert("<%=LANG['LANG127'][NUM]%>")
+    }
+  }
+</script>
